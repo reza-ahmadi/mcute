@@ -1,0 +1,5 @@
+(define x0::int)
+(assert (>= x0 -32768))
+(assert (<= x0 32767))
+(assert (= (+ -6 (* x0 2)) 0))
+(check)

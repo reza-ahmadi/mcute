@@ -1,0 +1,47 @@
+Iteration 1 (0s): covered 4 branches [1 reach funs, 12 reach branches].
+Cfg solves: 0/0 (0 lucky [0 continued], 0 on 0's, 0 on others,0 unsats, 0 prediction failures)
+    (recursive successes: 0)
+Top-level SolveAlongCfg: 0/0
+All SolveAlongCfg: 0/0  (0 all concrete, 0 no paths)
+    (sat failures: 0/0)  (prediction failures: 0) (recursions: 0)
+DoSearch(5, 0, 10000, 6)
+**** in: x>0 && x<10 ******* y is greater than x. x: 1, y:1583045880Iteration 2 (0s): covered 6 branches [1 reach funs, 12 reach branches].
+Found new branch by forcing at distance 0 (0).
+Cfg solves: 1/2 (0 lucky [0 continued], 1 on 0's, 0 on others,1 unsats, 0 prediction failures)
+    (recursive successes: 0)
+Top-level SolveAlongCfg: 0/0
+All SolveAlongCfg: 0/0  (0 all concrete, 0 no paths)
+    (sat failures: 0/0)  (prediction failures: 0) (recursions: 0)
+DoSearch(5, 0, 10000, 7)
+Iteration 3 (0s): covered 8 branches [1 reach funs, 12 reach branches].
+Found new branch by forcing at distance 0 (0).
+Cfg solves: 2/4 (0 lucky [0 continued], 2 on 0's, 0 on others,2 unsats, 0 prediction failures)
+    (recursive successes: 0)
+Top-level SolveAlongCfg: 0/0
+All SolveAlongCfg: 0/0  (0 all concrete, 0 no paths)
+    (sat failures: 0/0)  (prediction failures: 0) (recursions: 0)
+DoSearch(5, 0, 10000, 4)
+**** in: x>0 && x<10 ******* y is greater than x. x: 1, y:1583045880Iteration 4 (0s): covered 8 branches [1 reach funs, 12 reach branches].
+SolveAlongCfg(1,1)
+SolveAlongCfg(2,0)
+**** in: x>0 && x<10 ******* x is greater than or equal to y. x: 1, y:0Iteration 5 (0s): covered 9 branches [1 reach funs, 12 reach branches].
+Cfg solves: 3/6 (0 lucky [0 continued], 2 on 0's, 0 on others,3 unsats, 0 prediction failures)
+    (recursive successes: 0)
+Top-level SolveAlongCfg: 1/1
+All SolveAlongCfg: 2/2  (1 all concrete, 0 no paths)
+    (sat failures: 0/1)  (prediction failures: 0) (recursions: 1)
+Cfg solves: 3/6 (0 lucky [0 continued], 2 on 0's, 0 on others,3 unsats, 0 prediction failures)
+    (recursive successes: 0)
+Top-level SolveAlongCfg: 1/1
+All SolveAlongCfg: 2/2  (1 all concrete, 0 no paths)
+    (sat failures: 0/1)  (prediction failures: 0) (recursions: 1)
+DoSearch(5, 0, 10000, 7)
+**** in: x>0 && x<10 ******* x is greater than or equal to y. x: 1, y:0$$$$$$$$$$ in: x>0 && z<=10 ****$$$$$$$$$$ z<5Iteration 6 (0s): covered 11 branches [1 reach funs, 12 reach branches].
+Found new branch by forcing at distance 0 (0).
+Cfg solves: 4/7 (0 lucky [0 continued], 3 on 0's, 0 on others,3 unsats, 0 prediction failures)
+    (recursive successes: 0)
+Top-level SolveAlongCfg: 1/1
+All SolveAlongCfg: 2/2  (1 all concrete, 0 no paths)
+    (sat failures: 0/1)  (prediction failures: 0) (recursions: 1)
+DoSearch(5, 0, 10000, 8)
+******************** Filename is: input.1 **************************************** Filename is: input.2 **************************************** Filename is: input.3 **************************************** Filename is: input.4 **************************************** Filename is: input.5 **************************************** Filename is: input.6 *******************
