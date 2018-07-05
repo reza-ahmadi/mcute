@@ -14,3 +14,5 @@
 7. LaunchProgram function in the concolic_search class in fact sends the inputs via ports to the CUT to run it, as well. (in addition to execute the action code of the transitions saved into seperate files). This part should be done in the test harness, since other classes can hardly send messages to the ports (to be received by the CUT).
 
 8. much of the code written in the concolic_search class remains in the same file, only parts that need to communicate with the CUT are moved to the TH.
+
+
