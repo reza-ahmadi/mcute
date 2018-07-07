@@ -98,14 +98,17 @@ if (HighTemps&lt;=9){
 		cuteCommands.newBranch(B1).send();
 	}
 	if (temprature>0){
+		log.log (&quot;----branch visited: temprature>0----\n&quot;);
+		cuteCommands.newBranch(B2).send();
 		Temprature=temprature;
 		if (Temprature>=90){
 			HighTemps++;
 			cuteCommands.newBranch(B9).send();
 		}
-		log.log (&quot;----branch visited: temprature>0----\n&quot;);
-		cuteCommands.newBranch(B2).send();
 	}
+}else{ //is only enabled if the transition is executed many times
+   log.log (&quot;warning: engine worked too many times with high temprature&quot;);
+   cuteCommands.newBranch(B10).send();
 }</body>
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_bcGQsGgpEeijRtS4FXxxtA" event="_CXoYoGdjEeiqifykceCvxw" port="_GQwmUGdjEeiqifykceCvxw"/>
@@ -275,7 +278,7 @@ log.log(&quot;------------------------------------------\n&quot;);
 //all states, transition, branches are set statically
 States=6;
 Transitions=7;
-ActionCodeBranches=8;
+ActionCodeBranches=10;
 
 //loop execution default values for all transitions with loop
 //LoopExecutions[T2]=0;
@@ -299,7 +302,7 @@ srand(time(NULL));
                 <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
               </trigger>
             </transition>
-            <transition xmi:type="uml:Transition" xmi:id="_EuVzoH5UEeipA49rzMw2KQ" name="" kind="external" source="_FrLd4GgwEeijRtS4FXxxtA" target="_FrLd4GgwEeijRtS4FXxxtA">
+            <transition xmi:type="uml:Transition" xmi:id="_EuVzoH5UEeipA49rzMw2KQ" name="newState / selectNextTransition" kind="external" source="_FrLd4GgwEeijRtS4FXxxtA" target="_FrLd4GgwEeijRtS4FXxxtA">
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_LTx2kH5UEeipA49rzMw2KQ" name="Effect" isReentrant="false">
                 <language>C++</language>
                 <body>

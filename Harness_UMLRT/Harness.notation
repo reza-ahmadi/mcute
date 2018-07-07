@@ -931,7 +931,7 @@
     <edges xmi:type="notation:Connector" xmi:id="_E0QOYH5UEeipA49rzMw2KQ" type="Transition_Edge" source="_HUAc5mgwEeijRtS4FXxxtA" target="_HUAc5mgwEeijRtS4FXxxtA">
       <children xmi:type="notation:DecorationNode" xmi:id="_E0SDkH5UEeipA49rzMw2KQ" type="Transition_NameLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_IxW9IH5UEeipA49rzMw2KQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_E0SDkX5UEeipA49rzMw2KQ" x="39" y="13"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_E0SDkX5UEeipA49rzMw2KQ" x="45" y="-15"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_E0SDkn5UEeipA49rzMw2KQ" type="Transition_GuardLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_IxsUUH5UEeipA49rzMw2KQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
@@ -943,7 +943,7 @@
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_E0QOYX5UEeipA49rzMw2KQ"/>
       <element xmi:type="uml:Transition" href="Harness.uml#_EuVzoH5UEeipA49rzMw2KQ"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_E0QOYn5UEeipA49rzMw2KQ" points="[429, 220, -643984, -643984]$[491, 219, -643984, -643984]$[491, 315, -643984, -643984]$[380, 315, -643984, -643984]$[380, 253, -643984, -643984]"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_E0QOYn5UEeipA49rzMw2KQ" points="[429, 220, -643984, -643984]$[491, 219, -643984, -643984]$[491, 286, -643984, -643984]$[380, 286, -643984, -643984]$[380, 253, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_E4dY8H5UEeipA49rzMw2KQ" id="(1.0,0.7911392405063291)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_E4dY8X5UEeipA49rzMw2KQ" id="(0.7525252525252525,1.0)"/>
     </edges>
