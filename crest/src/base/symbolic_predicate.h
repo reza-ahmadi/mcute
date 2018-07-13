@@ -23,7 +23,7 @@ using std::map;
 using std::ostream;
 using std::set;
 
-namespace crest {
+namespace mcute {
 
 class SymbolicPred {
  public:
@@ -55,7 +55,7 @@ class SymbolicPred {
   SymbolicExpr* expr_;
 };
 
-}  // namespace crest
+}  // namespace mcute
 
 #endif  // BASE_SYMBOLIC_PREDICATE_H__
 

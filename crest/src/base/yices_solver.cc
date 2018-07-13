@@ -32,7 +32,7 @@ using std::cout;
 using std::endl;
 
 
-namespace crest {
+namespace mcute {
 
 typedef vector<const SymbolicPred*>::const_iterator PredIt;
 
@@ -218,4 +218,4 @@ bool YicesSolver::Solve(const map<var_t,type_t>& vars,
 }
 
 
-}  // namespace crest
+}  // namespace mcute

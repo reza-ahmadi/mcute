@@ -13,7 +13,7 @@
 
 #include <cstddef>
 
-namespace crest {
+namespace mcute {
 
 typedef int id_t;
 typedef int branch_id_t;
@@ -65,6 +65,6 @@ extern const value_t kMaxValue[];
 
 extern const size_t kByteSize[];
 
-}  // namespace crest
+}  // namespace mcute
 
 #endif  // BASE_BASIC_TYPES_H__

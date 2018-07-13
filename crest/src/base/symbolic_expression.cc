@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "base/symbolic_expression.h"
 
-namespace crest {
+namespace mcute {
 
 typedef map<var_t,value_t>::iterator It;
 typedef map<var_t,value_t>::const_iterator ConstIt;
@@ -163,4 +163,4 @@ bool SymbolicExpr::operator==(const SymbolicExpr& e) const {
 }
 
 
-}  // namespace crest
+}  // namespace mcute

@@ -24,7 +24,7 @@ using std::make_pair;
 using std::ostream;
 using std::vector;
 
-namespace crest {
+namespace mcute {
 
 class SymbolicExecution {
  public:
@@ -51,6 +51,6 @@ class SymbolicExecution {
   SymbolicPath path_;  
 };
 
-}  // namespace crest
+}  // namespace mcute
 
 #endif  // BASE_SYMBOLIC_EXECUTION_H__

@@ -444,6 +444,25 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dPhKsH8VEeipA49rzMw2KQ" id="(0.8356164383561644,0.4262295081967213)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dPhKsX8VEeipA49rzMw2KQ" id="(0.35,0.475)"/>
     </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_vax6sIY7EeiKGobklzfqdw" type="Transition_Edge" source="_xghRkGdiEeiqifykceCvxw" target="_v45MdGdiEeiqifykceCvxw">
+      <children xmi:type="notation:DecorationNode" xmi:id="_vax6s4Y7EeiKGobklzfqdw" type="Transition_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vzeukIY7EeiKGobklzfqdw" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vax6tIY7EeiKGobklzfqdw" x="-1" y="12"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_vax6tYY7EeiKGobklzfqdw" type="Transition_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_v0L5MIY7EeiKGobklzfqdw" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vax6toY7EeiKGobklzfqdw"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_vax6t4Y7EeiKGobklzfqdw" type="Transition_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_v06R8IY7EeiKGobklzfqdw" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vax6uIY7EeiKGobklzfqdw" x="1" y="58"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_vax6sYY7EeiKGobklzfqdw"/>
+      <element xmi:type="uml:Transition" href="Harness.uml#_vaGlQIY7EeiKGobklzfqdw"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_vax6soY7EeiKGobklzfqdw" points="[286, 118, -643984, -643984]$[286, 78, -643984, -643984]$[174, 78, -643984, -643984]$[174, 133, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_vcbggIY7EeiKGobklzfqdw" id="(0.15789473684210525,0.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_vcbggYY7EeiKGobklzfqdw" id="(0.8714285714285714,0.0)"/>
+    </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_C7rg0GgnEeijRtS4FXxxtA" type="CompositeStructure" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_C7wZUGgnEeijRtS4FXxxtA" type="Class_Shape">

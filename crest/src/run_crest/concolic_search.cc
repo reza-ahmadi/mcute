@@ -37,7 +37,7 @@ using std::queue;
 using std::random_shuffle;
 using std::stable_sort;
 
-namespace crest {
+namespace mcute {
 
 namespace {
 
@@ -1395,4 +1395,4 @@ bool CfgHeuristicSearch::DoBoundedBFS(int i, int depth, const SymbolicExecution&
   return false;
 }
 
-}  // namespace crest
+}  // namespace mcute

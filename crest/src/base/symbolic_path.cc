@@ -15,7 +15,7 @@
 using std::cout;
 using std::endl;
 
-namespace crest {
+namespace mcute {
 
 SymbolicPath::SymbolicPath() { }
 
@@ -97,4 +97,4 @@ bool SymbolicPath::Parse(istream& s) {
   return !s.fail();
 }
 
-}  // namespace crest
+}  // namespace mcute

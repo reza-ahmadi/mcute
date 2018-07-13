@@ -19,7 +19,7 @@
 
 using std::vector;
 using std::to_string;
-using namespace crest;
+using namespace mcute;
 
 // The symbolic interpreter. */
 static SymbolicInterpreter* SI;
@@ -83,15 +83,15 @@ void __CrestAtExit() {
   std::ofstream out("szd_execution", std::ios::out | std::ios::binary);
   out.write(buff.data(), buff.size());
   //reza start
-  printf ("\n ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Saving the SymbolicExecution object agian^^^^^^^^^");
-  int rnd = rand() % 1000 + 1;
-  string rnd_str = to_string(rnd);
-  string yices_str = "szd_execution_";
-  string num_str = yices_str + rnd_str;
-  std::ofstream out2(num_str.c_str(), std::ios::out);
-  out2 << buff;
-  out2.close();
-  rnd++;
+//  printf ("\n ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Saving the SymbolicExecution object agian^^^^^^^^^");
+//  int rnd = rand() % 1000 + 1;
+//  string rnd_str = to_string(rnd);
+//  string yices_str = "szd_execution_";
+//  string num_str = yices_str + rnd_str;
+//  std::ofstream out2(num_str.c_str(), std::ios::out);
+//  out2 << buff;
+//  out2.close();
+//  rnd++;
   //reza end
   assert(!out.fail());
   out.close();

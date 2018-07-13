@@ -13,7 +13,7 @@
 #include <iostream>
 #include "base/symbolic_execution.h"
 
-using namespace crest;
+using namespace mcute;
 using namespace std;
 
 int main(void) {

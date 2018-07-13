@@ -25,7 +25,7 @@ using std::ostream;
 using std::set;
 using std::string;
 
-namespace crest {
+namespace mcute {
 
 class SymbolicExpr {
  public:
@@ -73,6 +73,6 @@ class SymbolicExpr {
   map<var_t,value_t> coeff_;
 };
 
-}  // namespace crest
+}  // namespace mcute
 
 #endif  // BASE_SYMBOLIC_EXPRESSION_H__

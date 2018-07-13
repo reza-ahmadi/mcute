@@ -12,7 +12,7 @@
 
 #include "base/symbolic_execution.h"
 
-namespace crest {
+namespace mcute {
 
 SymbolicExecution::SymbolicExecution() { }
 
@@ -57,4 +57,4 @@ bool SymbolicExecution::Parse(istream& s) {
   return (path_.Parse(s) && !s.fail());
 }
 
-}  // namespace crest
+}  // namespace mcute

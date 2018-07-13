@@ -15,7 +15,7 @@
 
 using std::numeric_limits;
 
-namespace crest {
+namespace mcute {
 
 compare_op_t NegateCompareOp(compare_op_t op) {
   return static_cast<compare_op_t>(op ^ 1);
@@ -103,5 +103,5 @@ const size_t kByteSize[] = {
   sizeof(unsigned long long),  sizeof(long long)
 };
 
-}  // namespace crest
+}  // namespace mcute
 

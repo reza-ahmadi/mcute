@@ -13,7 +13,7 @@ BASE_LIBS = base/basic_types.o base/symbolic_execution.o \
             base/yices_solver.o
 
 
-all: libcrest/libumlcute.a libcrest/libcrest.a run_crest/run_crest umlCUTE/umlCUTE \
+all: libcrest/libumlcute.a libcrest/libcrest.a run_crest/run_crest run_mcute/umlCUTE \
      process_cfg/process_cfg tools/print_execution \
      install
 
@@ -21,13 +21,13 @@ libcrest/libcrest.a: libcrest/crest.o $(BASE_LIBS)
 	$(AR) rsv $@ $^
 
 
-libcrest/libumlcute.a: run_crest/concolic_search.o libcrest/crest.o $(BASE_LIBS)
+libcrest/libumlcute.a: run_mcute/concolic_search.o libcrest/crest.o $(BASE_LIBS)
 	$(AR) rsv $@ $^
 
 run_crest/run_crest: run_crest/concolic_search.o $(BASE_LIBS)
 
 
-umlCUTE/umlCUTE: run_crest/concolic_search.o $(BASE_LIBS)  #for testing executable
+run_mcute/umlCUTE: run_mcute/concolic_search.o $(BASE_LIBS)  #for testing executable
 
 tools/print_execution: $(BASE_LIBS)
 
@@ -35,12 +35,12 @@ install:
 	cp libcrest/libcrest.a ../lib
 	cp libcrest/libumlcute.a ../lib
 	cp run_crest/run_crest ../bin
-	cp umlCUTE/umlCUTE ../bin
+	cp run_mcute/umlCUTE ../bin
 	cp process_cfg/process_cfg ../bin
 	cp tools/print_execution ../bin
 	cp libcrest/crest.h ../include
 
 clean:
-	rm -f libcrest/libcrest.a run_crest/run_crest
+	rm -f libcrest/libumlcute.a libcrest/libcrest.a run_crest/run_crest
 	rm -f process_cfg/process_cfg tools/print_execution
 	rm -f */*.o */*~ *~

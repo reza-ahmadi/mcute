@@ -10,7 +10,7 @@
 
 #include "base/symbolic_predicate.h"
 
-namespace crest {
+namespace mcute {
 
 SymbolicPred::SymbolicPred()
   : op_(ops::EQ), expr_(new SymbolicExpr(0)) { }
@@ -50,4 +50,4 @@ bool SymbolicPred::Equal(const SymbolicPred& p) const {
 }
 
 
-}  // namespace crest
+}  // namespace mcute

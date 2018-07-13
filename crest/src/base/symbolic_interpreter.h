@@ -27,7 +27,7 @@ using std::map;
 using std::vector;
 using __gnu_cxx::hash_map;
 
-namespace crest {
+namespace mcute {
 
 class SymbolicInterpreter {
  public:
@@ -87,6 +87,6 @@ class SymbolicInterpreter {
   inline void ClearPredicateRegister();
 };
 
-}  // namespace crest
+}  // namespace mcute
 
 #endif  // BASE_SYMBOLIC_INTERPRETER_H__

@@ -27,7 +27,7 @@ using std::vector;
 #define IFDEBUG(x)
 #endif
 
-namespace crest {
+namespace mcute {
 
 typedef map<addr_t,SymbolicExpr*>::const_iterator ConstMemIt;
 
@@ -349,4 +349,4 @@ void SymbolicInterpreter::ClearPredicateRegister() {
 }
 
 
-}  // namespace crest
+}  // namespace mcute

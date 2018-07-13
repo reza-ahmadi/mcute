@@ -20,7 +20,7 @@
 using std::map;
 using std::vector;
 
-namespace crest {
+namespace mcute {
 
 class YicesSolver {
  public:
@@ -37,7 +37,7 @@ class YicesSolver {
                                         map<var_t,value_t>* soln);
 };
 
-}  // namespace crest
+}  // namespace mcute
 
 
 #endif  // BASE_YICES_SOLVER_H__

@@ -24,7 +24,7 @@ using std::ostream;
 using std::swap;
 using std::vector;
 
-namespace crest {
+namespace mcute {
 
 class SymbolicPath {
  public:
@@ -49,6 +49,6 @@ class SymbolicPath {
   vector<SymbolicPred*> constraints_;
 };
 
-}  // namespace crest
+}  // namespace mcute
 
 #endif  // BASE_SYMBOLIC_PATH_H__
