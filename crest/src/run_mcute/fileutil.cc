@@ -38,8 +38,10 @@ TestTable fileutil::getTests() {
 //			cout << "\n now reading: " << input << endl;
 		}
 		testFile.close();
-		tests.insert(TestTable::value_type(fileName, inputs));
-		inputs.clear();
+		if (inputs.size()>0){
+			tests.insert(TestTable::value_type(fileName, inputs));
+			inputs.clear();
+		}
 	}
 
 	return tests;
