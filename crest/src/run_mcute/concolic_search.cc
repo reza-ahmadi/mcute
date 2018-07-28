@@ -220,6 +220,10 @@ void Search::RunProgram(const vector<value_t>& inputs, SymbolicExecution* ex) {
 
 //printf ("******************** Filename is: %s ********************", fname);
 
+  // NOTE:
+  // by moving the methods in this class to the harness
+  // we do not need to save inputs, we can send them directly to the CUT
+
 
 //END-REZA
 
