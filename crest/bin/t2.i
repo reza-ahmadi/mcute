@@ -1,9 +1,9 @@
-# 1 "../test/t2.c"
+# 1 "t2.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "../test/t2.c"
+# 1 "t2.c"
 
 
 
@@ -57,7 +57,7 @@ extern void __CrestUInt(unsigned int* x) __attribute__((crest_skip));
 extern void __CrestChar(char* x) __attribute__((crest_skip));
 extern void __CrestShort(short* x) __attribute__((crest_skip));
 extern void __CrestInt(int* x) __attribute__((crest_skip));
-# 5 "../test/t2.c" 2
+# 5 "t2.c" 2
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -888,7 +888,7 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 6 "../test/t2.c" 2
+# 6 "t2.c" 2
 
 int main(void) {
 int desiredLevel;

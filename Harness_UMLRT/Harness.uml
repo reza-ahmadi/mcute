@@ -375,7 +375,7 @@ if (state_name==SETUP){
             </transition>
             <transition xmi:type="uml:Transition" xmi:id="_6UmmQH_gEeiMFcUmhpquNg" kind="external" source="_FrJBoGgwEeijRtS4FXxxtA" target="_2YhyQH_gEeiMFcUmhpquNg"/>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_FrJBoGgwEeijRtS4FXxxtA"/>
-            <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="CUTE__Testing">
+            <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="MCUTE__Testing">
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_J4hBAGgwEeijRtS4FXxxtA" name="Entry" isReentrant="false">
                 <language>C++</language>
                 <body> //we already know how many inputs we need
@@ -542,8 +542,8 @@ log.log(&quot;*****************************************************\n&quot;);</b
         </ownedBehavior>
       </packagedElement>
     </packagedElement>
-    <packagedElement xmi:type="uml:Package" xmi:id="_k8svIGgnEeijRtS4FXxxtA" name="Testing_testsimple">
-      <packagedElement xmi:type="uml:Class" xmi:id="_C62aYGgnEeijRtS4FXxxtA" name="CUTE__MAIN__testsimple" classifierBehavior="_1XUoUGhEEeijRtS4FXxxtA" isActive="true">
+    <packagedElement xmi:type="uml:Package" xmi:id="_k8svIGgnEeijRtS4FXxxtA" name="Testing_DRC_Capsule">
+      <packagedElement xmi:type="uml:Class" xmi:id="_C62aYGgnEeijRtS4FXxxtA" name="CUTE__MAIN__DRC" classifierBehavior="_1XUoUGhEEeijRtS4FXxxtA" isActive="true">
         <ownedAttribute xmi:type="uml:Property" xmi:id="_wtzlsGgnEeijRtS4FXxxtA" name="harness" visibility="protected" type="_ZSoUsGgnEeijRtS4FXxxtA" isOrdered="true" aggregation="composite"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_tCMV8GgvEeijRtS4FXxxtA" name="testsimple" visibility="protected" type="_hpaO8GdiEeiqifykceCvxw" isOrdered="true" aggregation="composite"/>
         <ownedAttribute xmi:type="uml:Port" xmi:id="_jct8kGhHEeijRtS4FXxxtA" name="settings" visibility="protected" type="_CV8wAWhHEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
