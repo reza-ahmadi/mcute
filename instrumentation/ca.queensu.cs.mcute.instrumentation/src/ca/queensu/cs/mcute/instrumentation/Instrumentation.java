@@ -430,6 +430,27 @@ public class Instrumentation {
 	}
 	
 	/**
+	 * Restore all variables during transition effect of reset transitions.
+	 * @param transition the transition to instrument
+	 */
+	private void restoreCurrentAttributesValues(Transition transition) {
+		
+		String prebody = "";
+		
+		// For all attribute, prepare the prebody
+		Property[] attrs = getCapsuleAttributes();
+		for (int i = 0; i < attrs.length; i++) {
+			Property attr = attrs[i];
+			prebody += attr.getName() + " = " + "restore_".concat(attr.getName()) + ";\n";
+		}
+					
+		OpaqueBehavior behavior = (OpaqueBehavior) transition.getEffect();
+		int index = behavior.getLanguages().indexOf("C++");
+		String body = behavior.getBodies().get(index);
+		behavior.getBodies().set(index, prebody+body);
+	}
+	
+	/**
 	 * Create the cute command for every transition.
 	 * Invoke createEffectIfAny
 	 */
@@ -461,7 +482,12 @@ public class Instrumentation {
 		opposite.setTarget(source);
 		opposite.setName("reset"+index);
 		getRegion().getTransitions().add(opposite);
-		//TODO: populate the action code
+		
+		OpaqueBehavior behavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
+		behavior.getLanguages().add("C++");
+		behavior.getBodies().add("");
+		opposite.setEffect(behavior);
+		restoreCurrentAttributesValues(opposite);
 	}
 	
 	/**
@@ -480,6 +506,8 @@ public class Instrumentation {
 				continue;
 			}
 			createOppositeTransition(transition, i);
+			
+			
 		}
 	}
 	
