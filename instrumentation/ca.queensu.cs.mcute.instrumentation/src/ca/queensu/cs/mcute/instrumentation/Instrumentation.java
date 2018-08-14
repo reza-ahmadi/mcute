@@ -402,6 +402,34 @@ public class Instrumentation {
 	}
 	
 	/**
+	 * Save all variables before executing entry action code.
+	 */
+	private void saveCurrentAttributesValues() {
+		
+		// retrieve all states of the statemachine (assuming states are non-composite)
+		Region region = getRegion();
+		List<Vertex> vertices = region.getSubvertices();
+		Stream<Vertex> states = vertices.stream().filter(v-> v instanceof State);
+		String prebody = "";
+		
+		// For all attribute, prepare the prebody
+		Property[] attrs = getCapsuleAttributes();
+		for (int i = 0; i < attrs.length; i++) {
+			Property attr = attrs[i];
+			prebody += "restore_".concat(attr.getName()) + " = " + attr.getName() + ";\n";
+		}
+					
+					
+		for (Iterator<Vertex> it = states.iterator(); it.hasNext();) {
+			State state = (State)it.next();
+			OpaqueBehavior behavior = (OpaqueBehavior) state.getEntry();
+			int index = behavior.getLanguages().indexOf("C++");
+			String body = behavior.getBodies().get(index);
+			behavior.getBodies().set(index, prebody+body);
+		}		
+	}
+	
+	/**
 	 * Create the cute command for every transition.
 	 * Invoke createEffectIfAny
 	 */
@@ -530,6 +558,11 @@ public class Instrumentation {
 		// Step 6: Create cute commands for every state
 		System.out.print("Adding cuteCommands.newState(STATE).send(); at the end of entry action code... ");
 		instrumentation.createCuteCommandsForStates();
+		System.out.println("done.");
+		
+		// Step 6a: Create entry code to save current values of capsule attributes
+		System.out.print("Saving current values of capsule attributes...");
+		instrumentation.saveCurrentAttributesValues();
 		System.out.println("done.");
 		
 		// Step 7: Create cute commands for every transition
