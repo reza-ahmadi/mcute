@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void f1(string s)
+{
+	s = "changed in f1
+}
+
+
+void f2(string& s)
+{
+        s = "changed in f1";
+        cout << "in f1" << s << endl;
+}
+
+int main(){
+
+string ss = "s1 passed by main";
+        cout << "in f1" << s << endl;
+
+ f1(ss);
+
+        cout << "in f1" << s << endl;
+
+ f2(ss);
+
+}

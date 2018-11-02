@@ -13,12 +13,14 @@
 #include <string>
 #include <sys/time.h>
 #include <vector>
+#include <iostream>
 
 #include "base/symbolic_interpreter.h"
 #include "libcrest/crest.h"
 
 using std::vector;
 using std::to_string;
+
 using namespace mcute;
 
 // The symbolic interpreter. */
@@ -69,8 +71,41 @@ void __CrestInit() {
 
   pre_symbolic = 1;
 
+  //reza-start
+  //the function __CrestAtExit will be invoked as soon as the
+  //process stops
   assert(!atexit(__CrestAtExit));
+  //reza-end
 }
+
+//reza-start
+//in order to be able to write the symbolic execution object
+//in a file at any point in the execution of the state-machine
+void __CrestWriteSE() {
+  const SymbolicExecution& ex = SI->execution();
+
+  // Write the execution out to file 'szd_execution'.
+  string buff;
+  buff.reserve(1<<26);
+  ex.Serialize(&buff);
+  std::cout<<"writing the symbolic execution object into the file: szd_execution" << std::endl;
+  std::ofstream out("szd_execution", std::ios::out | std::ios::binary);
+  out.write(buff.data(), buff.size());
+  //reza start
+//  printf ("\n ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Saving the SymbolicExecution object agian^^^^^^^^^");
+//  int rnd = rand() % 1000 + 1;
+//  string rnd_str = to_string(rnd);
+//  string yices_str = "szd_execution_";
+//  string num_str = yices_str + rnd_str;
+//  std::ofstream out2(num_str.c_str(), std::ios::out);
+//  out2 << buff;
+//  out2.close();
+//  rnd++;
+  //reza end
+  assert(!out.fail());
+  out.close();
+}
+//reza-end
 
 
 void __CrestAtExit() {

@@ -183,7 +183,11 @@ EXTERN void __CrestBranch(__CREST_ID, __CREST_BRANCH_ID, __CREST_BOOL) __SKIP;
 EXTERN void __CrestCall(__CREST_ID, __CREST_FUNCTION_ID) __SKIP;
 EXTERN void __CrestReturn(__CREST_ID) __SKIP;
 EXTERN void __CrestHandleReturn(__CREST_ID, __CREST_VALUE) __SKIP;
-
+//reza-start
+//in order to be able to write the symbolic execution object
+//in a file at any point in the execution of the state-machine
+EXTERN void __CrestWriteSE() __SKIP;
+//reza-end
 /*
  * Functions (macros) for obtaining symbolic inputs.
  */
