@@ -318,7 +318,6 @@ void Search::RandomInput(const map<var_t,type_t>& vars, vector<value_t>* input) 
   }
 }
 
-
 bool Search::SolveAtBranch(const SymbolicExecution& ex,
                            size_t branch_idx,
                            vector<value_t>* input) {
