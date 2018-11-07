@@ -124,100 +124,112 @@ __CrestWriteSE();</body>
           <transition xmi:type="uml:Transition" xmi:id="_5zIWAGgoEeijRtS4FXxxtA" name="t1" source="_bigO0N7GEeiBkYD2qJeUwg" target="_jRLeAGdiEeiqifykceCvxw">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_MVmxsGg0EeijRtS4FXxxtA" name="Effect" isReentrant="false">
               <language>C++</language>
-              <body>cuteCommands.newTransition(T1).send();
-
-int __retres6;
-
-//Initializing the Symbolic Interpreter
-__CrestInit();
-
-__CrestCall(1, 1);
-__CrestLoad(2, (unsigned long )0, (long long )0);
-__CrestStore(3, (unsigned long )(&amp; HighTemps));
-#line 10
-HighTemps = 0;
-#line 12
-__CrestInt(&amp; desiredLevel);
+              <body>    cuteCommands.newTransition(T1).send();
+    int __retres6;
+    //Initializing the Symbolic Interpreter
+    __CrestInit();
+ __CrestCall(1, 1);
+  __CrestLoad(2, (unsigned long )0, (long long )0);
+  __CrestStore(3, (unsigned long )(&amp; HighTemps));
+#line 11
+  HighTemps = 0;
 #line 13
-__CrestInt(&amp; temprature);
-__CrestLoad(6, (unsigned long )(&amp; HighTemps), (long long )HighTemps);
-__CrestLoad(5, (unsigned long )0, (long long )9);
-__CrestApply2(4, 15, (long long )(HighTemps &lt;= 9));
+  __CrestInt(&amp; desiredLevel);
+#line 14
+  __CrestInt(&amp; temprature);
+  __CrestLoad(6, (unsigned long )(&amp; HighTemps), (long long )HighTemps);
+  __CrestLoad(5, (unsigned long )0, (long long )9);
+  __CrestApply2(4, 15, (long long )(HighTemps &lt;= 9));
 #line 16
-if (HighTemps &lt;= 9) {
-	__CrestBranch(7, 3, 1);
-	{
-		__CrestLoad(11, (unsigned long )(&amp; desiredLevel), (long long )desiredLevel);
-		__CrestLoad(10, (unsigned long )0, (long long )0);
-		__CrestApply2(9, 14, (long long )(desiredLevel > 0));
+  if (HighTemps &lt;= 9) {
+    __CrestBranch(7, 3, 1);
 #line 17
-		if (desiredLevel > 0) {
-			__CrestBranch(12, 4, 1);
-			__CrestLoad(14, (unsigned long )(&amp; desiredLevel), (long long )desiredLevel);
-			__CrestStore(15, (unsigned long )(&amp; DesiredLevel));
+    printf((char const   * __restrict  )&quot;warning: engine worked too many times with high temprature\n&quot;);
+    __CrestClearStack(9);
+    {
+    __CrestLoad(12, (unsigned long )(&amp; desiredLevel), (long long )desiredLevel);
+    __CrestLoad(11, (unsigned long )0, (long long )0);
+    __CrestApply2(10, 14, (long long )(desiredLevel > 0));
 #line 18
-			DesiredLevel = desiredLevel;
-			log.log (&quot;----branch visited: desiredLevel>0----\n&quot;);
-			cuteCommands.newBranch(B1).send();
-		} else {
-			__CrestBranch(13, 5, 0);
+    if (desiredLevel > 0) {
+      __CrestBranch(13, 5, 1);
+      __CrestLoad(15, (unsigned long )(&amp; desiredLevel), (long long )desiredLevel);
+      __CrestStore(16, (unsigned long )(&amp; DesiredLevel));
+#line 19
+      DesiredLevel = desiredLevel;
+#line 20
+      printf((char const   * __restrict  )&quot;----branch visited: desiredLevel>0----\n&quot;);
+      __CrestClearStack(17);
+    } else {
+      __CrestBranch(14, 6, 0);
 
-		}
-	}
-	{
-		__CrestLoad(18, (unsigned long )(&amp; temprature), (long long )temprature);
-		__CrestLoad(17, (unsigned long )0, (long long )0);
-		__CrestApply2(16, 14, (long long )(temprature > 0));
+    }
+    }
+    {
+    __CrestLoad(20, (unsigned long )(&amp; temprature), (long long )temprature);
+    __CrestLoad(19, (unsigned long )0, (long long )0);
+    __CrestApply2(18, 14, (long long )(temprature > 0));
 #line 22
-		if (temprature > 0) {
-			__CrestBranch(19, 7, 1);
-			__CrestLoad(21, (unsigned long )(&amp; temprature), (long long )temprature);
-			__CrestStore(22, (unsigned long )(&amp; Temprature));
+    if (temprature > 0) {
+      __CrestBranch(21, 8, 1);
+#line 23
+      printf((char const   * __restrict  )&quot;----branch visited: temprature>0----\n&quot;);
+      __CrestClearStack(23);
+      __CrestLoad(24, (unsigned long )(&amp; temprature), (long long )temprature);
+      __CrestStore(25, (unsigned long )(&amp; Temprature));
+#line 24
+      Temprature = temprature;
+      {
+      __CrestLoad(28, (unsigned long )(&amp; Temprature), (long long )Temprature);
+      __CrestLoad(27, (unsigned long )0, (long long )90);
+      __CrestApply2(26, 17, (long long )(Temprature >= 90));
 #line 25
-			log.log (&quot;----branch visited: temprature>0----\n&quot;);
-			cuteCommands.newBranch(B2).send();
-			Temprature = temprature;
-			{
-				__CrestLoad(25, (unsigned long )(&amp; Temprature), (long long )Temprature);
-				__CrestLoad(24, (unsigned long )0, (long long )90);
-				__CrestApply2(23, 17, (long long )(Temprature >= 90));
+      if (Temprature >= 90) {
+        __CrestBranch(29, 10, 1);
+        __CrestLoad(33, (unsigned long )(&amp; HighTemps), (long long )HighTemps);
+        __CrestLoad(32, (unsigned long )0, (long long )1);
+        __CrestApply2(31, 0, (long long )(HighTemps + 1));
+        __CrestStore(34, (unsigned long )(&amp; HighTemps));
 #line 26
-				if (Temprature >= 90) {
-					__CrestBranch(26, 9, 1);
-					__CrestLoad(30, (unsigned long )(&amp; HighTemps), (long long )HighTemps);
-					__CrestLoad(29, (unsigned long )0, (long long )1);
-					__CrestApply2(28, 0, (long long )(HighTemps + 1));
-					__CrestStore(31, (unsigned long )(&amp; HighTemps));
+        HighTemps ++;
 #line 27
-					HighTemps ++;
-					cuteCommands.newBranch(B9).send();
-					log.log (&quot;----branch visited: Temprature >= 90----\n&quot;);
-				} else {
-					__CrestBranch(27, 10, 0);
-					log.log (&quot;----branch visited: !(Temprature >= 90)----\n&quot;);
-				}
-			}
-		} else {
-			__CrestBranch(20, 11, 0);
-			log.log (&quot;----branch visited: !(temprature > 0)----\n&quot;);
-		}
-	}
-} else {
-	__CrestBranch(8, 12, 0);
-	log.log (&quot;----branch visited: !(HighTemp &lt;=9)----\n&quot;);
-}
-__CrestLoad(32, (unsigned long )0, (long long )0);
-__CrestStore(33, (unsigned long )(&amp; __retres6));
+        printf((char const   * __restrict  )&quot;----branch visited: temprature>=90----\n&quot;);
+        __CrestClearStack(35);
+      } else {
+        __CrestBranch(30, 11, 0);
+        __CrestLoad(38, (unsigned long )(&amp; HighTemps), (long long )HighTemps);
+        __CrestLoad(37, (unsigned long )0, (long long )1);
+        __CrestApply2(36, 1, (long long )(HighTemps - 1));
+        __CrestStore(39, (unsigned long )(&amp; HighTemps));
+#line 30
+        HighTemps --;
+#line 31
+        printf((char const   * __restrict  )&quot;----branch visited: !(temprature>=90)----\n&quot;);
+        __CrestClearStack(40);
+      }
+      }
+    } else {
+      __CrestBranch(22, 12, 0);
 #line 35
-__retres6 = 0;
-__CrestLoad(34, (unsigned long )(&amp; __retres6), (long long )__retres6);
-__CrestReturn(35);
-log.log (&quot;warning: engine worked too many times with high temprature&quot;);
-cuteCommands.newBranch(B10).send();
-#line 7
+      printf((char const   * __restrict  )&quot;----branch visited: !(temprature>0)----\n&quot;);
+      __CrestClearStack(41);
+    }
+    }
+  } else {
+    __CrestBranch(8, 13, 0);
+#line 38
+    printf((char const   * __restrict  )&quot;warning: engine NOT worked too many times with high temprature&quot;);
+    __CrestClearStack(42);
+  }
+  __CrestLoad(43, (unsigned long )0, (long long )0);
+  __CrestStore(44, (unsigned long )(&amp; __retres6));
+#line 40
+  __retres6 = 0;
+  __CrestLoad(45, (unsigned long )(&amp; __retres6), (long long )__retres6);
+  __CrestReturn(46);
+#line 8
 
-__CrestWriteSE();
-
+    __CrestWriteSE();
 </body>
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_bcGQsGgpEeijRtS4FXxxtA" event="_CXoYoGdjEeiqifykceCvxw" port="_GQwmUGdjEeiqifykceCvxw"/>
@@ -324,7 +336,7 @@ cuteCommands.newState(FILLING).send();</body>
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_RAiXIGgxEeijRtS4FXxxtA" value="0"/>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_iqHc8GgxEeijRtS4FXxxtA" name="timing" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_iqHc8GgxEeijRtS4FXxxtA" name="timingRunning" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Port" xmi:id="_wUrIcGgxEeijRtS4FXxxtA" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
@@ -371,6 +383,9 @@ cuteCommands.newState(FILLING).send();</body>
         <ownedAttribute xmi:type="uml:Port" xmi:id="_SkthcOIIEeitsrWbfpHoZQ" name="timingReport" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_hekjgOLKEeiS-ZARNzPJ8Q" name="timingIteration" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+          <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
+        </ownedAttribute>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_FrDiEGgwEeijRtS4FXxxtA" name="StateMachineCuteHarness" isReentrant="false">
           <region xmi:type="uml:Region" xmi:id="_FrHMcGgwEeijRtS4FXxxtA" name="Region">
             <transition xmi:type="uml:Transition" xmi:id="_FrNTEWgwEeijRtS4FXxxtA" name="" source="_2YhyQH_gEeiMFcUmhpquNg" target="_pphewOE1EeiBkYD2qJeUwg">
@@ -397,7 +412,7 @@ cuteCommands.newState(FILLING).send();</body>
     //   cute.addXXX(100,200);
     //end
     if (RunningTime>0){
-    timing.informIn(UMLRTTimespec(RunningTime,0));
+    timingRunning.informIn(UMLRTTimespec(RunningTime,0));
     }
     //for random numbers
     srand(time(NULL));
@@ -485,56 +500,57 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
                     </specification>
                   </ownedRule>
                 </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_cN0AMOE4EeiBkYD2qJeUwg" name="NO__Continue_Executing_Ex_Transition" kind="external" source="_TIhPoOE4EeiBkYD2qJeUwg" target="_jodUMOE1EeiBkYD2qJeUwg">
+                <transition xmi:type="uml:Transition" xmi:id="_cN0AMOE4EeiBkYD2qJeUwg" name="NO__Continue_Executing_Ex_Transition" kind="external" source="_TIhPoOE4EeiBkYD2qJeUwg" target="_nNdD0OLIEeiS-ZARNzPJ8Q">
                   <effect xmi:type="uml:OpaqueBehavior" xmi:id="_BC4MAOFQEeitsrWbfpHoZQ" name="Effect" isReentrant="false">
                     <language>C++</language>
                     <body>//send reset message to execute the previous transition again 
 commands.reset().send();</body>
                   </effect>
                 </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_s_t9gOFAEeiBkYD2qJeUwg" name="Transition_Executed" kind="external" source="_oe0lMOFAEeiBkYD2qJeUwg" target="_jodUMOE1EeiBkYD2qJeUwg">
+                <transition xmi:type="uml:Transition" xmi:id="_s_t9gOFAEeiBkYD2qJeUwg" name="Transition_Restarted1" kind="external" source="_oe0lMOFAEeiBkYD2qJeUwg" target="_jodUMOE1EeiBkYD2qJeUwg">
                   <effect xmi:type="uml:OpaqueBehavior" xmi:id="_8ISfEOIEEeitsrWbfpHoZQ" name="Effect" isReentrant="false">
                     <language>C++</language>
                     <body>TotalTransitionsExecuted++;</body>
                   </effect>
-                  <trigger xmi:type="uml:Trigger" xmi:id="_t-zb8OFAEeiBkYD2qJeUwg" event="_YilhYGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
-                </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_UG3_MOFBEeiBkYD2qJeUwg" kind="external" source="_oe0lMOFAEeiBkYD2qJeUwg" target="_oe0lMOFAEeiBkYD2qJeUwg">
-                  <trigger xmi:type="uml:Trigger" xmi:id="_UrRswOFBEeiBkYD2qJeUwg" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
+                  <trigger xmi:type="uml:Trigger" xmi:id="_t-zb8OFAEeiBkYD2qJeUwg" event="_KK5UsOE1EeiBkYD2qJeUwg" port="_rximYGgvEeijRtS4FXxxtA"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_Tfp5AOIDEeitsrWbfpHoZQ" name="newT" kind="internal" source="_FrLd4GgwEeijRtS4FXxxtA" target="_FrLd4GgwEeijRtS4FXxxtA">
                   <trigger xmi:type="uml:Trigger" xmi:id="_U_1SUOIDEeitsrWbfpHoZQ" event="_YilhYGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
                   <trigger xmi:type="uml:Trigger" xmi:id="_WKUvgOIDEeitsrWbfpHoZQ" event="_OdRbEGgvEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
+                  <trigger xmi:type="uml:Trigger" xmi:id="_69jC0OLLEeiS-ZARNzPJ8Q" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_sJFQUOLIEeiS-ZARNzPJ8Q" name="Transition_Restarted2" kind="external" source="_nNdD0OLIEeiS-ZARNzPJ8Q" target="_jodUMOE1EeiBkYD2qJeUwg">
+                  <trigger xmi:type="uml:Trigger" xmi:id="_x6WrYOLIEeiS-ZARNzPJ8Q" event="_KK5UsOE1EeiBkYD2qJeUwg" port="_rximYGgvEeijRtS4FXxxtA"/>
                 </transition>
                 <subvertex xmi:type="uml:State" xmi:id="_jodUMOE1EeiBkYD2qJeUwg" name="Negate_Solve_Gen_Inp">
                   <entry xmi:type="uml:OpaqueBehavior" xmi:id="_lD0lUOE9EeiBkYD2qJeUwg" name="Entry" isReentrant="false">
                     <language>C++</language>
-                    <body>	//handle iteration
-	//0. read the symbolic execution object
-	// Read the symbolic execution object of the previous execution of the transition
-	SymbolicExecution ex;
-	std::ifstream in(&quot;szd_execution&quot;, std::ios::in | std::ios::binary);
-	ex.Parse(in);
-	in.close();
-
-	//1. negate and solve the PCs
-	//ToDo: how to actually call SolveAtBranch
-	vector&lt;value_t> input;
-	for (size_t i = 0; (i &lt; ex.path().constraints().size()); i++) {
-		SolveAtBranch(ex, i, input);
-	}
-	//print the generated inputs
-	std::cout &lt;&lt; &quot;\n-----printing inputs generated by the Concolic engine-------\n&quot;;
-	for (size_t i = 0; i &lt; input.size(); i++) {
-		std::cout &lt;&lt; &quot;:&quot; &lt;&lt; input[i] &lt;&lt; std::endl;
-	}
-
-	//2. send message to the current transition
-	if (next_t == &quot;t1&quot;) {
-		data.setup(0, 0).send();
-	} else if (next_t == &quot;t2&quot;) {
-		data.start().send();
-	}
+                    <body>    //handle iteration
+    //0. read the symbolic execution object
+    // Read the symbolic execution object of the previous execution of the transition
+    SymbolicExecution ex;
+    std::ifstream in(&quot;szd_execution&quot;, std::ios::in | std::ios::binary);
+    ex.Parse(in);
+    in.close();
+    //1. negate and solve the PCs
+    //ToDo: how to actually call SolveAtBranch
+    vector&lt;value_t> input;
+    printf(&quot;number of constraints are: %d&quot;, ex.path().constraints().size());
+    for (size_t i = 0; (i &lt; ex.path().constraints().size()); i++) {
+		if (i%2==1)
+			SolveAtBranch(ex, i, input);
+    }
+    //print the generated inputs
+    std::cout &lt;&lt; &quot;\n-----printing inputs generated by the Concolic engine-------\n&quot;;
+    for (size_t i = 0; i &lt; input.size(); i++) {
+    std::cout &lt;&lt; &quot;:&quot; &lt;&lt; input[i] &lt;&lt; std::endl;
+    }
+    //2. send message to the current transition
+    if (next_t == &quot;t1&quot;) {
+    data.setup(0, 0).send();
+    } else if (next_t == &quot;t2&quot;) {
+    data.start().send();
+    }
 </body>
                   </entry>
                 </subvertex>
@@ -546,6 +562,10 @@ commands.reset().send();</body>
 //---- generate and send random data --------------
 //---- to the selected transition -----------------
 //-------------------------------------------------
+
+cout&lt;&lt;&quot;------------------------------------------&quot; &lt;&lt;endl;
+cout&lt;&lt;&quot;--------- executing the transition: &quot; &lt;&lt; next_t &lt;&lt;endl;
+cout&lt;&lt;&quot;------------------------------------------&quot; &lt;&lt;endl;
 
 //e.g., if next_t = &quot;t1&quot; send msg(X);
 //else send msg(Y);
@@ -563,6 +583,9 @@ if (next_t==&quot;t1&quot;){
 	data.start().send();
 }
 
+//restarting the transition
+commands.reset().send();
+
 
 
 
@@ -570,6 +593,7 @@ if (next_t==&quot;t1&quot;){
 </body>
                   </entry>
                 </subvertex>
+                <subvertex xmi:type="uml:State" xmi:id="_nNdD0OLIEeiS-ZARNzPJ8Q" name="Wait4Iteration"/>
               </region>
             </subvertex>
             <subvertex xmi:type="uml:State" xmi:id="_UtmewGgxEeijRtS4FXxxtA" name="Report">
@@ -963,4 +987,6 @@ else if (argc>=2) {
   <RTCppProperties:ParameterProperties xmi:id="_xEHUEOIREeitsrWbfpHoZQ" type="const SymbolicExecution&amp;" base_Parameter="_g5xMYOIREeitsrWbfpHoZQ"/>
   <RTCppProperties:ParameterProperties xmi:id="_zBuQQOIREeitsrWbfpHoZQ" type="size_t" base_Parameter="_hydu8OIREeitsrWbfpHoZQ"/>
   <RTCppProperties:ParameterProperties xmi:id="_z8blAOIREeitsrWbfpHoZQ" type="vector&lt;value_t>&amp;" base_Parameter="_h2-bgOIREeitsrWbfpHoZQ"/>
+  <UMLRTStateMachines:RTState xmi:id="_nNnb4OLIEeiS-ZARNzPJ8Q" base_State="_nNdD0OLIEeiS-ZARNzPJ8Q"/>
+  <UMLRealTime:RTPort xmi:id="_hettcOLKEeiS-ZARNzPJ8Q" isPublish="false" isWired="false" base_Port="_hekjgOLKEeiS-ZARNzPJ8Q"/>
 </xmi:XMI>
