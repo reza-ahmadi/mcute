@@ -14,6 +14,22 @@ using namespace std;
 
 namespace mcute {
 
+void fileutil::writeInputs(const string& file,
+				   const vector<value_t>& input) {
+  FILE* f = fopen(file.c_str(), "w");
+  if (!f) {
+    fprintf(stderr, "Failed to open %s.\n", file.c_str());
+    perror("Error: ");
+    exit(-1);
+  }
+
+  for (size_t i = 0; i < input.size(); i++) {
+    fprintf(f, "%lld\n", input[i]);
+  }
+
+  fclose(f);
+}
+
 TestTable fileutil::getTests() {
 	//returns a table of test file names and the list of inputs inside each
 	TestTable tests;

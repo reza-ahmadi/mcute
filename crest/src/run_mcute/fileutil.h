@@ -21,6 +21,7 @@ class fileutil{
 public:
 	//returns a table of test file names and the list of inputs inside each
 	static TestTable getTests();
+	static void writeInputs(const string& file, const vector<value_t>& input);
 };
 
 }
