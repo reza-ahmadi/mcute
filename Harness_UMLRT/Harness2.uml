@@ -25,6 +25,10 @@
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
         <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_-d3XEYCjEeib_vS042iOdQ" value="0"/>
       </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_7W70QORtEeiwK5UPZ22vmQ" name="_LoopBack" visibility="public">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_7W70QeRtEeiwK5UPZ22vmQ" value="0"/>
+      </ownedAttribute>
       <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_jPbKgGdiEeiqifykceCvxw" name="DRCStateMachine" isReentrant="false">
         <region xmi:type="uml:Region" xmi:id="_jRBF8GdiEeiqifykceCvxw" name="Region">
           <transition xmi:type="uml:Transition" xmi:id="_jROhUGdiEeiqifykceCvxw" name="Initial" source="_jREJQGdiEeiqifykceCvxw" target="_bigO0N7GEeiBkYD2qJeUwg">
@@ -260,6 +264,13 @@ __CrestWriteSE();</body>
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_mUkOwOEtEeiBkYD2qJeUwg" event="_a97JIGg4EeijRtS4FXxxtA" port="_ugLW4GgvEeijRtS4FXxxtA"/>
           </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_rczS0ORtEeiwK5UPZ22vmQ" name="" kind="external" source="_xgSBAGdiEeiqifykceCvxw" target="_bigO0N7GEeiBkYD2qJeUwg">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_HzolgORuEeiwK5UPZ22vmQ" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>_LoopBack=1;</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_E422cORuEeiwK5UPZ22vmQ" event="_CveIEORuEeiwK5UPZ22vmQ" port="_ugLW4GgvEeijRtS4FXxxtA"/>
+          </transition>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_jREJQGdiEeiqifykceCvxw"/>
           <subvertex xmi:type="uml:State" xmi:id="_jRLeAGdiEeiqifykceCvxw" name="Setup">
             <entry xmi:type="uml:OpaqueBehavior" xmi:id="_GEHmgGgpEeijRtS4FXxxtA" name="Entry" isReentrant="false">
@@ -291,7 +302,10 @@ cuteCommands.newState(FILLING).send();</body>
 
 log.log (&quot;@@@@ MUT: Init---!\n&quot;);
 
+if (_LoopBack==0){
     cuteCommands.newState(INIT).send();
+}else
+	_LoopBack=0;
 </body>
             </entry>
           </subvertex>
@@ -498,7 +512,7 @@ log.log(&quot;---------------------- choice2, false ---------------------------\
                 <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
               </trigger>
             </transition>
-            <transition xmi:type="uml:Transition" xmi:id="_Qfeu0OO_EeitooxfkYAKHg" guard="_TOlZYOO_EeitooxfkYAKHg" kind="external" source="_cBWz0KPHEeii3rHGIK9rRQ" target="_KIQUUOQ-EeitooxfkYAKHg">
+            <transition xmi:type="uml:Transition" xmi:id="_Qfeu0OO_EeitooxfkYAKHg" name="" guard="_TOlZYOO_EeitooxfkYAKHg" kind="external" source="_cBWz0KPHEeii3rHGIK9rRQ" target="_KIQUUOQ-EeitooxfkYAKHg">
               <ownedRule xmi:type="uml:Constraint" xmi:id="_TOlZYOO_EeitooxfkYAKHg">
                 <specification xmi:type="uml:OpaqueExpression" xmi:id="_TOlZYeO_EeitooxfkYAKHg">
                   <language>C++</language>
@@ -536,11 +550,13 @@ if (Curr_State==INIT){
 	next_t = &quot;t2&quot;;
 	log.log (&quot;Curr state: SETUP&quot;);
 }
-//else{
-//	log.log (&quot;Curr state: last state. Restarting..&quot;);
-//	commands.reset().send(); //to be able to re-execute the previous transition
-//	log.log (&quot;++++++Harness: msg 'reset' sent&quot;);
-//}</body>
+else{
+	log.log (&quot;Curr state: last state. Restarting..&quot;);
+	commands.loopBack().send(); //to be able to re-execute the previous transitions
+	log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
+	Curr_State=INIT;
+	next_t = &quot;t1&quot;;
+}</body>
               </entry>
               <region xmi:type="uml:Region" xmi:id="_GjyEYGgxEeijRtS4FXxxtA" name="Region1">
                 <transition xmi:type="uml:Transition" xmi:id="_LKRRkOE2EeiBkYD2qJeUwg" name="TransitionExecuted [All_Branches_Covered?]" kind="external" source="_jodUMOE1EeiBkYD2qJeUwg" target="_TIhPoOE4EeiBkYD2qJeUwg">
@@ -876,6 +892,7 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
         </packagedElement>
         <packagedElement xmi:type="uml:Interface" xmi:id="_Fi3r4GgvEeijRtS4FXxxtA" name="CUTE_Commands~">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_a9H34Gg4EeijRtS4FXxxtA" name="reset"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_Cvc58ORuEeiwK5UPZ22vmQ" name="loopBack"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Usage" xmi:id="_Fi5hEGgvEeijRtS4FXxxtA" client="_FiiUsGgvEeijRtS4FXxxtA" supplier="_Fi3r4GgvEeijRtS4FXxxtA"/>
         <packagedElement xmi:type="uml:AnyReceiveEvent" xmi:id="_Fi6IIGgvEeijRtS4FXxxtA" name="*"/>
@@ -886,6 +903,7 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_YilhYGgzEeijRtS4FXxxtA" operation="_Yik6UGgzEeijRtS4FXxxtA"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_a97JIGg4EeijRtS4FXxxtA" operation="_a9H34Gg4EeijRtS4FXxxtA"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_KK5UsOE1EeiBkYD2qJeUwg" operation="_KK4GkOE1EeiBkYD2qJeUwg"/>
+        <packagedElement xmi:type="uml:CallEvent" xmi:id="_CveIEORuEeiwK5UPZ22vmQ" operation="_Cvc58ORuEeiwK5UPZ22vmQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_CV8wAGhHEeijRtS4FXxxtA" name="CUTE_Settings">
         <packagedElement xmi:type="uml:Collaboration" xmi:id="_CV8wAWhHEeijRtS4FXxxtA" name="CUTE_Settings">
