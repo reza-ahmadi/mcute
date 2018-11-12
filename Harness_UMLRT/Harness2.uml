@@ -436,6 +436,9 @@ if (_LoopBack==0){
         <ownedAttribute xmi:type="uml:Port" xmi:id="_8ciGQOOwEeiS-ZARNzPJ8Q" name="timingReadFile" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_uS3LgOaSEeiwK5UPZ22vmQ" name="timingRunningId" visibility="public">
+          <type xmi:type="uml:Class" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6qkTMGXmEeS_4daqvwyFrg"/>
+        </ownedAttribute>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_FrDiEGgwEeijRtS4FXxxtA" name="StateMachineCuteHarness" isReentrant="false">
           <region xmi:type="uml:Region" xmi:id="_FrHMcGgwEeijRtS4FXxxtA" name="Region">
             <transition xmi:type="uml:Transition" xmi:id="_FrNTEWgwEeijRtS4FXxxtA" name="" source="_2YhyQH_gEeiMFcUmhpquNg" target="_KIQUUOQ-EeitooxfkYAKHg">
@@ -462,10 +465,11 @@ ActionCodeBranches=6;
 //   cute.addXXX(100,200);
 //end
 if (RunningTime>0) {
-	timingRunning.informIn(UMLRTTimespec(RunningTime,0));
+	timingRunningId = timingRunning.informIn(UMLRTTimespec(RunningTime,0));
+
 }else
 {
-	timingRunning.informIn(UMLRTTimespec(4,0));
+   timingRunningId = timingRunning.informIn(UMLRTTimespec(4,0));
 }
 //for random numbers
 srand (time(NULL));
@@ -658,7 +662,7 @@ in.close();
 Constraints=ex.path().constraints().size();
 //number of iterations cannot be more than the number of constraints
 //todo: should be fixed later with a better algorithm
-//since for now we only negate constraints at most as maximum number of as the number of constraints
+//since for now we only negate constraints at most as number of times as the maximum number of constraints
 Depth = (TransitionIterations>Constraints?Constraints:TransitionIterations) - 1;
 
 
@@ -774,7 +778,13 @@ log.log(&quot;*****************************************************\n&quot;);</b
             </subvertex>
             <subvertex xmi:type="uml:State" xmi:id="_2YhyQH_gEeiMFcUmhpquNg" name="Starting"/>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_cBWz0KPHEeii3rHGIK9rRQ" kind="choice"/>
-            <subvertex xmi:type="uml:State" xmi:id="_vFIAMOIDEeitsrWbfpHoZQ" name="Wait1Sec"/>
+            <subvertex xmi:type="uml:State" xmi:id="_vFIAMOIDEeitsrWbfpHoZQ" name="Wait1Sec">
+              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7ilKkOaREeiwK5UPZ22vmQ" name="Entry" isReentrant="false">
+                <language>C++</language>
+                <body>//cancel the other timer
+timingRunning.cancelTimer(timingRunningId);</body>
+              </entry>
+            </subvertex>
             <subvertex xmi:type="uml:State" xmi:id="_ayVIUORnEeiwK5UPZ22vmQ" name="Init"/>
           </region>
         </ownedBehavior>
