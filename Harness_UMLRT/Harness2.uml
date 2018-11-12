@@ -439,6 +439,9 @@ if (_LoopBack==0){
         <ownedAttribute xmi:type="uml:Property" xmi:id="_uS3LgOaSEeiwK5UPZ22vmQ" name="timingRunningId" visibility="public">
           <type xmi:type="uml:Class" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6qkTMGXmEeS_4daqvwyFrg"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_KvXXoOavEeiwK5UPZ22vmQ" name="CoverageInfo" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_FrDiEGgwEeijRtS4FXxxtA" name="StateMachineCuteHarness" isReentrant="false">
           <region xmi:type="uml:Region" xmi:id="_FrHMcGgwEeijRtS4FXxxtA" name="Region">
             <transition xmi:type="uml:Transition" xmi:id="_FrNTEWgwEeijRtS4FXxxtA" name="" source="_2YhyQH_gEeiMFcUmhpquNg" target="_KIQUUOQ-EeitooxfkYAKHg">
@@ -560,7 +563,11 @@ else{
 	log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
 	Curr_State=INIT;
 	next_t = &quot;t1&quot;;
-}</body>
+}
+
+//initialize the coverage info object for the transition
+CoverageInfo.transition = next_t;
+</body>
               </entry>
               <region xmi:type="uml:Region" xmi:id="_GjyEYGgxEeijRtS4FXxxtA" name="Region1">
                 <transition xmi:type="uml:Transition" xmi:id="_LKRRkOE2EeiBkYD2qJeUwg" name="TransitionExecuted [All_Branches_Covered?]" kind="external" source="_jodUMOE1EeiBkYD2qJeUwg" target="_TIhPoOE4EeiBkYD2qJeUwg">
@@ -582,6 +589,8 @@ if (Curr_State==INIT){
 }else if (Curr_State==SETUP){
 	log.log(&quot;state is SETUP&quot;);
 }
+
+
 
 </body>
                   </effect>
@@ -671,7 +680,10 @@ if (Curr_State==INIT){
 	log.log(&quot;state is INIT&quot;);
 }else if (Curr_State==SETUP){
 	log.log(&quot;state is SETUP&quot;);
-}</body>
+}
+
+
+</body>
                   </effect>
                   <trigger xmi:type="uml:Trigger" xmi:id="_GyqzoOOxEeiS-ZARNzPJ8Q" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
                 </transition>
@@ -715,6 +727,10 @@ if (Depth>=0){
     	data.start(input[0], input[1],input[0], input[1]).send();
 	log.log (&quot;++++++Harness: msg 'start' sent&quot;);
     }
+
+//updating the coverage information
+CoverageInfo.updateCoverageInfo(ex);
+
 }</body>
                   </entry>
                 </subvertex>
@@ -741,6 +757,9 @@ if (Depth>=0){
                   <entry xmi:type="uml:OpaqueBehavior" xmi:id="_AaA8UORdEeiwK5UPZ22vmQ" name="Entry" isReentrant="false">
                     <language>C++</language>
                     <body>
+//initializing the coverage information
+CoverageInfo.initCoverageInfo();
+
     //-------------------------------------------------
     //---- generate and send random data --------------
     //---- to the selected transition -----------------
@@ -761,6 +780,8 @@ if (Depth>=0){
 	log.log (&quot;++++++Harness: msg 'start' sent&quot;);
     	data.start(inp1,inp2,inp1,inp2).send();
     }
+
+
 </body>
                   </entry>
                 </subvertex>
@@ -1196,7 +1217,7 @@ else if (argc>=2) {
   <UMLRTStateMachines:RTState xmi:id="_1gXA0WhKEeijRtS4FXxxtA" base_State="_1gRhSmhKEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_JjnrwGm0EeiLpMcT--nfLg" isWired="false" base_Port="_JjTisGm0EeiLpMcT--nfLg"/>
   <RTCppProperties:CapsuleProperties xmi:id="_QTsRYGm0EeiLpMcT--nfLg" headerPreface="#include &quot;umlrtmain.hh&quot;" base_Class="_C62aYGgnEeijRtS4FXxxtA"/>
-  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;fileutil.h>&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;#include &quot;STATES.hh&quot;&#xA;#include &quot;TRANSITIONS.hh&quot;&#xA;#include &quot;BRANCHES.hh&quot;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;fileutil.h>&#xA;#include &lt;coverage_util.h>&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;#include &quot;STATES.hh&quot;&#xA;#include &quot;TRANSITIONS.hh&quot;&#xA;#include &quot;BRANCHES.hh&quot;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
   <RTCppProperties:CapsuleProperties xmi:id="_6u_EAH5SEeipA49rzMw2KQ" headerPreface="#include &quot;STATES.hh&quot;&#xA;#include &quot;TRANSITIONS.hh&quot;&#xA;#include &quot;BRANCHES.hh&quot;&#xA;&#xA;#include &quot;CUT_Attributes.hh&quot;&#xA;&#xA;&#xA;#include &lt;map>&#xA;#include &lt;vector>&#xA;#include &lt;iostream>&#xA;#include &lt;string>&#xA;&#xA;#include &quot;libcrest/crest.h&quot;" base_Class="_hpaO8GdiEeiqifykceCvxw"/>
   <RTCppProperties:AttributeProperties xmi:id="_bHwlUH5XEeipA49rzMw2KQ" type="string" base_Property="_dxTFUH5VEeipA49rzMw2KQ"/>
   <UMLRTStateMachines:RTState xmi:id="_2YpuEH_gEeiMFcUmhpquNg" base_State="_2YhyQH_gEeiMFcUmhpquNg"/>
@@ -1227,4 +1248,5 @@ else if (argc>=2) {
   <UMLRTStateMachines:RTState xmi:id="_ayW9gORnEeiwK5UPZ22vmQ" base_State="_ayVIUORnEeiwK5UPZ22vmQ"/>
   <UMLRTStateMachines:RTState xmi:id="_y1EvoORnEeiwK5UPZ22vmQ" base_State="_y1C6cORnEeiwK5UPZ22vmQ"/>
   <UMLRealTime:RTPort xmi:id="_4Yps8ORnEeiwK5UPZ22vmQ" isPublish="false" isWired="false" base_Port="_4Yk0cORnEeiwK5UPZ22vmQ"/>
+  <RTCppProperties:AttributeProperties xmi:id="_PsAQwOavEeiwK5UPZ22vmQ" type="coverage_util" base_Property="_KvXXoOavEeiwK5UPZ22vmQ"/>
 </xmi:XMI>

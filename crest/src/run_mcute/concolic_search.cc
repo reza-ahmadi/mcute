@@ -201,8 +201,8 @@ void Search::LaunchProgram(const vector<value_t>& inputs) {
   }
   */
   //reza start : fix this BS!!!
-  system(("/home/reza/workspace-papyrusrt1.0/Harness_UMLRT_CDTProject/src/" + program_).c_str());
-//  system(program_.c_str());
+//  system(("/home/reza/workspace-papyrusrt1.0/Harness_UMLRT_CDTProject/src/" + program_).c_str());
+  system(program_.c_str());
   //reza end
 }
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace mcute {
 
+
 void fileutil::writeInputs(const string& file,
 				   const vector<value_t>& input) {
   FILE* f = fopen(file.c_str(), "w");
