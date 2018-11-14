@@ -28,15 +28,12 @@ namespace mcute {
 class coverage_util {
 
 protected:
-	vector<branch_id_t> branches_;
 	vector<branch_id_t> paired_branch_;
 	vector<function_id_t> branch_function_;
-	vector<bool> covered_;
 	vector<bool> total_covered_;
+	vector<bool> covered_;
 	branch_id_t max_branch_;
 	unsigned int num_covered_;
-	unsigned int total_num_covered_;
-
 	vector<bool> reached_;
 	vector<unsigned int> branch_count_;
 	function_id_t max_function_;
@@ -48,6 +45,8 @@ protected:
 	typedef vector<branch_id_t>::const_iterator BranchIt;
 
 public:
+	vector<branch_id_t> branches_;
+	unsigned int total_num_covered_;
 	string transition;
 	//returns a table of test file names and the list of inputs inside each
 	coverage_util(string t);
@@ -56,6 +55,8 @@ public:
 	bool updateCoverageInfo(const SymbolicExecution& ex);
 	bool updateCoverageInfo(const SymbolicExecution& ex, set<branch_id_t>* new_branches);
 	void writeCoverage(const string& file);
+//	void resetIterations();
+	int incIterations();
 
 private:
 //	const int max_iters_;

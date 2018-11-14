@@ -24,6 +24,7 @@ coverage_util::coverage_util(string t){
 
 void coverage_util::initCoverageInfo() {
 
+	num_iters_=0;
 	max_branch_ = 0;
 	max_function_ = 0;
 	branches_.reserve(100000);
@@ -114,10 +115,11 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 
 //  fprintf(stderr, "Iteration %d (%lds): covered %u branches [%u reach funs, %u reach branches].\n",
 //	  num_iters_, time(NULL)-start_time_, total_num_covered_, reachable_functions_, reachable_branches_);
-
+	fprintf(stderr,"\n--------------------------------------------------------------------------------\n");
 	fprintf(stderr,
 			"Transition %s: Iteration %d : covered %u branches [%u reach branches].\n",
 			transition.c_str(), num_iters_, total_num_covered_, reachable_branches_);
+	fprintf(stderr,"--------------------------------------------------------------------------------\n");
 
 	bool found_new_branch = (num_covered_ > prev_covered_);
 	if (found_new_branch) {
@@ -129,6 +131,16 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 
 	return found_new_branch;
 }
+
+//void coverage_util::resetIterations(){
+//	num_iters_=0;
+//}
+
+int coverage_util::incIterations(){
+	num_iters_++;
+}
+
+
 
 void coverage_util::writeCoverage(const string& file) {
   FILE* f = fopen(file.c_str(), "w");
