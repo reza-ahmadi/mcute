@@ -461,12 +461,16 @@ if (_LoopBack==0){
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_ymrygebREeiwK5UPZ22vmQ" value="0"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_55OVcOhlEeidvedyZ74wtA" name="Strategy" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_FrDiEGgwEeijRtS4FXxxtA" name="StateMachineCuteHarness" isReentrant="false">
           <region xmi:type="uml:Region" xmi:id="_FrHMcGgwEeijRtS4FXxxtA" name="Region">
-            <transition xmi:type="uml:Transition" xmi:id="_FrNTEWgwEeijRtS4FXxxtA" name="" source="_2YhyQH_gEeiMFcUmhpquNg" target="_KIQUUOQ-EeitooxfkYAKHg">
+            <transition xmi:type="uml:Transition" xmi:id="_FrNTEWgwEeijRtS4FXxxtA" name="" source="_2YhyQH_gEeiMFcUmhpquNg" target="_Sy9EkOhlEeidvedyZ74wtA">
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_YtFSUG6jEeisYt_0zxy50Q" name="Effect" isReentrant="false">
                 <language>C++</language>
                 <body>RunningTime = execTime;
+Strategy=strategy;
 TransitionIterations = transitionIterations;
 if (totalIterations>0) {
 	TotalIterationsPromised = totalIterations;
@@ -550,8 +554,29 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
             <transition xmi:type="uml:Transition" xmi:id="_fnsUwORnEeiwK5UPZ22vmQ" name="" kind="external" source="_ayVIUORnEeiwK5UPZ22vmQ" target="_2YhyQH_gEeiMFcUmhpquNg">
               <trigger xmi:type="uml:Trigger" xmi:id="_oqCfAORnEeiwK5UPZ22vmQ" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
             </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_c_M2IOhlEeidvedyZ74wtA" guard="_EHv-8OhmEeidvedyZ74wtA" kind="external" source="_Sy9EkOhlEeidvedyZ74wtA" target="_ICRTwOhmEeidvedyZ74wtA">
+              <ownedRule xmi:type="uml:Constraint" xmi:id="_EHv-8OhmEeidvedyZ74wtA">
+                <specification xmi:type="uml:OpaqueExpression" xmi:id="_EHwmAOhmEeidvedyZ74wtA">
+                  <language>C++</language>
+                  <body>return Strategy==&quot;RND&quot; || Strategy==&quot;RANDOM&quot; || Strategy==&quot;R&quot;;</body>
+                </specification>
+              </ownedRule>
+            </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_etJlsOhlEeidvedyZ74wtA" guard="_DFvvYOhmEeidvedyZ74wtA" kind="external" source="_Sy9EkOhlEeidvedyZ74wtA" target="_KIQUUOQ-EeitooxfkYAKHg">
+              <ownedRule xmi:type="uml:Constraint" xmi:id="_DFvvYOhmEeidvedyZ74wtA">
+                <specification xmi:type="uml:OpaqueExpression" xmi:id="_DFvvYehmEeidvedyZ74wtA">
+                  <language>C++</language>
+                  <body>return Strategy==&quot;DFS&quot; || Strategy==&quot;D&quot;;</body>
+                </specification>
+              </ownedRule>
+            </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_nAZ1UOhlEeidvedyZ74wtA" kind="external" source="_5u_Q0OhkEeidvedyZ74wtA" target="_UtmewGgxEeijRtS4FXxxtA">
+              <trigger xmi:type="uml:Trigger" xmi:id="_oOh1UOhlEeidvedyZ74wtA" port="_iqHc8GgxEeijRtS4FXxxtA">
+                <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
+              </trigger>
+            </transition>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_FrJBoGgwEeijRtS4FXxxtA"/>
-            <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="MCUTE__DFS_Testing">
+            <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="Concolic___DFS__Testing">
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_KNFQkOE2EeiBkYD2qJeUwg" kind="exitPoint"/>
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_KIQUUOQ-EeitooxfkYAKHg" kind="entryPoint"/>
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7OwGsOFOEeitsrWbfpHoZQ" name="SelectCandidateTransition" isReentrant="false">
@@ -853,6 +878,44 @@ timingRunning.cancelTimer(timingRunningId);</body>
               </entry>
             </subvertex>
             <subvertex xmi:type="uml:State" xmi:id="_ayVIUORnEeiwK5UPZ22vmQ" name="Init"/>
+            <subvertex xmi:type="uml:State" xmi:id="_5u_Q0OhkEeidvedyZ74wtA" name="Random__SimEXP__Testing">
+              <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_ICRTwOhmEeidvedyZ74wtA" kind="entryPoint"/>
+              <region xmi:type="uml:Region" xmi:id="_IBdbcOhmEeidvedyZ74wtA" name="Region1">
+                <transition xmi:type="uml:Transition" xmi:id="_KF-38OhmEeidvedyZ74wtA" kind="local" source="_ICRTwOhmEeidvedyZ74wtA" target="_JCv5UOhmEeidvedyZ74wtA"/>
+                <transition xmi:type="uml:Transition" xmi:id="_OWzz8OhmEeidvedyZ74wtA" name="" kind="external" source="_JCv5UOhmEeidvedyZ74wtA" target="_JYpQ0OhmEeidvedyZ74wtA">
+                  <trigger xmi:type="uml:Trigger" xmi:id="_uR_XIOhmEeidvedyZ74wtA" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_O8AywOhmEeidvedyZ74wtA" name="" kind="external" source="_JYpQ0OhmEeidvedyZ74wtA" target="_JCv5UOhmEeidvedyZ74wtA">
+                  <trigger xmi:type="uml:Trigger" xmi:id="_wbWQUOhmEeidvedyZ74wtA" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
+                </transition>
+                <subvertex xmi:type="uml:State" xmi:id="_JCv5UOhmEeidvedyZ74wtA" name="SendMessage">
+                  <entry xmi:type="uml:OpaqueBehavior" xmi:id="_BnQisOhnEeidvedyZ74wtA" name="Entry" isReentrant="false">
+                    <language>C++</language>
+                    <body>
+    //send message to the current transition
+    if (next_t == &quot;t1&quot;) {
+    	data.setup(0, 0).send();
+	log.log (&quot;++++++Harness: msg 'setup' sent&quot;);
+    } else if (next_t == &quot;t2&quot;) {
+    	data.start(0, 0, 0, 0).send();
+	log.log (&quot;++++++Harness: msg 'start' sent&quot;);
+    }
+</body>
+                  </entry>
+                </subvertex>
+                <subvertex xmi:type="uml:State" xmi:id="_JYpQ0OhmEeidvedyZ74wtA" name="Wait4Iteration">
+                  <entry xmi:type="uml:OpaqueBehavior" xmi:id="_6hrnIOhmEeidvedyZ74wtA" name="Entry" isReentrant="false">
+                    <language>C++</language>
+                    <body>
+
+
+//restarting
+commands.reset().send();</body>
+                  </entry>
+                </subvertex>
+              </region>
+            </subvertex>
+            <subvertex xmi:type="uml:Pseudostate" xmi:id="_Sy9EkOhlEeidvedyZ74wtA" kind="choice"/>
           </region>
         </ownedBehavior>
         <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XROgkOLcEeiS-ZARNzPJ8Q" name="DFSOpaqueBehavior" specification="_TelVYOLcEeiS-ZARNzPJ8Q">
@@ -1010,26 +1073,6 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
         <packagedElement xmi:type="uml:Usage" xmi:id="_CV8wDWhHEeijRtS4FXxxtA" client="_CV8wAWhHEeijRtS4FXxxtA" supplier="_CV8wDGhHEeijRtS4FXxxtA"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_JglVQGhIEeijRtS4FXxxtA" operation="_JgeAgGhIEeijRtS4FXxxtA"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_d5YvgGhKEeijRtS4FXxxtA" name="CUTE__MAIN__" classifierBehavior="_d5YvjWhKEeijRtS4FXxxtA" isActive="true">
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_d5YvgWhKEeijRtS4FXxxtA" name="harness" visibility="protected" type="_ZSoUsGgnEeijRtS4FXxxtA" isOrdered="true" aggregation="composite"/>
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_d5Yvg2hKEeijRtS4FXxxtA" name="settings" visibility="protected" type="_CV8wAWhHEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
-        <ownedConnector xmi:type="uml:Connector" xmi:id="_d5YvimhKEeijRtS4FXxxtA" name="RTConnector3">
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_d5Yvi2hKEeijRtS4FXxxtA" role="_d5Yvg2hKEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_d5YvjGhKEeijRtS4FXxxtA" partWithPort="_d5YvgWhKEeijRtS4FXxxtA" role="_gsG2IGhHEeijRtS4FXxxtA"/>
-        </ownedConnector>
-        <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_d5YvjWhKEeijRtS4FXxxtA" name="StateMachineTOP_Test" isReentrant="false">
-          <region xmi:type="uml:Region" xmi:id="_d5YvjmhKEeijRtS4FXxxtA" name="Region">
-            <transition xmi:type="uml:Transition" xmi:id="_d5Yvj2hKEeijRtS4FXxxtA" name="Initial" source="_d5YvkGhKEeijRtS4FXxxtA" target="_d5YvkWhKEeijRtS4FXxxtA"/>
-            <subvertex xmi:type="uml:Pseudostate" xmi:id="_d5YvkGhKEeijRtS4FXxxtA"/>
-            <subvertex xmi:type="uml:State" xmi:id="_d5YvkWhKEeijRtS4FXxxtA" name="State1">
-              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_d5YvkmhKEeijRtS4FXxxtA" name="Entry" isReentrant="false">
-                <language>C++</language>
-                <body>//read terminal inputs</body>
-              </entry>
-            </subvertex>
-          </region>
-        </ownedBehavior>
-      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_k8svIGgnEeijRtS4FXxxtA" name="Testing_DRC_Capsule">
       <packagedElement xmi:type="uml:Class" xmi:id="_C62aYGgnEeijRtS4FXxxtA" name="CUTE__MAIN__DRC" classifierBehavior="_1XUoUGhEEeijRtS4FXxxtA" isActive="true">
@@ -1079,29 +1122,33 @@ if (argc==1) {
 		log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
 		log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
 		log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
-	} else {
-		time = atoi(arg);
-		settings.start(strategy, time, totalIterations, transitionIterations).send();
-	}
+	} 
 }
-else if (argc>=2) {
-	const char * arg = UMLRTMain::getArg(0);
+else if (argc==4) {
+	//const char * arg = UMLRTMain::getArg(0);
 	//const char * arg1 = UMLRTMain::getArg(1);
 	//const char * arg2 = UMLRTMain::getArg(2);
 	//log.log(&quot;  0:%s, 1:%s, 2:%s  &quot; , arg, arg1, arg2);
 
-	const char * timeStr = UMLRTMain::getArg(0);
+
+	strategy = (char*) UMLRTMain::getArg(0);
+
+	const char * timeStr = UMLRTMain::getArg(1);
 	time = atoi(timeStr);
 
-	const char * totalIterationsStr = UMLRTMain::getArg(1);
+	const char * totalIterationsStr = UMLRTMain::getArg(2);
 	totalIterations = atoi(totalIterationsStr);
 
-	const char * transitionIterationsStr = UMLRTMain::getArg(2);
+	const char * transitionIterationsStr = UMLRTMain::getArg(3);
 	if (atoi(transitionIterationsStr)>0) {
 		transitionIterations = atoi(transitionIterationsStr);
 	}
 
 	settings.start(strategy, time, totalIterations, transitionIterations).send(); //default 5 seconds
+}else{
+	log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
+	log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
+	log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
 }
 </body>
               </entry>
@@ -1245,14 +1292,6 @@ else if (argc>=2) {
   <UMLRealTime:RTPort xmi:id="_gsKggGhHEeijRtS4FXxxtA" base_Port="_gsG2IGhHEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_jcvxwGhHEeijRtS4FXxxtA" base_Port="_jct8kGhHEeijRtS4FXxxtA"/>
   <UMLRealTime:RTConnector xmi:id="_nU7kQWhHEeijRtS4FXxxtA" base_Connector="_nU5IAGhHEeijRtS4FXxxtA"/>
-  <UMLRealTime:Capsule xmi:id="_d5doAGhKEeijRtS4FXxxtA" base_Class="_d5YvgGhKEeijRtS4FXxxtA"/>
-  <UMLRealTime:CapsulePart xmi:id="_d5ePEGhKEeijRtS4FXxxtA" base_Property="_d5YvgWhKEeijRtS4FXxxtA"/>
-  <UMLRealTime:RTPort xmi:id="_d5e2IGhKEeijRtS4FXxxtA" base_Port="_d5Yvg2hKEeijRtS4FXxxtA"/>
-  <UMLRealTime:RTConnector xmi:id="_d5fdMWhKEeijRtS4FXxxtA" base_Connector="_d5YvimhKEeijRtS4FXxxtA"/>
-  <UMLRTStateMachines:RTStateMachine xmi:id="_d5gEQGhKEeijRtS4FXxxtA" base_StateMachine="_d5YvjWhKEeijRtS4FXxxtA"/>
-  <UMLRTStateMachines:RTRegion xmi:id="_d5gEQWhKEeijRtS4FXxxtA" base_Region="_d5YvjmhKEeijRtS4FXxxtA"/>
-  <UMLRTStateMachines:RTPseudostate xmi:id="_d5grUGhKEeijRtS4FXxxtA" base_Pseudostate="_d5YvkGhKEeijRtS4FXxxtA"/>
-  <UMLRTStateMachines:RTState xmi:id="_d5grUWhKEeijRtS4FXxxtA" base_State="_d5YvkWhKEeijRtS4FXxxtA"/>
   <UMLRealTime:Capsule xmi:id="_1gUkkGhKEeijRtS4FXxxtA" base_Class="_1gRhQGhKEeijRtS4FXxxtA"/>
   <UMLRealTime:CapsulePart xmi:id="_1gVLoGhKEeijRtS4FXxxtA" base_Property="_1gRhQWhKEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_1gVysGhKEeijRtS4FXxxtA" base_Port="_1gRhQmhKEeijRtS4FXxxtA"/>
@@ -1295,4 +1334,11 @@ else if (argc>=2) {
   <UMLRTStateMachines:RTState xmi:id="_y1EvoORnEeiwK5UPZ22vmQ" base_State="_y1C6cORnEeiwK5UPZ22vmQ"/>
   <UMLRealTime:RTPort xmi:id="_4Yps8ORnEeiwK5UPZ22vmQ" isPublish="false" isWired="false" base_Port="_4Yk0cORnEeiwK5UPZ22vmQ"/>
   <RTCppProperties:AttributeProperties xmi:id="_PsAQwOavEeiwK5UPZ22vmQ" type="vector&lt;coverage_util>" base_Property="_KvXXoOavEeiwK5UPZ22vmQ"/>
+  <UMLRTStateMachines:RTState xmi:id="_5vBGAOhkEeidvedyZ74wtA" base_State="_5u_Q0OhkEeidvedyZ74wtA"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_Sy_g0OhlEeidvedyZ74wtA" base_Pseudostate="_Sy9EkOhlEeidvedyZ74wtA"/>
+  <RTCppProperties:AttributeProperties xmi:id="_55O8gOhlEeidvedyZ74wtA" type="string" base_Property="_55OVcOhlEeidvedyZ74wtA"/>
+  <UMLRTStateMachines:RTRegion xmi:id="_IBlXQOhmEeidvedyZ74wtA" base_Region="_IBdbcOhmEeidvedyZ74wtA"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_ICTI8OhmEeidvedyZ74wtA" base_Pseudostate="_ICRTwOhmEeidvedyZ74wtA"/>
+  <UMLRTStateMachines:RTState xmi:id="_JCxHcOhmEeidvedyZ74wtA" base_State="_JCv5UOhmEeidvedyZ74wtA"/>
+  <UMLRTStateMachines:RTState xmi:id="_JYrGAOhmEeidvedyZ74wtA" base_State="_JYpQ0OhmEeidvedyZ74wtA"/>
 </xmi:XMI>
