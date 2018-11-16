@@ -473,6 +473,13 @@ if (_LoopBack==0){
         <ownedAttribute xmi:type="uml:Port" xmi:id="_GQg2oOk0EeiYVL3mrKgfUA" name="timingForceTransition" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="__XlrAOm3EeiYVL3mrKgfUA" name="TestStartTime" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_aZqxQOm4EeiYVL3mrKgfUA">
+            <language>C++</language>
+            <body>time(NULL)</body>
+          </defaultValue>
+        </ownedAttribute>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_FrDiEGgwEeijRtS4FXxxtA" name="StateMachineCuteHarness" isReentrant="false">
           <region xmi:type="uml:Region" xmi:id="_FrHMcGgwEeijRtS4FXxxtA" name="Region">
             <transition xmi:type="uml:Transition" xmi:id="_FrNTEWgwEeijRtS4FXxxtA" name="" source="_2YhyQH_gEeiMFcUmhpquNg" target="_Sy9EkOhlEeidvedyZ74wtA">
@@ -882,10 +889,13 @@ for (int i=0;i&lt;CoverageUtilObjs.size();i++){
 	totalCovered+=CoverageUtilObjs.at(i).total_num_covered_;
 }
 log.log(&quot;\n=============== Test execution report ===============&quot;);
-log.log(&quot;\n     branch coverage: %d out of %d = %%%.1f   &quot;, totalCovered, totalBranches, (float)totalCovered/totalBranches*100);
+log.log(&quot;\n     Total test execution time: %d (Sec)   &quot;, time(NULL) - TestStartTime);
+log.log(&quot;\n     Total executed test iterations: %d   &quot;, TotalIterationsExecuted);
+log.log(&quot;\n     Total Branch coverage: %d out of %d = %%%.1f   &quot;, totalCovered, totalBranches, (float)totalCovered/totalBranches*100);
 log.log(&quot;\n     Transition coverage: %d out of %d = %%%.1f   &quot;, VisitedTransitions.size(), Transitions, (float)VisitedTransitions.size()/Transitions * 100);
 log.log(&quot;\n     State coverage: %d out of %d = %%%.1f   &quot;, VisitedStates.size(), States, (float)VisitedStates.size()/States * 100);
-log.log(&quot;\n=====================================================&quot;);</body>
+log.log(&quot;\n=====================================================&quot;);
+</body>
               </entry>
             </subvertex>
             <subvertex xmi:type="uml:State" xmi:id="_2YhyQH_gEeiMFcUmhpquNg" name="Starting"/>
