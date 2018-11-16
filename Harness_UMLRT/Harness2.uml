@@ -561,7 +561,7 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
                 <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
               </trigger>
             </transition>
-            <transition xmi:type="uml:Transition" xmi:id="_Qfeu0OO_EeitooxfkYAKHg" name="" kind="external" source="_cBWz0KPHEeii3rHGIK9rRQ" target="_KIQUUOQ-EeitooxfkYAKHg">
+            <transition xmi:type="uml:Transition" xmi:id="_Qfeu0OO_EeitooxfkYAKHg" name="Selecting_Next_Transition" kind="external" source="_cBWz0KPHEeii3rHGIK9rRQ" target="_KIQUUOQ-EeitooxfkYAKHg">
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_R3aLEOO_EeitooxfkYAKHg" name="Effect" isReentrant="false">
                 <language>C++</language>
                 <body>log.log(&quot;-- choice2, true --\n&quot;);</body>
@@ -617,28 +617,12 @@ log.log (&quot;--- \n Selecting the next transition for execution ----\n&quot;);
 
 //keep track of visited states
 if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
-	VisitedStates.push_back(Curr_State);
+  VisitedStates.push_back(Curr_State);
 }
 
 
-if (Curr_State==INIT){
-	//it is possible to run t1
-	next_t = &quot;t1&quot;;
-	VisitedTransitions.push_back(next_t);
-	log.log (&quot;Curr state: INIT&quot;);
-}else if (Curr_State==SETUP){
-	//it is possible to run t2
-	next_t = &quot;t2&quot;;
-	VisitedTransitions.push_back(next_t);
-	log.log (&quot;Curr state: SETUP&quot;);
-}
-else{
-	log.log (&quot;Curr state: last state. Restarting..&quot;);
-	commands.loopBack().send(); //to be able to re-execute the previous transitions
-	log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
-	Curr_State=INIT;
-	next_t = &quot;t1&quot;;
-}
+//Selecting next transition
+SelectNextTransition();
 
 //initialize the coverage info object for the transition
 //CoverageInfo.transition = next_t;
@@ -889,7 +873,7 @@ for (int i=0;i&lt;CoverageUtilObjs.size();i++){
 	totalCovered+=CoverageUtilObjs.at(i).total_num_covered_;
 }
 log.log(&quot;\n=============== Test execution report ===============&quot;);
-log.log(&quot;\n     Total test execution time: %d (Sec)   &quot;, time(NULL) - TestStartTime);
+log.log(&quot;\n     Total test execution time: %d (seconds)   &quot;, time(NULL) - TestStartTime);
 log.log(&quot;\n     Total executed test iterations: %d   &quot;, TotalIterationsExecuted);
 log.log(&quot;\n     Total Branch coverage: %d out of %d = %%%.1f   &quot;, totalCovered, totalBranches, (float)totalCovered/totalBranches*100);
 log.log(&quot;\n     Transition coverage: %d out of %d = %%%.1f   &quot;, VisitedTransitions.size(), Transitions, (float)VisitedTransitions.size()/Transitions * 100);
@@ -913,31 +897,15 @@ timingRunning.cancelTimer(timingRunningId);</body>
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_hxFjcOj3EeiYDrXBQFB6pw" kind="exitPoint"/>
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_qs6voOjvEeidvedyZ74wtA" name="Entry" isReentrant="false">
                 <language>C++</language>
-                <body>  //selecting the next transition
-  if (Curr_State==INIT){
-    //it is possible to run t1
-    next_t = &quot;t1&quot;;
-    VisitedTransitions.push_back(next_t);
-    log.log (&quot;Curr state: INIT&quot;);
-  }else if (Curr_State==SETUP){
-    //it is possible to run t2
-    next_t = &quot;t2&quot;;
-    VisitedTransitions.push_back(next_t);
-    log.log (&quot;Curr state: SETUP&quot;);
-  }
-  else{
-    log.log (&quot;Curr state: last state. Restarting..&quot;);
-    commands.loopBack().send(); //to be able to re-execute the previous transitions
-    log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
-    Curr_State=INIT;
-    next_t = &quot;t1&quot;;
-  }
+                <body>//selecting the next transition
+SelectNextTransition();
 
 //initialize the coverage info object for the transition
 //CoverageInfo.transition = next_t;
 coverage_util cu(next_t);
 cu.initCoverageInfo();
-CoverageUtilObjs.push_back(cu);	</body>
+CoverageUtilObjs.push_back(cu);
+</body>
               </entry>
               <region xmi:type="uml:Region" xmi:id="_IBdbcOhmEeidvedyZ74wtA" name="Region1">
                 <transition xmi:type="uml:Transition" xmi:id="_KF-38OhmEeidvedyZ74wtA" kind="local" source="_ICRTwOhmEeidvedyZ74wtA" target="_JCv5UOhmEeidvedyZ74wtA">
@@ -968,7 +936,7 @@ TotalIterationsExecuted++;</body>
                     <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
                   </trigger>
                 </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_0DdL8OkVEeiYDrXBQFB6pw" kind="external" source="_evvSUOj3EeiYDrXBQFB6pw" target="_JCv5UOhmEeidvedyZ74wtA">
+                <transition xmi:type="uml:Transition" xmi:id="_0DdL8OkVEeiYDrXBQFB6pw" name="Select_Candidate_Transition_for_Execution" kind="external" source="_evvSUOj3EeiYDrXBQFB6pw" target="_JCv5UOhmEeidvedyZ74wtA">
                   <effect xmi:type="uml:OpaqueBehavior" xmi:id="_0l5KoOkVEeiYDrXBQFB6pw" name="Effect" isReentrant="false">
                     <language>C++</language>
                     <body>log.log(&quot;\nexecuting next transition: %s\n&quot;, next_t.c_str());
@@ -1170,6 +1138,27 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
 	return false;
 </body>
         </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_FRWKUOnREeiYVL3mrKgfUA" name="SelectNextTransitionOpaqueBehavior" specification="__6ZTwOnQEeiYVL3mrKgfUA">
+          <language>C++</language>
+          <body>if (Curr_State==INIT){
+	//it is possible to run t1
+	next_t = &quot;t1&quot;;
+	VisitedTransitions.push_back(next_t);
+	log.log (&quot;Curr state: INIT&quot;);
+}else if (Curr_State==SETUP){
+	//it is possible to run t2
+	next_t = &quot;t2&quot;;
+	VisitedTransitions.push_back(next_t);
+	log.log (&quot;Curr state: SETUP&quot;);
+}
+else{
+	log.log (&quot;Curr state: last state. Restarting..&quot;);
+	commands.loopBack().send(); //to be able to re-execute the previous transitions
+	log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
+	Curr_State=INIT;
+	next_t = &quot;t1&quot;;
+}</body>
+        </ownedBehavior>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_Y1TDoOHlEeitsrWbfpHoZQ" name="SolveAtBranch" concurrency="guarded" method="_lysHIOHlEeitsrWbfpHoZQ">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_uBd-EOHzEeitsrWbfpHoZQ" name="result" direction="return">
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
@@ -1195,6 +1184,7 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           </ownedParameter>
         </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="__6ZTwOnQEeiYVL3mrKgfUA" name="SelectNextTransition" concurrency="guarded" method="_FRWKUOnREeiYVL3mrKgfUA"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_FivJAGgvEeijRtS4FXxxtA" name="CUTE_Commands">
         <packagedElement xmi:type="uml:Collaboration" xmi:id="_FiiUsGgvEeijRtS4FXxxtA" name="CUTE_Commands">
