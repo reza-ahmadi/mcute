@@ -46,16 +46,10 @@ Temprature=50;
 </body>
             </effect>
           </transition>
-          <transition xmi:type="uml:Transition" xmi:id="_yFV14GdiEeiqifykceCvxw" name="t2" guard="_4jF6gH8eEeipA49rzMw2KQ" source="_jRLeAGdiEeiqifykceCvxw" target="_xgSBAGdiEeiqifykceCvxw">
-            <ownedRule xmi:type="uml:Constraint" xmi:id="_4jF6gH8eEeipA49rzMw2KQ">
-              <specification xmi:type="uml:OpaqueExpression" xmi:id="_4jF6gX8eEeipA49rzMw2KQ">
-                <language>C++</language>
-                <body>return (Temprature>0 &amp;&amp; Temprature &lt;100 &amp;&amp; DesiredLevel > 0);</body>
-              </specification>
-            </ownedRule>
+          <transition xmi:type="uml:Transition" xmi:id="_yFV14GdiEeiqifykceCvxw" name="t2" source="_jRLeAGdiEeiqifykceCvxw" target="_xgSBAGdiEeiqifykceCvxw">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_rbYGAGdnEeijRtS4FXxxtA" name="Effect" isReentrant="false">
               <language>C++</language>
-              <body>
+              <body>//return (Temprature>0 &amp;&amp; Temprature &lt;100 &amp;&amp; DesiredLevel > 0);
   __CrestInit();
     __CrestCall(1, 1);
 #line 11
@@ -460,6 +454,9 @@ if (_LoopBack==0){
         <ownedAttribute xmi:type="uml:Property" xmi:id="_uS3LgOaSEeiwK5UPZ22vmQ" name="timingRunningId" visibility="public">
           <type xmi:type="uml:Class" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6qkTMGXmEeS_4daqvwyFrg"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_XiTHgOk0EeiYVL3mrKgfUA" name="timingForceTransitionId" visibility="public">
+          <type xmi:type="uml:Class" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6qkTMGXmEeS_4daqvwyFrg"/>
+        </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_KvXXoOavEeiwK5UPZ22vmQ" name="CoverageUtilObjs" visibility="public">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
         </ownedAttribute>
@@ -471,6 +468,9 @@ if (_LoopBack==0){
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Port" xmi:id="_eBp2kOjyEeidvedyZ74wtA" name="timingRandomIteration" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+          <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_GQg2oOk0EeiYVL3mrKgfUA" name="timingForceTransition" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_FrDiEGgwEeijRtS4FXxxtA" name="StateMachineCuteHarness" isReentrant="false">
@@ -939,10 +939,18 @@ TExecutions=0;
 log.log(&quot;\nTotalIterationsPromised:%d, TotalIterationsExecuted:%d\n&quot;, TotalIterationsPromised, TransitionIterationsExecuted);</body>
                   </effect>
                 </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_OWzz8OhmEeidvedyZ74wtA" name="" kind="external" source="_JCv5UOhmEeidvedyZ74wtA" target="_JYpQ0OhmEeidvedyZ74wtA">
+                <transition xmi:type="uml:Transition" xmi:id="_OWzz8OhmEeidvedyZ74wtA" name="TransitionExecuted" kind="external" source="_JCv5UOhmEeidvedyZ74wtA" target="_JYpQ0OhmEeidvedyZ74wtA">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_hihPQOk0EeiYVL3mrKgfUA" name="Effect" isReentrant="false">
+                    <language>C++</language>
+                    <body>//cancel the timer since the transition was executed
+timingForceTransition.cancelTimer(timingForceTransitionId);
+
+TransitionIterationsExecuted++;
+TotalIterationsExecuted++;</body>
+                  </effect>
                   <trigger xmi:type="uml:Trigger" xmi:id="_uR_XIOhmEeidvedyZ74wtA" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
                 </transition>
-                <transition xmi:type="uml:Transition" xmi:id="_O8AywOhmEeidvedyZ74wtA" name="" kind="external" source="_JYpQ0OhmEeidvedyZ74wtA" target="_JCv5UOhmEeidvedyZ74wtA">
+                <transition xmi:type="uml:Transition" xmi:id="_O8AywOhmEeidvedyZ74wtA" name="NewIteration" kind="external" source="_JYpQ0OhmEeidvedyZ74wtA" target="_JCv5UOhmEeidvedyZ74wtA">
                   <trigger xmi:type="uml:Trigger" xmi:id="_wbWQUOhmEeidvedyZ74wtA" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_hxe-UOjyEeidvedyZ74wtA" name="" kind="external" source="_JYpQ0OhmEeidvedyZ74wtA" target="_evvSUOj3EeiYDrXBQFB6pw">
@@ -997,6 +1005,15 @@ return (TotalIterationsPromised > 0 &amp;&amp; TotalIterationsExecuted >= TotalI
                     <body>log.log(&quot;\nenough transitions were executed\n&quot;);</body>
                   </effect>
                 </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_wGDmoOkzEeiYVL3mrKgfUA" name="Keep_Sending_New_Msgs_To_Force_Exec" kind="external" source="_JCv5UOhmEeidvedyZ74wtA" target="_JYpQ0OhmEeidvedyZ74wtA">
+                  <effect xmi:type="uml:OpaqueBehavior" xmi:id="_J4A24Ok2EeiYVL3mrKgfUA" name="Effect" isReentrant="false">
+                    <language>C++</language>
+                    <body>log.log (&quot;transition [%s] was not fired since its gaurd predicate did not hold. Trying again..&quot;, next_t.c_str());</body>
+                  </effect>
+                  <trigger xmi:type="uml:Trigger" xmi:id="_Jx22cOk0EeiYVL3mrKgfUA" port="_GQg2oOk0EeiYVL3mrKgfUA">
+                    <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
+                  </trigger>
+                </transition>
                 <subvertex xmi:type="uml:State" xmi:id="_JCv5UOhmEeidvedyZ74wtA" name="SendMessage">
                   <entry xmi:type="uml:OpaqueBehavior" xmi:id="_BnQisOhnEeidvedyZ74wtA" name="Entry" isReentrant="false">
                     <language>C++</language>
@@ -1027,8 +1044,10 @@ if (next_t == &quot;t1&quot;) {
   data.start(0, 0, 0, 0).send();
   log.log (&quot;++++++Harness: msg 'start' sent&quot;);
 }
-TransitionIterationsExecuted++;
-TotalIterationsExecuted++;
+
+//TODO: pursue this issue
+//if the transition is not executed normally, retart to send a new message in the next iteration
+//timingForceTransitionId = timingForceTransition.informIn(UMLRTTimespec(0.2,0));
 </body>
                   </entry>
                 </subvertex>
@@ -1036,11 +1055,12 @@ TotalIterationsExecuted++;
                   <entry xmi:type="uml:OpaqueBehavior" xmi:id="_6hrnIOhmEeidvedyZ74wtA" name="Entry" isReentrant="false">
                     <language>C++</language>
                     <body>//keep track of visited states
-Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
-if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
-  VisitedStates.push_back(Curr_State);
+if (rtdata){
+	Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
+	  VisitedStates.push_back(Curr_State);
+	}
 }
-
 //reading SE object
 SymbolicExecution ex;
 std::ifstream in(&quot;szd_execution&quot;, std::ios::in | std::ios::binary);
@@ -1503,4 +1523,5 @@ else if (argc==4) {
   <UMLRealTime:RTPort xmi:id="_eBxLUOjyEeidvedyZ74wtA" isPublish="false" isWired="false" base_Port="_eBp2kOjyEeidvedyZ74wtA"/>
   <UMLRTStateMachines:RTPseudostate xmi:id="_ev-i4Oj3EeiYDrXBQFB6pw" base_Pseudostate="_evvSUOj3EeiYDrXBQFB6pw"/>
   <UMLRTStateMachines:RTPseudostate xmi:id="_hxKb8Oj3EeiYDrXBQFB6pw" base_Pseudostate="_hxFjcOj3EeiYDrXBQFB6pw"/>
+  <UMLRealTime:RTPort xmi:id="_GQzKgOk0EeiYVL3mrKgfUA" isPublish="false" isWired="false" base_Port="_GQg2oOk0EeiYVL3mrKgfUA"/>
 </xmi:XMI>
