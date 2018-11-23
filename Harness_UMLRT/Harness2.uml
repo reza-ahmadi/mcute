@@ -460,6 +460,9 @@ if (_LoopBack==0){
         <ownedAttribute xmi:type="uml:Property" xmi:id="_KvXXoOavEeiwK5UPZ22vmQ" name="CoverageUtilObjs" visibility="public">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_-LTfMO93EeiBrOAOs4BT-g" name="CoverageUtilTable" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_ymrygObREeiwK5UPZ22vmQ" name="Terminated" visibility="public">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_ymrygebREeiwK5UPZ22vmQ" value="0"/>
@@ -517,6 +520,8 @@ if (RunningTime>0) {
 srand (time(NULL));
 next_t=&quot;t1&quot;;
 Curr_State=INIT;
+
+
 </body>
               </effect>
               <trigger xmi:type="uml:Trigger" xmi:id="_wdhG0GmvEeiLpMcT--nfLg" event="_JglVQGhIEeijRtS4FXxxtA" port="_gsG2IGhHEeijRtS4FXxxtA"/>
@@ -568,6 +573,24 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
               </effect>
             </transition>
             <transition xmi:type="uml:Transition" xmi:id="_fnsUwORnEeiwK5UPZ22vmQ" name="" kind="external" source="_ayVIUORnEeiwK5UPZ22vmQ" target="_2YhyQH_gEeiMFcUmhpquNg">
+              <effect xmi:type="uml:OpaqueBehavior" xmi:id="_cTFv8O9pEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
+                <language>C++</language>
+                <body>
+   map&lt;string,coverage_util*> coverageInfo;
+   coverage_util* cu1 = new coverage_util(string(&quot;t1&quot;));
+   // cu.initCoverageInfo();
+   // CoverageUtilObjs.push_back(cu);
+
+   coverage_util* cu2 = new coverage_util(string(&quot;t2&quot;));
+   // cu2.initCoverageInfo();
+   // CoverageUtilObjs.push_back(cu2);
+
+   coverageInfo.insert(pair&lt;string, coverage_util*>(&quot;t1&quot;,cu1));
+   printf (&quot;t1 cu\n&quot;);
+
+   coverageInfo.insert(pair&lt;string, coverage_util*>(&quot;t2&quot;,cu2));
+   printf (&quot;t2 cu\n&quot;);</body>
+              </effect>
               <trigger xmi:type="uml:Trigger" xmi:id="_oqCfAORnEeiwK5UPZ22vmQ" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
             </transition>
             <transition xmi:type="uml:Transition" xmi:id="_c_M2IOhlEeidvedyZ74wtA" guard="_EHv-8OhmEeidvedyZ74wtA" kind="external" source="_Sy9EkOhlEeidvedyZ74wtA" target="_ICRTwOhmEeidvedyZ74wtA">
@@ -601,6 +624,14 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
                 <body>//cancel the other timer
 timingRunning.cancelTimer(timingRunningId);</body>
               </effect>
+            </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_EeB28O93EeiBrOAOs4BT-g" guard="_4csWkO93EeiBrOAOs4BT-g" kind="external" source="_Sy9EkOhlEeidvedyZ74wtA" target="_agpkIO94EeiBrOAOs4BT-g">
+              <ownedRule xmi:type="uml:Constraint" xmi:id="_4csWkO93EeiBrOAOs4BT-g">
+                <specification xmi:type="uml:OpaqueExpression" xmi:id="_4csWke93EeiBrOAOs4BT-g">
+                  <language>C++</language>
+                  <body>return Strategy==&quot;bfs&quot; || Strategy==&quot;BFS&quot; || Strategy==&quot;B&quot;;</body>
+                </specification>
+              </ownedRule>
             </transition>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_FrJBoGgwEeijRtS4FXxxtA"/>
             <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="Concolic___DFS__Testing">
@@ -860,6 +891,106 @@ if (Depth>=0){
 </body>
                   </entry>
                 </subvertex>
+                <subvertex xmi:type="uml:State" xmi:id="_2dGS0O92EeiBrOAOs4BT-g" name="Concolic___DFS__Testing">
+                  <region xmi:type="uml:Region" xmi:id="_2dGS1O92EeiBrOAOs4BT-g" name="Region1">
+                    <transition xmi:type="uml:Transition" xmi:id="_2dGS5O92EeiBrOAOs4BT-g" name="" kind="external" source="_2dGS7u92EeiBrOAOs4BT-g" target="_2dGS6O92EeiBrOAOs4BT-g"/>
+                    <subvertex xmi:type="uml:State" xmi:id="_2dGS6O92EeiBrOAOs4BT-g" name="Negate_Solve_Gen_Inp">
+                      <entry xmi:type="uml:OpaqueBehavior" xmi:id="_2dGS6e92EeiBrOAOs4BT-g" name="Entry" isReentrant="false">
+                        <language>C++</language>
+                        <body>log.log (&quot;Harness: Negating_Solving_Gen, Depth is: %d&quot;, Depth);
+if (Depth>=0){
+    //handle iteration
+    //0. read the symbolic execution object
+    // Read the symbolic execution object of the previous execution of the transition
+    SymbolicExecution ex;
+    std::ifstream in(&quot;szd_execution&quot;, std::ios::in | std::ios::binary);
+    ex.Parse(in);
+    in.close();
+
+    //1. negate and solve the PCs
+    //ToDo: how to actually call SolveAtBranch
+    vector&lt;value_t> input;
+    printf(&quot;number of constraints are: %d&quot;, ex.path().constraints().size());
+    //for (size_t i = 0; (i &lt; ex.path().constraints().size()); i++) {
+	 //	if (i%2==1)
+    printf(&quot;\n---Call SolveAtBranch, Depth: %d&quot;, Depth);
+	 SolveAtBranch(ex, Depth, input);
+    //}
+	 Depth--;
+    //print the generated inputs
+    std::cout &lt;&lt; &quot;\n-----printing inputs generated by the Concolic engine-------\n&quot;;
+    for (size_t i = 0; i &lt; input.size(); i++) {
+    	std::cout &lt;&lt; &quot;:&quot; &lt;&lt; input[i] &lt;&lt; std::endl;
+    }
+    //write the inputs to a file, since SI object is initialized by these inputs
+    fileutil::writeInputs(&quot;input&quot;, input);
+
+    //2. send message to the current transition
+    if (next_t == &quot;t1&quot;) {
+    	data.setup(input[0], input[1]).send();
+	log.log (&quot;++++++Harness: msg 'setup' sent&quot;);
+    } else if (next_t == &quot;t2&quot;) {
+    	data.start(input[0], input[1],input[0], input[1]).send();
+	log.log (&quot;++++++Harness: msg 'start' sent&quot;);
+    }
+
+
+
+}</body>
+                      </entry>
+                    </subvertex>
+                    <subvertex xmi:type="uml:Pseudostate" xmi:id="_2dGS6u92EeiBrOAOs4BT-g" kind="choice"/>
+                    <subvertex xmi:type="uml:State" xmi:id="_2dGS6-92EeiBrOAOs4BT-g" name="Wait4Iteration"/>
+                    <subvertex xmi:type="uml:State" xmi:id="_2dGS7O92EeiBrOAOs4BT-g" name="_TMP_DBG_">
+                      <entry xmi:type="uml:OpaqueBehavior" xmi:id="_2dGS7e92EeiBrOAOs4BT-g" name="Entry" isReentrant="false">
+                        <language>C++</language>
+                        <body>// Read the symbolic execution object of the previous execution of the transition
+ SymbolicExecution ex;
+ std::ifstream in(&quot;szd_execution&quot;, std::ios::in | std::ios::binary);
+ ex.Parse(in);
+ in.close();
+ DFS(0, 10, ex);</body>
+                      </entry>
+                    </subvertex>
+                    <subvertex xmi:type="uml:State" xmi:id="_2dGS7u92EeiBrOAOs4BT-g" name="Restarting">
+                      <entry xmi:type="uml:OpaqueBehavior" xmi:id="_2dGS7-92EeiBrOAOs4BT-g" name="Entry" isReentrant="false">
+                        <language>C++</language>
+                        <body>//timingReadFile.informIn(UMLRTTimespec(0.5,0));</body>
+                      </entry>
+                    </subvertex>
+                    <subvertex xmi:type="uml:State" xmi:id="_2dGS8O92EeiBrOAOs4BT-g" name="GeneratingRandomData">
+                      <entry xmi:type="uml:OpaqueBehavior" xmi:id="_2dGS8e92EeiBrOAOs4BT-g" name="Entry" isReentrant="false">
+                        <language>C++</language>
+                        <body>
+
+    //-------------------------------------------------
+    //---- generate and send random data --------------
+    //---- to the selected transition -----------------
+    //-------------------------------------------------
+    cout&lt;&lt;&quot;------------------------------------------&quot; &lt;&lt;endl;
+    cout&lt;&lt;&quot;--------- executing the transition: &quot; &lt;&lt; next_t &lt;&lt;endl;
+    cout&lt;&lt;&quot;------------------------------------------&quot; &lt;&lt;endl;
+    //e.g., if next_t = &quot;t1&quot; send msg(X);
+    //else send msg(Y);
+    int imin = std::numeric_limits&lt;int>::min(); // min int value
+    int imax = std::numeric_limits&lt;int>::max(); //max int value
+    int inp1 = rand() % imax + imin;
+    int inp2 = rand() % imax + imin;
+    if (next_t==&quot;t1&quot;){
+	log.log (&quot;++++++Harness: msg 'setup' sent&quot;);
+    	data.setup(inp1, inp2).send();
+    }else if (next_t==&quot;t2&quot;){
+	log.log (&quot;++++++Harness: msg 'start' sent&quot;);
+    	data.start(inp1,inp2,inp1,inp2).send();
+    }
+
+
+
+</body>
+                      </entry>
+                    </subvertex>
+                  </region>
+                </subvertex>
               </region>
             </subvertex>
             <subvertex xmi:type="uml:State" xmi:id="_UtmewGgxEeijRtS4FXxxtA" name="Reporting">
@@ -904,7 +1035,7 @@ SelectNextTransition();
 //CoverageInfo.transition = next_t;
 coverage_util cu(next_t);
 cu.initCoverageInfo();
-CoverageUtilObjs.push_back(cu);
+//CoverageUtilObjs.push_back(cu);
 </body>
               </entry>
               <region xmi:type="uml:Region" xmi:id="_IBdbcOhmEeidvedyZ74wtA" name="Region1">
@@ -1073,6 +1204,46 @@ if (TransitionIterationsExecuted&lt;TransitionIterations)
               </region>
             </subvertex>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_Sy9EkOhlEeidvedyZ74wtA" kind="choice"/>
+            <subvertex xmi:type="uml:State" xmi:id="_U0eEcO94EeiBrOAOs4BT-g" name="Concolic___BFS__Testing">
+              <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_agpkIO94EeiBrOAOs4BT-g" kind="entryPoint"/>
+              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_WaJo0O94EeiBrOAOs4BT-g" name="Entry" isReentrant="false">
+                <language>C++</language>
+                <body>
+//*****************************************************************
+//**** deciding what is the next transition to be executed ********
+//*****************************************************************
+
+log.log (&quot;--- \n Selecting the next transition for execution ----\n&quot;);
+
+//keep track of visited states
+if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
+  VisitedStates.push_back(Curr_State);
+}
+
+
+//Selecting next transition
+SelectNextTransition();
+
+//initialize the coverage info object for the transition
+//CoverageInfo.transition = next_t;
+coverage_util* cu = new coverage_util(next_t);
+cu->initCoverageInfo();
+
+//vector of coverage info objects
+CoverageUtilTable.insert(pair&lt;string,coverage_util*>(next_t,cu));
+
+</body>
+              </entry>
+              <region xmi:type="uml:Region" xmi:id="_aggaMO94EeiBrOAOs4BT-g" name="Region1">
+                <transition xmi:type="uml:Transition" xmi:id="_cPmZQO94EeiBrOAOs4BT-g" kind="local" source="_agpkIO94EeiBrOAOs4BT-g" target="_bXr50O94EeiBrOAOs4BT-g"/>
+                <subvertex xmi:type="uml:State" xmi:id="_bXr50O94EeiBrOAOs4BT-g" name="State1">
+                  <entry xmi:type="uml:OpaqueBehavior" xmi:id="_eptEMO94EeiBrOAOs4BT-g" name="Entry" isReentrant="false">
+                    <language>C++</language>
+                    <body>cout &lt;&lt;&quot;start bfs here&quot;&lt;&lt;endl;</body>
+                  </entry>
+                </subvertex>
+              </region>
+            </subvertex>
           </region>
         </ownedBehavior>
         <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_XROgkOLcEeiS-ZARNzPJ8Q" name="DFSOpaqueBehavior" specification="_TelVYOLcEeiS-ZARNzPJ8Q">
@@ -1524,4 +1695,9 @@ else if (argc==4) {
   <UMLRTStateMachines:RTPseudostate xmi:id="_ev-i4Oj3EeiYDrXBQFB6pw" base_Pseudostate="_evvSUOj3EeiYDrXBQFB6pw"/>
   <UMLRTStateMachines:RTPseudostate xmi:id="_hxKb8Oj3EeiYDrXBQFB6pw" base_Pseudostate="_hxFjcOj3EeiYDrXBQFB6pw"/>
   <UMLRealTime:RTPort xmi:id="_GQzKgOk0EeiYVL3mrKgfUA" isPublish="false" isWired="false" base_Port="_GQg2oOk0EeiYVL3mrKgfUA"/>
+  <RTCppProperties:AttributeProperties xmi:id="_-LUtUO93EeiBrOAOs4BT-g" type="map&lt;string,coverage_util*>" base_Property="_-LTfMO93EeiBrOAOs4BT-g"/>
+  <UMLRTStateMachines:RTState xmi:id="_U0ggsO94EeiBrOAOs4BT-g" base_State="_U0eEcO94EeiBrOAOs4BT-g"/>
+  <UMLRTStateMachines:RTRegion xmi:id="_agkEkO94EeiBrOAOs4BT-g" base_Region="_aggaMO94EeiBrOAOs4BT-g"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_agt1kO94EeiBrOAOs4BT-g" base_Pseudostate="_agpkIO94EeiBrOAOs4BT-g"/>
+  <UMLRTStateMachines:RTState xmi:id="_bXuWEO94EeiBrOAOs4BT-g" base_State="_bXr50O94EeiBrOAOs4BT-g"/>
 </xmi:XMI>
