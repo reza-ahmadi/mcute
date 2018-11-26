@@ -5,6 +5,9 @@
 #include <map>
 #include <stdio.h>
 #include "base/basic_types.h"
+#include "base/symbolic_execution.h"
+#include <assert.h>
+
 using namespace std;
 
 namespace mcute {
@@ -23,6 +26,7 @@ public:
 	static TestTable getTests();
 	static void writeInputs(const string& file, const vector<value_t>& input);
 	static void writeData(const string& file, const string& data);
+	static void printSymExObj(bool inputs, bool constraints, bool branches);
 //	static void writeCoverage(const string& file);
 
 };

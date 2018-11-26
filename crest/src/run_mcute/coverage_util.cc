@@ -92,6 +92,8 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex) {
 bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 		set<branch_id_t>* new_branches) {
 
+	cout<<"trying to update branches for transition: " << transition << endl;
+
 	const unsigned int prev_covered_ = num_covered_;
 	const vector<branch_id_t>& branches = ex.path().branches();
 	for (BranchIt i = branches.begin(); i != branches.end(); ++i) {

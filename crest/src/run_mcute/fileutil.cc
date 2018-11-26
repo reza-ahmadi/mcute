@@ -14,6 +14,41 @@ using namespace std;
 
 namespace mcute {
 
+void fileutil::printSymExObj(bool inputs, bool constraints, bool branches){
+  SymbolicExecution ex;
+
+  ifstream in("szd_execution", ios::in | ios::binary);
+  assert(ex.Parse(in));
+  in.close();
+
+  if (inputs){
+    // Print input.
+    for (size_t i = 0; i < ex.inputs().size(); i++) {
+      cout << "(= x" << i << " " << ex.inputs()[i] << ")\n";
+    }
+    cout << endl;
+  }
+
+  if (constraints)
+  { // Print the constraints.
+    string tmp;
+    for (size_t i = 0; i < ex.path().constraints().size(); i++) {
+      tmp.clear();
+      ex.path().constraints()[i]->AppendToString(&tmp);
+      cout << tmp << endl;
+    }
+    cout << endl;
+  }
+
+  if (branches){
+    // Print the branches.
+    for (size_t i = 0; i < ex.path().branches().size(); i++) {
+      cout << ex.path().branches()[i] << "\n";
+    }
+    cout << endl << endl;
+  }
+}
+
 void fileutil::writeInputs(const string& file, const vector<value_t>& input) {
 	FILE* f = fopen(file.c_str(), "w");
 	if (!f) {
