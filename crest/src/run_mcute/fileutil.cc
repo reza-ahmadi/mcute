@@ -14,21 +14,32 @@ using namespace std;
 
 namespace mcute {
 
+void fileutil::writeInputs(const string& file, const vector<value_t>& input) {
+	FILE* f = fopen(file.c_str(), "w");
+	if (!f) {
+		fprintf(stderr, "Failed to open %s.\n", file.c_str());
+		perror("Error: ");
+		exit(-1);
+	}
 
-void fileutil::writeInputs(const string& file,
-				   const vector<value_t>& input) {
-  FILE* f = fopen(file.c_str(), "w");
-  if (!f) {
-    fprintf(stderr, "Failed to open %s.\n", file.c_str());
-    perror("Error: ");
-    exit(-1);
-  }
+	for (size_t i = 0; i < input.size(); i++) {
+		fprintf(f, "%lld\n", input[i]);
+	}
 
-  for (size_t i = 0; i < input.size(); i++) {
-    fprintf(f, "%lld\n", input[i]);
-  }
+	fclose(f);
+}
 
-  fclose(f);
+void fileutil::writeData(const string& file, const string& data) {
+	FILE* f = fopen(file.c_str(), "w");
+	if (!f) {
+		fprintf(stderr, "Failed to open %s.\n", file.c_str());
+		perror("Error: ");
+		exit(-1);
+	}
+
+	fprintf(f, "%s\n", data.c_str());
+
+	fclose(f);
 }
 
 TestTable fileutil::getTests() {
@@ -55,7 +66,7 @@ TestTable fileutil::getTests() {
 //			cout << "\n now reading: " << input << endl;
 		}
 		testFile.close();
-		if (inputs.size()>0){
+		if (inputs.size() > 0) {
 			tests.insert(TestTable::value_type(fileName, inputs));
 			inputs.clear();
 		}

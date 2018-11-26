@@ -294,6 +294,7 @@ void SymbolicInterpreter::HandleReturn(id_t id, value_t value) {
 
 void SymbolicInterpreter::Branch(id_t id, branch_id_t bid, bool pred_value) {
   IFDEBUG(fprintf(stderr, "branch %d %d\n", bid, pred_value));
+//  printf("\nstack size:%d\n",stack_.size());
   assert(stack_.size() == 1);
   stack_.pop_back();
 

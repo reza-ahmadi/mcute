@@ -22,6 +22,7 @@ public:
 	//returns a table of test file names and the list of inputs inside each
 	static TestTable getTests();
 	static void writeInputs(const string& file, const vector<value_t>& input);
+	static void writeData(const string& file, const string& data);
 //	static void writeCoverage(const string& file);
 
 };
