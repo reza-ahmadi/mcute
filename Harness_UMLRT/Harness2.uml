@@ -742,9 +742,9 @@ SelectNextTransition();
 
 //initialize the coverage info object for the transition
 //CoverageInfo.transition = next_t;
-coverage_util cu(next_t);
-cu.initCoverageInfo();
-CoverageUtilObjs.push_back(cu);
+//coverage_util cu(next_t);
+//cu.initCoverageInfo();
+//CoverageUtilObjs.push_back(cu);
 </body>
               </entry>
               <region xmi:type="uml:Region" xmi:id="_GjyEYGgxEeijRtS4FXxxtA" name="Region1">
@@ -774,8 +774,8 @@ SymbolicExecution ex;
 std::ifstream in(&quot;szd_execution&quot;, std::ios::in | std::ios::binary);
 ex.Parse(in);
 in.close();
-printf (&quot;\n[[vector size=%d]]\n&quot;, CoverageUtilObjs.size());
-coverage_util* it = &amp;CoverageUtilObjs.back();
+//printf (&quot;\n[[vector size=%d]]\n&quot;, CoverageUtilObjs.size());
+coverage_util* it = CoverageUtilTable[next_t];
 it->incIterations();
 it->updateCoverageInfo(ex);
 
@@ -870,8 +870,8 @@ if (Curr_State==INIT){
 }
 
 //updating the coverage information
-printf (&quot;\n[[vector size=%d]]\n&quot;, CoverageUtilObjs.size());
-coverage_util* it = &amp;CoverageUtilObjs.back();
+//printf (&quot;\n[[vector size=%d]]\n&quot;, CoverageUtilObjs.size());
+coverage_util* it = CoverageUtilTable[next_t];
 //coverage_util cu = CoverageUtilObjs.at(CoverageUtilObjs.size()-1);
 it->incIterations();
 it->updateCoverageInfo(ex);
@@ -1119,8 +1119,8 @@ SelectNextTransition();
 
 //initialize the coverage info object for the transition
 //CoverageInfo.transition = next_t;
-coverage_util cu(next_t);
-cu.initCoverageInfo();
+//coverage_util cu(next_t);
+//cu.initCoverageInfo();
 //CoverageUtilObjs.push_back(cu);
 </body>
               </entry>
@@ -1180,9 +1180,9 @@ TotalIterationsExecuted++;</body>
 
     //initialize the coverage info object for the transition
     //CoverageInfo.transition = next_t;
-    coverage_util cu(next_t);
-    cu.initCoverageInfo();
-    CoverageUtilObjs.push_back(cu);</body>
+//    coverage_util cu(next_t);
+//    cu.initCoverageInfo();
+//    CoverageUtilObjs.push_back(cu);</body>
                   </effect>
                 </transition>
                 <transition xmi:type="uml:Transition" xmi:id="_3nFqwOkVEeiYDrXBQFB6pw" guard="_4hKtYOkVEeiYDrXBQFB6pw" kind="external" source="_evvSUOj3EeiYDrXBQFB6pw" target="_hxFjcOj3EeiYDrXBQFB6pw">
@@ -1263,8 +1263,8 @@ ex.Parse(in);
 in.close();
 
 //updating the coverage information
-printf (&quot;\n[[vector size=%d]]\n&quot;, CoverageUtilObjs.size());
-coverage_util* it = &amp;CoverageUtilObjs.back();
+//printf (&quot;\n[[vector size=%d]]\n&quot;, CoverageUtilObjs.size());
+coverage_util* it = CoverageUtilTable[next_t];
 it->incIterations();
 it->updateCoverageInfo(ex);
 
@@ -1453,6 +1453,11 @@ Depth=0;
     data.start(0, 0, 0, 0).send();
     log.log (&quot;++++++Harness: msg 'start' sent&quot;);
   }
+
+cout &lt;&lt;endl&lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl;
+cout &lt;&lt; &quot;\t\t\tExecuting the transition: &quot; &lt;&lt; next_t.c_str() &lt;&lt; endl;
+cout &lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl&lt;&lt;endl;
+
 </body>
                   </entry>
                 </subvertex>
@@ -1597,23 +1602,27 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
         <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_FRWKUOnREeiYVL3mrKgfUA" name="SelectNextTransitionOpaqueBehavior" specification="__6ZTwOnQEeiYVL3mrKgfUA">
           <language>C++</language>
           <body>if (Curr_State==INIT){
-	//it is possible to run t1
-	next_t = &quot;t1&quot;;
-	VisitedTransitions.push_back(next_t);
-	log.log (&quot;Curr state: INIT&quot;);
+  //it is possible to run t1
+  next_t = &quot;t1&quot;;
+  log.log (&quot;Curr state: INIT&quot;);
 }else if (Curr_State==SETUP){
-	//it is possible to run t2
-	next_t = &quot;t2&quot;;
-	VisitedTransitions.push_back(next_t);
-	log.log (&quot;Curr state: SETUP&quot;);
+  //it is possible to run t2
+  next_t = &quot;t2&quot;;
+  log.log (&quot;Curr state: SETUP&quot;);
 }
 else{
-	log.log (&quot;Curr state: last state. Restarting..&quot;);
-	//commands.loopBack().send(); //to be able to re-execute the previous transitions
-	//log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
-	Curr_State=INIT;
-	next_t = &quot;t1&quot;;
-}</body>
+  log.log (&quot;Curr state: last state. Restarting..&quot;);
+  //commands.loopBack().send(); //to be able to re-execute the previous transitions
+  //log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
+  Curr_State=INIT;
+  next_t = &quot;t1&quot;;
+}
+
+//adding the transition to the list of covered transitions
+if(std::find(VisitedTransitions.begin(), VisitedTransitions.end(), next_t) == VisitedTransitions.end()){
+  VisitedTransitions.push_back(next_t);
+}
+</body>
         </ownedBehavior>
         <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_GLA_QPEOEeiEK7ZB4QGZMA" name="AllBranchesCoveredOpaqueBehavior" specification="_us69IPENEeiEK7ZB4QGZMA">
           <language>C++</language>
