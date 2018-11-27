@@ -52,6 +52,7 @@ public:
 	coverage_util(string t);
 	coverage_util();
 	void initCoverageInfo();
+	bool branchBelongsToTransition(int branchId);
 	bool updateCoverageInfo(const SymbolicExecution& ex);
 	bool updateCoverageInfo(const SymbolicExecution& ex, set<branch_id_t>* new_branches);
 	void writeCoverage(const string& file);

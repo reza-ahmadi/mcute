@@ -15,16 +15,17 @@ using namespace std;
 
 namespace mcute {
 
-coverage_util::coverage_util(){}
+coverage_util::coverage_util() {
+}
 
-coverage_util::coverage_util(string t){
+coverage_util::coverage_util(string t) {
 	transition = t;
 //	max_iters_=100;
 }
 
 void coverage_util::initCoverageInfo() {
 
-	num_iters_=0;
+	num_iters_ = 0;
 	max_branch_ = 0;
 	max_function_ = 0;
 	branches_.reserve(100000);
@@ -32,7 +33,8 @@ void coverage_util::initCoverageInfo() {
 	branch_count_.push_back(0);
 
 	//read in the set of transition branches
-	cout<<"trying to read branches file: " << "branches_" + transition << endl;
+	cout << "trying to read branches file: " << "branches_" + transition
+			<< endl;
 	ifstream in("branches_" + transition);
 	assert(in);
 	function_id_t fid;
@@ -80,7 +82,7 @@ void coverage_util::initCoverageInfo() {
 //	fprintf(stderr,	"Iteration 0 (0s): covered %u branches [%u reach funs, %u reach branches].\n",
 //			num_covered_, reachable_functions_, reachable_branches_);
 
-	// Sort the branches.
+// Sort the branches.
 	sort(branches_.begin(), branches_.end());
 
 }
@@ -92,12 +94,15 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex) {
 bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 		set<branch_id_t>* new_branches) {
 
-	cout<<"trying to update branches for transition: " << transition << endl;
+	cout << "trying to update branches for transition: " << transition << endl;
 
 	const unsigned int prev_covered_ = num_covered_;
 	const vector<branch_id_t>& branches = ex.path().branches();
 	for (BranchIt i = branches.begin(); i != branches.end(); ++i) {
-		if ((*i > 0) && !covered_[*i]) {
+		//reza start
+		//		if ((*i > 0) && !covered_[*i]) {
+		if ((*i > 0) && !covered_[*i] && branchBelongsToTransition(*i)) {
+			//reza end
 			covered_[*i] = true;
 			num_covered_++;
 			if (new_branches) {
@@ -109,7 +114,10 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 				reachable_branches_ += branch_count_[branch_function_[*i]];
 			}
 		}
-		if ((*i > 0) && !total_covered_[*i]) {
+		//reza start
+//		if ((*i > 0) && !total_covered_[*i]) {
+		if ((*i > 0) && !total_covered_[*i] && branchBelongsToTransition(*i)) {
+			//reza end
 			total_covered_[*i] = true;
 			total_num_covered_++;
 		}
@@ -117,11 +125,14 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 
 //  fprintf(stderr, "Iteration %d (%lds): covered %u branches [%u reach funs, %u reach branches].\n",
 //	  num_iters_, time(NULL)-start_time_, total_num_covered_, reachable_functions_, reachable_branches_);
-	fprintf(stderr,"\n--------------------------------------------------------------------------------\n");
+	fprintf(stderr,
+			"\n--------------------------------------------------------------------------------\n");
 	fprintf(stderr,
 			"Transition %s: Iteration %d : covered %u branches [%u reach branches].\n",
-			transition.c_str(), num_iters_, total_num_covered_, reachable_branches_);
-	fprintf(stderr,"--------------------------------------------------------------------------------\n");
+			transition.c_str(), num_iters_, total_num_covered_,
+			reachable_branches_);
+	fprintf(stderr,
+			"--------------------------------------------------------------------------------\n");
 
 	bool found_new_branch = (num_covered_ > prev_covered_);
 	if (found_new_branch) {
@@ -138,27 +149,33 @@ bool coverage_util::updateCoverageInfo(const SymbolicExecution& ex,
 //	num_iters_=0;
 //}
 
-int coverage_util::incIterations(){
+int coverage_util::incIterations() {
 	num_iters_++;
 }
 
-
+bool coverage_util::branchBelongsToTransition(int branchId) {
+	for (BranchIt i = branches_.begin(); i != branches_.end(); ++i) {
+		if (*i == branchId)
+			return true;
+	}
+	return false;
+}
 
 void coverage_util::writeCoverage(const string& file) {
-  FILE* f = fopen(file.c_str(), "w");
-  if (!f) {
-    fprintf(stderr, "Failed to open %s.\n", file.c_str());
-    perror("Error: ");
-    exit(-1);
-  }
+	FILE* f = fopen(file.c_str(), "w");
+	if (!f) {
+		fprintf(stderr, "Failed to open %s.\n", file.c_str());
+		perror("Error: ");
+		exit(-1);
+	}
 
-  for (BranchIt i = branches_.begin(); i != branches_.end(); ++i) {
-    if (total_covered_[*i]) {
-      fprintf(f, "%d\n", *i);
-    }
-  }
+	for (BranchIt i = branches_.begin(); i != branches_.end(); ++i) {
+		if (total_covered_[*i]) {
+			fprintf(f, "%d\n", *i);
+		}
+	}
 
-  fclose(f);
+	fclose(f);
 }
 
 }

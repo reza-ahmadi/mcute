@@ -1,12 +1,9 @@
-# 1 "t2.c"
+# 1 "../test/t2.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "t2.c"
-
-
-
+# 1 "../test/t2.c"
 # 1 "./../include/crest.h" 1
 # 136 "./../include/crest.h"
 typedef enum {
@@ -50,14 +47,18 @@ extern void __CrestBranch(int, int, unsigned char) __attribute__((crest_skip));
 extern void __CrestCall(int, unsigned int) __attribute__((crest_skip));
 extern void __CrestReturn(int) __attribute__((crest_skip));
 extern void __CrestHandleReturn(int, long long int) __attribute__((crest_skip));
-# 197 "./../include/crest.h"
+
+
+
+extern void __CrestWriteSE() __attribute__((crest_skip));
+# 201 "./../include/crest.h"
 extern void __CrestUChar(unsigned char* x) __attribute__((crest_skip));
 extern void __CrestUShort(unsigned short* x) __attribute__((crest_skip));
 extern void __CrestUInt(unsigned int* x) __attribute__((crest_skip));
 extern void __CrestChar(char* x) __attribute__((crest_skip));
 extern void __CrestShort(short* x) __attribute__((crest_skip));
 extern void __CrestInt(int* x) __attribute__((crest_skip));
-# 5 "t2.c" 2
+# 2 "../test/t2.c" 2
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -888,27 +889,39 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 6 "t2.c" 2
+# 3 "../test/t2.c" 2
 
-int main(void) {
-int desiredLevel;
-int temprature;
-int HighTemps, DesiredLevel, Temprature;
 
-__CrestInt(&desiredLevel);
-__CrestInt(&temprature);
 
- if (HighTemps<=9){
-  if (desiredLevel>0){
-   DesiredLevel=desiredLevel;
+
+void main(){
+
+int tank1, tank2, solution, drain;
+
+int Warnings;
+
+__CrestInt(&tank1);
+__CrestInt(&tank2);
+__CrestInt(&solution);
+__CrestInt(&drain);
+
+ if (tank1==0 && tank2 == 0){
+  printf ("----branch visited: tank1==0 && tank2 == 0 ----");
+  if (Warnings>1 && Warnings<5){
+   printf ("----branch visited: Warnings>1 && Warnings<5 ----");
+  }else{
+   printf ("----branch visited: !(Warnings>1 && Warnings<5) ----");
   }
-  if (temprature>0){
-   Temprature=temprature;
-   if (Temprature>=90){
-    HighTemps++;
-   }
+  if (solution>0){
+   printf ("----branch visited: solution>0 ----");
+  }else{
+   printf ("----branch visited: !(solution>0) ----");
   }
- }else{
-
+ }
+ else{
+  printf ("----branch visited: !(tank1==0 && tank2 == 0) ----");
+  if (drain>0){
+   printf ("----branch visited: drain>0 ----");
+  }
  }
 }

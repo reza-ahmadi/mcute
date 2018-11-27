@@ -60,6 +60,9 @@ let open_append fname =
  * write-only -- at the end of each run we just append updates.)
  *)
 
+(* reza start *)
+let bidSeed = ref 0
+(* reza end *)
 let idCount = ref 0
 let stmtCount = Cfg.start_id
 let funCount = ref 0
@@ -87,6 +90,9 @@ let writeCounter fname (cnt : int) =
   with x ->
     failwith ("Failed to write counter to: " ^ fname ^ "\n")
 
+(*reza start*)
+let readBidSeed () = (bidSeed := readCounter "bidSeed")
+(*reza end*)
 let readIdCount () = (idCount := readCounter "idcount")
 let readStmtCount () = (stmtCount := readCounter "stmtcount")
 let readFunCount () = (funCount := readCounter "funcount")
@@ -396,8 +402,12 @@ object (self)
     match s.skind with
       | If (e, b1, b2, _) ->
           let getFirstStmtId blk = (List.hd blk.bstmts).sid in
-          let b1_sid = getFirstStmtId b1 in
-          let b2_sid = getFirstStmtId b2 in
+(*reza start*)
+(*        let b1_sid = !bidSeed + getFirstStmtId b1 in *)
+(*        let b2_sid = !bidSeed + getFirstStmtId b2 in *)
+(*reza end*)
+          let b1_sid = !bidSeed + getFirstStmtId b1 in
+          let b2_sid = !bidSeed + getFirstStmtId b2 in
 	    (self#queueInstr (instrumentExpr e) ;
 	     prependToBlock [mkBranch b1_sid 1] b1 ;
 	     prependToBlock [mkBranch b2_sid 0] b2 ;
@@ -511,6 +521,9 @@ let feature : featureDescr =
            * occur after clearFileCFG, because clearFileCfg clobbers
            * the statement counter.) *)
           readIdCount () ;
+          (*reza start*)
+          readBidSeed () ;
+          (*reza end*)
           readStmtCount () ;
           readFunCount () ;
           (* Compute the control-flow graph. *)

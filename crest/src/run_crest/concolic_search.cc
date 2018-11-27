@@ -438,10 +438,10 @@ void BoundedDepthFirstSearch::DFS(size_t pos, int depth, SymbolicExecution& prev
 	//print the current PC
 
     //SymbolicPath* symPred = path.constraints()[i];
-	cout<<"\n====== printing PCs..."<<endl;
-	string exStr = "";
-	path.Serialize(&exStr);
-	printf("\n++++++ current PC:%s", exStr.c_str());
+//	cout<<"\n====== printing PCs..."<<endl;
+//	string exStr = "";
+//	path.Serialize(&exStr);
+//	printf("\n++++++ current PC:%s", exStr.c_str());
 	//cout<<"\n++++++ current PC:"<< exStr << endl;
 	//Reza-end
 
