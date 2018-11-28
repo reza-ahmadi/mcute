@@ -4,18 +4,26 @@
 int main(int argc, char const *argv[]) {
   /* code */
 
-  int gv1 = 0;
-  int i1 = 0;
+  int desiredLevel;
+  int temprature;
+  int HighTemps;
 
-  CREST_int(i1);
+  CREST_int(desiredLevel);
+  CREST_int(temprature);
+  //CREST_int(HighTemps);
 
-  if (i1 > 0){
-    printf("%d is greater than 0\n", i1 );
-    gv1 = i1 * 2;
+  if (temprature>=60 && desiredLevel>=5){
+    printf("----branch visited: temprature>=60 && desiredLevel>=5 ----\n");
+    HighTemps = temprature-60;
+  }
+  else{
+    printf("----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
   }
 
-  if (gv1 > 100 && gv1 < 200){
-    printf("%d is > 100 && %d < 200 0\n", gv1, gv1 );
+  if (HighTemps>=10){
+    printf("----branch visited: HighTemps>=10!!!, %d degrees more than standart!!!----\n", HighTemps);
+  }else{
+    printf("----branch visited: !(HighTemps>=10)----\n");
   }
 
   return 0;
