@@ -651,8 +651,8 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
               <ownedRule xmi:type="uml:Constraint" xmi:id="_EHv-8OhmEeidvedyZ74wtA">
                 <specification xmi:type="uml:OpaqueExpression" xmi:id="_EHwmAOhmEeidvedyZ74wtA">
                   <language>C++</language>
-                  <body>//return Strategy==&quot;RND&quot; || Strategy==&quot;RANDOM&quot; || Strategy==&quot;R&quot;;
-return Strategy==&quot;SMP&quot; || Strategy==&quot;smp&quot; || Strategy==&quot;simple&quot; || Strategy==&quot;SIMPLE&quot; || Strategy==&quot;S&quot; || Strategy==&quot;s&quot;;</body>
+                  <body>return Strategy==&quot;rnd1&quot; || Strategy==&quot;random1&quot; || Strategy==&quot;r1&quot; || Strategy==&quot;RND1&quot; || Strategy==&quot;RANDOM1&quot; || Strategy==&quot;R1&quot;;
+//return Strategy==&quot;SMP&quot; || Strategy==&quot;smp&quot; || Strategy==&quot;simple&quot; || Strategy==&quot;SIMPLE&quot; || Strategy==&quot;S&quot; || Strategy==&quot;s&quot;;</body>
                 </specification>
               </ownedRule>
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_dOMxYPDqEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
@@ -665,7 +665,7 @@ fileutil::writeData(&quot;strategy&quot;, &quot;0&quot;);</body>
               <ownedRule xmi:type="uml:Constraint" xmi:id="_DFvvYOhmEeidvedyZ74wtA">
                 <specification xmi:type="uml:OpaqueExpression" xmi:id="_DFvvYehmEeidvedyZ74wtA">
                   <language>C++</language>
-                  <body>return Strategy==&quot;DFS&quot; || Strategy==&quot;D&quot;;</body>
+                  <body>return Strategy==&quot;bfs&quot; || Strategy==&quot;BFS&quot; || Strategy==&quot;B&quot;;</body>
                 </specification>
               </ownedRule>
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_d7ulwPDqEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
@@ -694,7 +694,7 @@ timingRunning.cancelTimer(timingRunningId);</body>
               <ownedRule xmi:type="uml:Constraint" xmi:id="_4csWkO93EeiBrOAOs4BT-g">
                 <specification xmi:type="uml:OpaqueExpression" xmi:id="_4csWke93EeiBrOAOs4BT-g">
                   <language>C++</language>
-                  <body>return Strategy==&quot;bfs&quot; || Strategy==&quot;BFS&quot; || Strategy==&quot;B&quot;;</body>
+                  <body>return Strategy==&quot;conc&quot; || Strategy==&quot;CONC&quot; || Strategy==&quot;C&quot; || Strategy==&quot;c&quot;;</body>
                 </specification>
               </ownedRule>
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_bZVhgPDqEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
@@ -716,7 +716,7 @@ fileutil::writeData(&quot;strategy&quot;, &quot;2&quot;);</body>
               <trigger xmi:type="uml:Trigger" xmi:id="_K4AlwPEBEeiEK7ZB4QGZMA" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
             </transition>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_FrJBoGgwEeijRtS4FXxxtA"/>
-            <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="Concolic___DFS__Testing">
+            <subvertex xmi:type="uml:State" xmi:id="_FrLd4GgwEeijRtS4FXxxtA" name="Concolic___BFS__Testing">
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_KNFQkOE2EeiBkYD2qJeUwg" kind="exitPoint"/>
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_KIQUUOQ-EeitooxfkYAKHg" kind="entryPoint"/>
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7OwGsOFOEeitsrWbfpHoZQ" name="SelectCandidateTransition" isReentrant="false">
@@ -1287,7 +1287,7 @@ if (TransitionIterationsExecuted&lt;TransitionIterations)
               </region>
             </subvertex>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_Sy9EkOhlEeidvedyZ74wtA" kind="choice"/>
-            <subvertex xmi:type="uml:State" xmi:id="_U0eEcO94EeiBrOAOs4BT-g" name="Concolic___BFS__Testing">
+            <subvertex xmi:type="uml:State" xmi:id="_U0eEcO94EeiBrOAOs4BT-g" name="Concolic__BFS__DFS_Testing">
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_agpkIO94EeiBrOAOs4BT-g" kind="entryPoint"/>
               <connectionPoint xmi:type="uml:Pseudostate" xmi:id="_ATKM8PC_EeiBrOAOs4BT-g" kind="exitPoint"/>
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_WaJo0O94EeiBrOAOs4BT-g" name="Entry" isReentrant="false">

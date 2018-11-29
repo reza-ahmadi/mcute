@@ -1126,13 +1126,13 @@
                 <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EfihQPDUEeiBrOAOs4BT-g" key="fillColor" value="true"/>
               </eAnnotations>
               <children xmi:type="notation:DecorationNode" xmi:id="_U1uBou94EeiBrOAOs4BT-g" type="State_NameLabel">
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aCH1EO94EeiBrOAOs4BT-g" width="227"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aCH1EO94EeiBrOAOs4BT-g" width="255"/>
               </children>
               <children xmi:type="notation:DecorationNode" xmi:id="_U1uBo-94EeiBrOAOs4BT-g" type="State_FloatingNameLabel">
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_U1uBpO94EeiBrOAOs4BT-g" x="40"/>
               </children>
               <children xmi:type="notation:BasicCompartment" xmi:id="_U1uBpe94EeiBrOAOs4BT-g" type="State_RegionCompartment">
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U1uBpu94EeiBrOAOs4BT-g" y="-1" width="227"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U1uBpu94EeiBrOAOs4BT-g" y="-1" width="255"/>
               </children>
               <children xmi:type="notation:Compartment" xmi:id="_U1uBp-94EeiBrOAOs4BT-g" type="InternalTransitions">
                 <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U1uBqO94EeiBrOAOs4BT-g"/>
@@ -1166,7 +1166,7 @@
                 <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AUnlgfC_EeiBrOAOs4BT-g" x="217" y="36" width="10" height="10"/>
               </children>
               <element xmi:type="uml:State" href="Harness2.uml#_U0eEcO94EeiBrOAOs4BT-g"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U1uBoe94EeiBrOAOs4BT-g" x="249" y="327" width="227" height="73"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U1uBoe94EeiBrOAOs4BT-g" x="249" y="327" width="255" height="73"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_HqruIPEBEeiEK7ZB4QGZMA" type="State_Shape" fontName="Segoe UI" fontHeight="12">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SNQ8EPEBEeiEK7ZB4QGZMA" source="PapyrusCSSForceValue">

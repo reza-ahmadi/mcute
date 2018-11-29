@@ -45,14 +45,14 @@ void main(void)
   __CrestApply2(2, 12, (long long )(tank1 == 0));
 # 18 "../test/t2.c"
   if (tank1 == 0) {
-    __CrestBranch(5, 17, 1);
+    __CrestBranch(5, 11, 1);
     {
     __CrestLoad(9, (unsigned long )(& tank2), (long long )tank2);
     __CrestLoad(8, (unsigned long )0, (long long )0);
     __CrestApply2(7, 12, (long long )(tank2 == 0));
 # 18 "../test/t2.c"
     if (tank2 == 0) {
-      __CrestBranch(10, 18, 1);
+      __CrestBranch(10, 12, 1);
 # 19 "../test/t2.c"
       printf((char const * __restrict )"----branch visited: tank1==0 && tank2 == 0 ----");
       __CrestClearStack(12);
@@ -62,26 +62,26 @@ void main(void)
       __CrestApply2(13, 14, (long long )(Warnings > 1));
 # 20 "../test/t2.c"
       if (Warnings > 1) {
-        __CrestBranch(16, 20, 1);
+        __CrestBranch(16, 14, 1);
         {
         __CrestLoad(20, (unsigned long )(& Warnings), (long long )Warnings);
         __CrestLoad(19, (unsigned long )0, (long long )5);
         __CrestApply2(18, 16, (long long )(Warnings < 5));
 # 20 "../test/t2.c"
         if (Warnings < 5) {
-          __CrestBranch(21, 21, 1);
+          __CrestBranch(21, 15, 1);
 # 21 "../test/t2.c"
           printf((char const * __restrict )"----branch visited: Warnings>1 && Warnings<5 ----");
           __CrestClearStack(23);
         } else {
-          __CrestBranch(22, 22, 0);
+          __CrestBranch(22, 16, 0);
 # 23 "../test/t2.c"
           printf((char const * __restrict )"----branch visited: !(Warnings>1 && Warnings<5) ----");
           __CrestClearStack(24);
         }
         }
       } else {
-        __CrestBranch(17, 23, 0);
+        __CrestBranch(17, 17, 0);
 # 23 "../test/t2.c"
         printf((char const * __restrict )"----branch visited: !(Warnings>1 && Warnings<5) ----");
         __CrestClearStack(25);
@@ -93,25 +93,25 @@ void main(void)
       __CrestApply2(26, 14, (long long )(solution > 0));
 # 25 "../test/t2.c"
       if (solution > 0) {
-        __CrestBranch(29, 25, 1);
+        __CrestBranch(29, 19, 1);
 # 26 "../test/t2.c"
         printf((char const * __restrict )"----branch visited: solution>0 ----");
         __CrestClearStack(31);
       } else {
-        __CrestBranch(30, 26, 0);
+        __CrestBranch(30, 20, 0);
 # 28 "../test/t2.c"
         printf((char const * __restrict )"----branch visited: !(solution>0) ----");
         __CrestClearStack(32);
       }
       }
     } else {
-      __CrestBranch(11, 27, 0);
+      __CrestBranch(11, 21, 0);
 # 18 "../test/t2.c"
       goto _L;
     }
     }
   } else {
-    __CrestBranch(6, 28, 0);
+    __CrestBranch(6, 22, 0);
     _L:
 # 32 "../test/t2.c"
     printf((char const * __restrict )"----branch visited: !(tank1==0 && tank2 == 0) ----");
@@ -122,12 +122,12 @@ void main(void)
     __CrestApply2(34, 14, (long long )(drain > 0));
 # 33 "../test/t2.c"
     if (drain > 0) {
-      __CrestBranch(37, 30, 1);
+      __CrestBranch(37, 24, 1);
 # 34 "../test/t2.c"
       printf((char const * __restrict )"----branch visited: drain>0 ----");
       __CrestClearStack(39);
     } else {
-      __CrestBranch(38, 31, 0);
+      __CrestBranch(38, 25, 0);
 
     }
     }
