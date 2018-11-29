@@ -5,7 +5,7 @@
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_fuzjcmdiEeiqifykceCvxw" key="language" value="umlrt-cpp"/>
     </eAnnotations>
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XBD94GgrEeijRtS4FXxxtA" source="UMLRT_Default_top">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_XBEk8GgrEeijRtS4FXxxtA" key="top_name" value="MCUTE____DRC"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_XBEk8GgrEeijRtS4FXxxtA" key="top_name" value="MCUTE__Testing__DRC"/>
     </eAnnotations>
     <packagedElement xmi:type="uml:Class" xmi:id="_hpaO8GdiEeiqifykceCvxw" name="DyeingRunController" classifierBehavior="_jPbKgGdiEeiqifykceCvxw" isActive="true">
       <ownedAttribute xmi:type="uml:Port" xmi:id="_GQwmUGdjEeiqifykceCvxw" name="protocol1" type="_oIRIwGdiEeiqifykceCvxw" isOrdered="true" aggregation="composite" isBehavior="true"/>
@@ -419,6 +419,113 @@ cuteCommands.newState(INIT).send();
       <packagedElement xmi:type="uml:CallEvent" xmi:id="_dCOgIH8WEeipA49rzMw2KQ" operation="_dCLc0H8WEeipA49rzMw2KQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_K8YA0GgnEeijRtS4FXxxtA" name="MCUTE">
+      <packagedElement xmi:type="uml:Class" xmi:id="_C62aYGgnEeijRtS4FXxxtA" name="MCUTE__Testing__DRC" classifierBehavior="_1XUoUGhEEeijRtS4FXxxtA" isActive="true">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_wtzlsGgnEeijRtS4FXxxtA" name="harness" visibility="protected" type="_ZSoUsGgnEeijRtS4FXxxtA" isOrdered="true" aggregation="composite"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_tCMV8GgvEeijRtS4FXxxtA" name="testsimple" visibility="protected" type="_hpaO8GdiEeiqifykceCvxw" isOrdered="true" aggregation="composite"/>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_jct8kGhHEeijRtS4FXxxtA" name="settings" visibility="protected" type="_CV8wAWhHEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_JjTisGm0EeiLpMcT--nfLg" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+          <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6kIb0IeXEeSVyrlWP4nYew"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_4Yk0cORnEeiwK5UPZ22vmQ" name="timingInit" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+          <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
+        </ownedAttribute>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_18iawGgvEeijRtS4FXxxtA" name="RTConnector1">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_z-v4YGgvEeijRtS4FXxxtA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_GQwmUGdjEeiqifykceCvxw"/>
+        </ownedConnector>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_3ASWwGgvEeijRtS4FXxxtA" name="RTConnector2">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_rximYGgvEeijRtS4FXxxtA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_ugLW4GgvEeijRtS4FXxxtA"/>
+        </ownedConnector>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_nU5IAGhHEeijRtS4FXxxtA" name="RTConnector3">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_nU69MGhHEeijRtS4FXxxtA" role="_jct8kGhHEeijRtS4FXxxtA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_nU7kQGhHEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_gsG2IGhHEeijRtS4FXxxtA"/>
+        </ownedConnector>
+        <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_1XUoUGhEEeijRtS4FXxxtA" name="StateMachineTOP_Test" isReentrant="false">
+          <region xmi:type="uml:Region" xmi:id="_1XoKUGhEEeijRtS4FXxxtA" name="Region">
+            <transition xmi:type="uml:Transition" xmi:id="_1Xx7UGhEEeijRtS4FXxxtA" name="Initial" source="_1XtC0GhEEeijRtS4FXxxtA" target="_y1C6cORnEeiwK5UPZ22vmQ"/>
+            <transition xmi:type="uml:Transition" xmi:id="_0z7B8ORnEeiwK5UPZ22vmQ" name="" kind="external" source="_y1C6cORnEeiwK5UPZ22vmQ" target="_1XwGIGhEEeijRtS4FXxxtA">
+              <trigger xmi:type="uml:Trigger" xmi:id="__Bd0AORnEeiwK5UPZ22vmQ" port="_4Yk0cORnEeiwK5UPZ22vmQ">
+                <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
+              </trigger>
+            </transition>
+            <subvertex xmi:type="uml:Pseudostate" xmi:id="_1XtC0GhEEeijRtS4FXxxtA"/>
+            <subvertex xmi:type="uml:State" xmi:id="_1XwGIGhEEeijRtS4FXxxtA" name="Starting">
+              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7bLoMGhEEeijRtS4FXxxtA" name="Entry" isReentrant="false">
+                <language>C++</language>
+                <body>char* strategy = &quot;DFS&quot;; //default strategy
+int transitionIterations = 5; //default
+int time = 0; //default time
+int totalIterations = 0;
+//read terminal inputs
+int argc = UMLRTMain::getArgCount();
+log.log(&quot;params count: %d&quot;, argc);
+if (argc==1) {
+	const char * arg = UMLRTMain::getArg(0);
+	if (!strcmp(arg, &quot;-h&quot;)) {
+		log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
+		log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
+		log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
+	} 
+}
+else if (argc==4) {
+	//const char * arg = UMLRTMain::getArg(0);
+	//const char * arg1 = UMLRTMain::getArg(1);
+	//const char * arg2 = UMLRTMain::getArg(2);
+	//log.log(&quot;  0:%s, 1:%s, 2:%s  &quot; , arg, arg1, arg2);
+
+
+	strategy = (char*) UMLRTMain::getArg(0);
+
+	const char * timeStr = UMLRTMain::getArg(1);
+	time = atoi(timeStr);
+
+	const char * totalIterationsStr = UMLRTMain::getArg(2);
+	totalIterations = atoi(totalIterationsStr);
+
+	const char * transitionIterationsStr = UMLRTMain::getArg(3);
+	if (atoi(transitionIterationsStr)>0) {
+		transitionIterations = atoi(transitionIterationsStr);
+	}
+
+	settings.start(strategy, time, totalIterations, transitionIterations).send(); //default 5 seconds
+}else{
+	log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
+	log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
+	log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
+}
+</body>
+              </entry>
+            </subvertex>
+            <subvertex xmi:type="uml:State" xmi:id="_y1C6cORnEeiwK5UPZ22vmQ" name="Init">
+              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_-XMvAORnEeiwK5UPZ22vmQ" name="Entry" isReentrant="false">
+                <language>C++</language>
+                <body>timingInit.informIn(UMLRTTimespec(0.5,0));</body>
+              </entry>
+            </subvertex>
+          </region>
+        </ownedBehavior>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_1gRhQGhKEeijRtS4FXxxtA" name="CUTE__MAIN__" classifierBehavior="_1gRhRmhKEeijRtS4FXxxtA" isActive="true">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_1gRhQWhKEeijRtS4FXxxtA" name="harness" visibility="protected" type="_ZSoUsGgnEeijRtS4FXxxtA" isOrdered="true" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_1gRhQmhKEeijRtS4FXxxtA" name="settings" visibility="protected" type="_CV8wAWhHEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
+          <ownedConnector xmi:type="uml:Connector" xmi:id="_1gRhQ2hKEeijRtS4FXxxtA" name="RTConnector3">
+            <end xmi:type="uml:ConnectorEnd" xmi:id="_1gRhRGhKEeijRtS4FXxxtA" role="_1gRhQmhKEeijRtS4FXxxtA"/>
+            <end xmi:type="uml:ConnectorEnd" xmi:id="_1gRhRWhKEeijRtS4FXxxtA" partWithPort="_1gRhQWhKEeijRtS4FXxxtA" role="_gsG2IGhHEeijRtS4FXxxtA"/>
+          </ownedConnector>
+          <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_1gRhRmhKEeijRtS4FXxxtA" name="StateMachineTOP_Test" isReentrant="false">
+            <region xmi:type="uml:Region" xmi:id="_1gRhR2hKEeijRtS4FXxxtA" name="Region">
+              <transition xmi:type="uml:Transition" xmi:id="_1gRhSGhKEeijRtS4FXxxtA" name="Initial" source="_1gRhSWhKEeijRtS4FXxxtA" target="_1gRhSmhKEeijRtS4FXxxtA"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_1gRhSWhKEeijRtS4FXxxtA"/>
+              <subvertex xmi:type="uml:State" xmi:id="_1gRhSmhKEeijRtS4FXxxtA" name="State1">
+                <entry xmi:type="uml:OpaqueBehavior" xmi:id="_1gRhS2hKEeijRtS4FXxxtA" name="Entry" isReentrant="false">
+                  <language>C++</language>
+                  <body>//read terminal inputs</body>
+                </entry>
+              </subvertex>
+            </region>
+          </ownedBehavior>
+        </nestedClassifier>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_ZSoUsGgnEeijRtS4FXxxtA" name="CUTE_Harness" isActive="true">
         <ownedAttribute xmi:type="uml:Port" xmi:id="_rximYGgvEeijRtS4FXxxtA" name="commands" visibility="public" type="_FiiUsGgvEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true"/>
         <ownedAttribute xmi:type="uml:Port" xmi:id="_z-v4YGgvEeijRtS4FXxxtA" name="data" visibility="public" type="_oIRIwGdiEeiqifykceCvxw" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true"/>
@@ -1468,7 +1575,7 @@ ex.Parse(in);
 in.close();
 
 cout &lt;&lt; &quot;\nNumber of constraints: &quot; &lt;&lt; ex.path().constraints().size() &lt;&lt; endl;
-Constraints = ex.path().constraints().size()-1;
+Constraints = ex.path().constraints().size();
 
 //print SE object info
 fileutil::printSymExObj(false, true, false);
@@ -1730,158 +1837,15 @@ return allCoverred;</body>
         <packagedElement xmi:type="uml:Usage" xmi:id="_CV8wDWhHEeijRtS4FXxxtA" client="_CV8wAWhHEeijRtS4FXxxtA" supplier="_CV8wDGhHEeijRtS4FXxxtA"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_JglVQGhIEeijRtS4FXxxtA" operation="_JgeAgGhIEeijRtS4FXxxtA"/>
       </packagedElement>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Package" xmi:id="_k8svIGgnEeijRtS4FXxxtA" name="Testing_DRC_Capsule">
-      <packagedElement xmi:type="uml:Class" xmi:id="_C62aYGgnEeijRtS4FXxxtA" name="MCUTE____DRC" classifierBehavior="_1XUoUGhEEeijRtS4FXxxtA" isActive="true">
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_wtzlsGgnEeijRtS4FXxxtA" name="harness" visibility="protected" type="_ZSoUsGgnEeijRtS4FXxxtA" isOrdered="true" aggregation="composite"/>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_tCMV8GgvEeijRtS4FXxxtA" name="testsimple" visibility="protected" type="_hpaO8GdiEeiqifykceCvxw" isOrdered="true" aggregation="composite"/>
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_jct8kGhHEeijRtS4FXxxtA" name="settings" visibility="protected" type="_CV8wAWhHEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_JjTisGm0EeiLpMcT--nfLg" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
-          <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6kIb0IeXEeSVyrlWP4nYew"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_4Yk0cORnEeiwK5UPZ22vmQ" name="timingInit" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
-          <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
-        </ownedAttribute>
-        <ownedConnector xmi:type="uml:Connector" xmi:id="_18iawGgvEeijRtS4FXxxtA" name="RTConnector1">
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_z-v4YGgvEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_GQwmUGdjEeiqifykceCvxw"/>
-        </ownedConnector>
-        <ownedConnector xmi:type="uml:Connector" xmi:id="_3ASWwGgvEeijRtS4FXxxtA" name="RTConnector2">
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_rximYGgvEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_ugLW4GgvEeijRtS4FXxxtA"/>
-        </ownedConnector>
-        <ownedConnector xmi:type="uml:Connector" xmi:id="_nU5IAGhHEeijRtS4FXxxtA" name="RTConnector3">
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_nU69MGhHEeijRtS4FXxxtA" role="_jct8kGhHEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_nU7kQGhHEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_gsG2IGhHEeijRtS4FXxxtA"/>
-        </ownedConnector>
-        <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_1XUoUGhEEeijRtS4FXxxtA" name="StateMachineTOP_Test" isReentrant="false">
-          <region xmi:type="uml:Region" xmi:id="_1XoKUGhEEeijRtS4FXxxtA" name="Region">
-            <transition xmi:type="uml:Transition" xmi:id="_1Xx7UGhEEeijRtS4FXxxtA" name="Initial" source="_1XtC0GhEEeijRtS4FXxxtA" target="_y1C6cORnEeiwK5UPZ22vmQ"/>
-            <transition xmi:type="uml:Transition" xmi:id="_0z7B8ORnEeiwK5UPZ22vmQ" name="" kind="external" source="_y1C6cORnEeiwK5UPZ22vmQ" target="_1XwGIGhEEeijRtS4FXxxtA">
-              <trigger xmi:type="uml:Trigger" xmi:id="__Bd0AORnEeiwK5UPZ22vmQ" port="_4Yk0cORnEeiwK5UPZ22vmQ">
-                <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
-              </trigger>
-            </transition>
-            <subvertex xmi:type="uml:Pseudostate" xmi:id="_1XtC0GhEEeijRtS4FXxxtA"/>
-            <subvertex xmi:type="uml:State" xmi:id="_1XwGIGhEEeijRtS4FXxxtA" name="Starting">
-              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7bLoMGhEEeijRtS4FXxxtA" name="Entry" isReentrant="false">
-                <language>C++</language>
-                <body>char* strategy = &quot;DFS&quot;; //default strategy
-int transitionIterations = 5; //default
-int time = 0; //default time
-int totalIterations = 0;
-//read terminal inputs
-int argc = UMLRTMain::getArgCount();
-log.log(&quot;params count: %d&quot;, argc);
-if (argc==1) {
-	const char * arg = UMLRTMain::getArg(0);
-	if (!strcmp(arg, &quot;-h&quot;)) {
-		log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
-		log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
-		log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
-	} 
-}
-else if (argc==4) {
-	//const char * arg = UMLRTMain::getArg(0);
-	//const char * arg1 = UMLRTMain::getArg(1);
-	//const char * arg2 = UMLRTMain::getArg(2);
-	//log.log(&quot;  0:%s, 1:%s, 2:%s  &quot; , arg, arg1, arg2);
-
-
-	strategy = (char*) UMLRTMain::getArg(0);
-
-	const char * timeStr = UMLRTMain::getArg(1);
-	time = atoi(timeStr);
-
-	const char * totalIterationsStr = UMLRTMain::getArg(2);
-	totalIterations = atoi(totalIterationsStr);
-
-	const char * transitionIterationsStr = UMLRTMain::getArg(3);
-	if (atoi(transitionIterationsStr)>0) {
-		transitionIterations = atoi(transitionIterationsStr);
-	}
-
-	settings.start(strategy, time, totalIterations, transitionIterations).send(); //default 5 seconds
-}else{
-	log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
-	log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
-	log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
-}
-</body>
-              </entry>
-            </subvertex>
-            <subvertex xmi:type="uml:State" xmi:id="_y1C6cORnEeiwK5UPZ22vmQ" name="Init">
-              <entry xmi:type="uml:OpaqueBehavior" xmi:id="_-XMvAORnEeiwK5UPZ22vmQ" name="Entry" isReentrant="false">
-                <language>C++</language>
-                <body>timingInit.informIn(UMLRTTimespec(0.5,0));</body>
-              </entry>
-            </subvertex>
-          </region>
-        </ownedBehavior>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_1gRhQGhKEeijRtS4FXxxtA" name="CUTE__MAIN__" classifierBehavior="_1gRhRmhKEeijRtS4FXxxtA" isActive="true">
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_1gRhQWhKEeijRtS4FXxxtA" name="harness" visibility="protected" type="_ZSoUsGgnEeijRtS4FXxxtA" isOrdered="true" aggregation="composite"/>
-          <ownedAttribute xmi:type="uml:Port" xmi:id="_1gRhQmhKEeijRtS4FXxxtA" name="settings" visibility="protected" type="_CV8wAWhHEeijRtS4FXxxtA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
-          <ownedConnector xmi:type="uml:Connector" xmi:id="_1gRhQ2hKEeijRtS4FXxxtA" name="RTConnector3">
-            <end xmi:type="uml:ConnectorEnd" xmi:id="_1gRhRGhKEeijRtS4FXxxtA" role="_1gRhQmhKEeijRtS4FXxxtA"/>
-            <end xmi:type="uml:ConnectorEnd" xmi:id="_1gRhRWhKEeijRtS4FXxxtA" partWithPort="_1gRhQWhKEeijRtS4FXxxtA" role="_gsG2IGhHEeijRtS4FXxxtA"/>
-          </ownedConnector>
-          <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_1gRhRmhKEeijRtS4FXxxtA" name="StateMachineTOP_Test" isReentrant="false">
-            <region xmi:type="uml:Region" xmi:id="_1gRhR2hKEeijRtS4FXxxtA" name="Region">
-              <transition xmi:type="uml:Transition" xmi:id="_1gRhSGhKEeijRtS4FXxxtA" name="Initial" source="_1gRhSWhKEeijRtS4FXxxtA" target="_1gRhSmhKEeijRtS4FXxxtA"/>
-              <subvertex xmi:type="uml:Pseudostate" xmi:id="_1gRhSWhKEeijRtS4FXxxtA"/>
-              <subvertex xmi:type="uml:State" xmi:id="_1gRhSmhKEeijRtS4FXxxtA" name="State1">
-                <entry xmi:type="uml:OpaqueBehavior" xmi:id="_1gRhS2hKEeijRtS4FXxxtA" name="Entry" isReentrant="false">
-                  <language>C++</language>
-                  <body>//read terminal inputs</body>
-                </entry>
-              </subvertex>
-            </region>
-          </ownedBehavior>
-        </nestedClassifier>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_TEwR0H5PEeipA49rzMw2KQ" name="STATES">
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR0X5PEeipA49rzMw2KQ" name="SETUP"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR0n5PEeipA49rzMw2KQ" name="FILLING"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR035PEeipA49rzMw2KQ" name="ABORTED"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR1H5PEeipA49rzMw2KQ" name="DYEING"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR1X5PEeipA49rzMw2KQ" name="DRAINING"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_HhfGEH8XEeipA49rzMw2KQ" name="DONE"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_pA-mIN7GEeiBkYD2qJeUwg" name="INIT"/>
       </packagedElement>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Enumeration" xmi:id="_TEwR0H5PEeipA49rzMw2KQ" name="STATES">
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR0X5PEeipA49rzMw2KQ" name="SETUP"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR0n5PEeipA49rzMw2KQ" name="FILLING"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR035PEeipA49rzMw2KQ" name="ABORTED"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR1H5PEeipA49rzMw2KQ" name="DYEING"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR1X5PEeipA49rzMw2KQ" name="DRAINING"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_HhfGEH8XEeipA49rzMw2KQ" name="DONE"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_pA-mIN7GEeiBkYD2qJeUwg" name="INIT"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Enumeration" xmi:id="_xiwcgH_oEeiMFcUmhpquNg" name="TRANSITIONS">
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_xiwcgX_oEeiMFcUmhpquNg" name="T1"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_xiwcgn_oEeiMFcUmhpquNg" name="T2"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_xiwcg3_oEeiMFcUmhpquNg" name="T4"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_xiwchH_oEeiMFcUmhpquNg" name="T5"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_xiwchX_oEeiMFcUmhpquNg" name="T6"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_xiwchn_oEeiMFcUmhpquNg" name="T7"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_6OLUgH_oEeiMFcUmhpquNg" name="RESET1"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_6RrUcH_oEeiMFcUmhpquNg" name="RESET2"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_rxcvwH_pEeiMFcUmhpquNg" name="INITIAL"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Enumeration" xmi:id="_zDkvAH_oEeiMFcUmhpquNg" name="BRANCHES">
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zDkvAX_oEeiMFcUmhpquNg" name="B1"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zDkvAn_oEeiMFcUmhpquNg" name="B2"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zDkvA3_oEeiMFcUmhpquNg" name="B3"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zDkvBH_oEeiMFcUmhpquNg" name="B4"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zDkvBX_oEeiMFcUmhpquNg" name="B5"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zDkvBn_oEeiMFcUmhpquNg" name="B6"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_u2rbUH_pEeiMFcUmhpquNg" name="B7"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_u7jUQH_pEeiMFcUmhpquNg" name="B8"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_KtfVoICkEeib_vS042iOdQ" name="B9"/>
-      <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Kz9xEICkEeib_vS042iOdQ" name="B10"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_p_XqAJK0EeiPG4gJcsWGbA" name="CUT_Attributes">
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_wtEREJK0EeiPG4gJcsWGbA" name="Temprature">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_xWzKkJK0EeiPG4gJcsWGbA" name="DesiredLevel">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_xZlY0JK0EeiPG4gJcsWGbA" name="HighTemps">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </ownedAttribute>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_fuzjc2diEeiqifykceCvxw">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_fuzjdGdiEeiqifykceCvxw" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -1959,8 +1923,8 @@ else if (argc==4) {
   <UMLRTStateMachines:RTState xmi:id="_1gXA0WhKEeijRtS4FXxxtA" base_State="_1gRhSmhKEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_JjnrwGm0EeiLpMcT--nfLg" isWired="false" base_Port="_JjTisGm0EeiLpMcT--nfLg"/>
   <RTCppProperties:CapsuleProperties xmi:id="_QTsRYGm0EeiLpMcT--nfLg" headerPreface="#include &quot;umlrtmain.hh&quot;" base_Class="_C62aYGgnEeijRtS4FXxxtA"/>
-  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;#include &lt;algorithm>&#xA;&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;fileutil.h>&#xA;#include &lt;coverage_util.h>&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;#include &quot;STATES.hh&quot;&#xA;#include &quot;TRANSITIONS.hh&quot;&#xA;#include &quot;BRANCHES.hh&quot;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
-  <RTCppProperties:CapsuleProperties xmi:id="_6u_EAH5SEeipA49rzMw2KQ" headerPreface="#include &quot;STATES.hh&quot;&#xA;#include &quot;TRANSITIONS.hh&quot;&#xA;#include &quot;BRANCHES.hh&quot;&#xA;&#xA;#include &quot;CUT_Attributes.hh&quot;&#xA;&#xA;&#xA;#include &lt;map>&#xA;#include &lt;assert.h>&#xA;#include &lt;vector>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;&#xA;#include &quot;libcrest/crest.h&quot;" base_Class="_hpaO8GdiEeiqifykceCvxw"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;#include &lt;algorithm>&#xA;&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;fileutil.h>&#xA;#include &lt;coverage_util.h>&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;#include &quot;STATES.hh&quot;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_6u_EAH5SEeipA49rzMw2KQ" headerPreface="#include &quot;STATES.hh&quot;&#xA;&#xA;#include &quot;CUT_Attributes.hh&quot;&#xA;&#xA;#include &lt;map>&#xA;#include &lt;assert.h>&#xA;#include &lt;vector>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;&#xA;#include &quot;libcrest/crest.h&quot;" base_Class="_hpaO8GdiEeiqifykceCvxw"/>
   <RTCppProperties:AttributeProperties xmi:id="_bHwlUH5XEeipA49rzMw2KQ" type="string" base_Property="_dxTFUH5VEeipA49rzMw2KQ"/>
   <UMLRTStateMachines:RTState xmi:id="_2YpuEH_gEeiMFcUmhpquNg" base_State="_2YhyQH_gEeiMFcUmhpquNg"/>
   <RTCppProperties:AttributeProperties xmi:id="_JDiJwH_qEeiMFcUmhpquNg" type="vector&lt;int>" base_Property="_ErnuUH_qEeiMFcUmhpquNg"/>
