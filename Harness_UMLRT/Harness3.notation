@@ -2769,7 +2769,7 @@
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_yG_pMfC-EeiBrOAOs4BT-g"/>
       <element xmi:type="uml:Transition" href="Harness3.uml#_yGtVUPC-EeiBrOAOs4BT-g"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yG_pMvC-EeiBrOAOs4BT-g" points="[606, 208, -643984, -643984]$[606, 238, -643984, -643984]$[313, 238, -643984, -643984]$[313, 210, -643984, -643984]"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yG_pMvC-EeiBrOAOs4BT-g" points="[611, 208, -643984, -643984]$[611, 238, -643984, -643984]$[318, 238, -643984, -643984]$[318, 210, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yH2k0PC-EeiBrOAOs4BT-g" id="(0.5294117647058824,1.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yH2k0fC-EeiBrOAOs4BT-g" id="(0.4772727272727273,1.0)"/>
     </edges>
@@ -2791,7 +2791,7 @@
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_5dXkYfC_EeiBrOAOs4BT-g"/>
       <element xmi:type="uml:Transition" href="Harness3.uml#_5c_J4PC_EeiBrOAOs4BT-g"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_5dXkYvC_EeiBrOAOs4BT-g" points="[167, 258, -643984, -643984]$[167, 161, -643984, -643984]$[291, 161, -643984, -643984]"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_5dXkYvC_EeiBrOAOs4BT-g" points="[142, 264, -643984, -643984]$[142, 161, -643984, -643984]$[255, 161, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5eXC4PC_EeiBrOAOs4BT-g" id="(0.3615023474178404,0.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5eXC4fC_EeiBrOAOs4BT-g" id="(0.0,0.3466666666666667)"/>
     </edges>

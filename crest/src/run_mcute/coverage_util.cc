@@ -1,3 +1,14 @@
+// Copyright (c) 2018, Reza Ahmadi (ahmadi@cs.queensu.ca)
+//
+// This file is part of mCUTE, which is distributed under the revised
+// BSD license.  A copy of this license can be found in the file LICENSE.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See LICENSE
+// for details.
+
+
 #include <iostream>
 #include <fstream>
 #include <string>

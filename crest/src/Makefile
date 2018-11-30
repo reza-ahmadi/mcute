@@ -21,7 +21,7 @@ libcrest/libcrest.a: libcrest/crest.o $(BASE_LIBS)
 	$(AR) rsv $@ $^
 
 
-libcrest/libumlcute.a: run_mcute/concolic_search.o libcrest/crest.o run_mcute/coverage_util.o run_mcute/fileutil.o $(BASE_LIBS)
+libcrest/libumlcute.a: run_mcute/concolic_search.o libcrest/crest.o run_mcute/branch_util.o run_mcute/coverage_util.o run_mcute/fileutil.o $(BASE_LIBS)
 	$(AR) rsv $@ $^
 
 run_crest/run_crest: run_crest/concolic_search.o $(BASE_LIBS)
