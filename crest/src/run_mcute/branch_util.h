@@ -51,7 +51,7 @@ namespace mcute {
 
 
 	public:
-		static void negate(const SymbolicExecution& ex, int& depth);
+		static void negate_rand(const SymbolicExecution& ex, int& depth);
 
 	private:
 		static bool solveAtBranch(const SymbolicExecution& ex, int branch_idx, vector<value_t>& input);
