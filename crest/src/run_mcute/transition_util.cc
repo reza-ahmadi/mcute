@@ -44,6 +44,17 @@ using std::stable_sort;
 
 namespace mcute {
 
+  void transition_util::create_coverage_util(map<string, coverage_util*>& CoverageUtilTable){
+
+    coverage_util* cu1 = new coverage_util(string("t1"));
+    cu1->initCoverageInfo();
+
+    coverage_util* cu2 = new coverage_util(string("t2"));
+    cu2->initCoverageInfo();
+
+    CoverageUtilTable.insert(pair<string, coverage_util*>("t1",cu1));
+    CoverageUtilTable.insert(pair<string, coverage_util*>("t2",cu2));
+  }
 
   ////////////////////////////////////////////////////////////////////////
   // this method selects the next transition for execution based on the
@@ -52,11 +63,11 @@ namespace mcute {
   void transition_util::select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions){
     if (Curr_State==INIT){
       //it is possible to run t3
-      next_t = "t3";
+      next_t = "t1";
       printf ("Curr state: INIT");
     }else if (Curr_State==SETUP){
       //it is possible to run t4
-      next_t = "t4";
+      next_t = "t2";
       printf ("Curr state: SETUP");
     }
     else{
@@ -64,7 +75,7 @@ namespace mcute {
       //commands.loopBack().send(); //to be able to re-execute the previous transitions
       //printf ("++++++Harness: msg 'loopBack' sent");
       Curr_State=INIT;
-      next_t = "t3";
+      next_t = "t1";
     }
 
     //adding the transition to the list of covered transitions

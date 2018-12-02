@@ -299,14 +299,14 @@ ifs.close();
   __CrestApply2(2, 12, (long long )(tank1 == 0));
 #line 18
   if (tank1 == 0) {
-    __CrestBranch(5, 17, 1);
+    __CrestBranch(5, 103, 1);
     {
     __CrestLoad(9, (unsigned long )(&amp; tank2), (long long )tank2);
     __CrestLoad(8, (unsigned long )0, (long long )0);
     __CrestApply2(7, 12, (long long )(tank2 == 0));
 #line 18
     if (tank2 == 0) {
-      __CrestBranch(10, 18, 1);
+      __CrestBranch(10, 104, 1);
 #line 19
       printf((char const   * __restrict  )&quot;----branch visited: tank1==0 &amp;&amp; tank2 == 0 ----&quot;);
       __CrestClearStack(12);
@@ -316,26 +316,26 @@ ifs.close();
       __CrestApply2(13, 14, (long long )(Warnings > 1));
 #line 20
       if (Warnings > 1) {
-        __CrestBranch(16, 20, 1);
+        __CrestBranch(16, 106, 1);
         {
         __CrestLoad(20, (unsigned long )(&amp; Warnings), (long long )Warnings);
         __CrestLoad(19, (unsigned long )0, (long long )5);
         __CrestApply2(18, 16, (long long )(Warnings &lt; 5));
 #line 20
         if (Warnings &lt; 5) {
-          __CrestBranch(21, 21, 1);
+          __CrestBranch(21, 107, 1);
 #line 21
           printf((char const   * __restrict  )&quot;----branch visited: Warnings>1 &amp;&amp; Warnings&lt;5 ----&quot;);
           __CrestClearStack(23);
         } else {
-          __CrestBranch(22, 22, 0);
+          __CrestBranch(22, 108, 0);
 #line 23
           printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1 &amp;&amp; Warnings&lt;5) ----&quot;);
           __CrestClearStack(24);
         }
         }
       } else {
-        __CrestBranch(17, 23, 0);
+        __CrestBranch(17, 109, 0);
 #line 23
         printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1 &amp;&amp; Warnings&lt;5) ----&quot;);
         __CrestClearStack(25);
@@ -347,25 +347,25 @@ ifs.close();
       __CrestApply2(26, 14, (long long )(solution > 0));
 #line 25
       if (solution > 0) {
-        __CrestBranch(29, 25, 1);
+        __CrestBranch(29, 111, 1);
 #line 26
         printf((char const   * __restrict  )&quot;----branch visited: solution>0 ----&quot;);
         __CrestClearStack(31);
       } else {
-        __CrestBranch(30, 26, 0);
+        __CrestBranch(30, 112, 0);
 #line 28
         printf((char const   * __restrict  )&quot;----branch visited: !(solution>0) ----&quot;);
         __CrestClearStack(32);
       }
       }
     } else {
-      __CrestBranch(11, 27, 0);
+      __CrestBranch(11, 113, 0);
 #line 18
       goto _L;
     }
     }
   } else {
-    __CrestBranch(6, 28, 0);
+    __CrestBranch(6, 114, 0);
     _L: /* CIL Label */ 
 #line 32
     printf((char const   * __restrict  )&quot;----branch visited: !(tank1==0 &amp;&amp; tank2 == 0) ----&quot;);
@@ -376,17 +376,18 @@ ifs.close();
     __CrestApply2(34, 14, (long long )(drain > 0));
 #line 33
     if (drain > 0) {
-      __CrestBranch(37, 30, 1);
+      __CrestBranch(37, 116, 1);
 #line 34
       printf((char const   * __restrict  )&quot;----branch visited: drain>0 ----&quot;);
       __CrestClearStack(39);
     } else {
-      __CrestBranch(38, 31, 0);
+      __CrestBranch(38, 117, 0);
 
     }
     }
   }
   __CrestReturn(40);
+#line 7
 #line 7
 #line 7
 
@@ -654,11 +655,11 @@ cuteCommands.newState(INIT).send();
         <ownedAttribute xmi:type="uml:Property" xmi:id="_UDwxQPT_Eei0JrDYvmKv7w" name="dyeingRunController2" visibility="protected" type="_d3yFUPTZEei0JrDYvmKv7w" isOrdered="true" aggregation="composite"/>
         <ownedConnector xmi:type="uml:Connector" xmi:id="_18iawGgvEeijRtS4FXxxtA" name="RTConnector1">
           <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_z-v4YGgvEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8WgvEeijRtS4FXxxtA" partWithPort="_UDwxQPT_Eei0JrDYvmKv7w" role="_d3yFUfTZEei0JrDYvmKv7w"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_GQwmUGdjEeiqifykceCvxw"/>
         </ownedConnector>
         <ownedConnector xmi:type="uml:Connector" xmi:id="_3ASWwGgvEeijRtS4FXxxtA" name="RTConnector2">
           <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_rximYGgvEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8WgvEeijRtS4FXxxtA" partWithPort="_UDwxQPT_Eei0JrDYvmKv7w" role="_d3yFVfTZEei0JrDYvmKv7w"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_ugLW4GgvEeijRtS4FXxxtA"/>
         </ownedConnector>
         <ownedConnector xmi:type="uml:Connector" xmi:id="_nU5IAGhHEeijRtS4FXxxtA" name="RTConnector3">
           <end xmi:type="uml:ConnectorEnd" xmi:id="_nU69MGhHEeijRtS4FXxxtA" role="_jct8kGhHEeijRtS4FXxxtA"/>
@@ -889,7 +890,7 @@ if (RunningTime>0) {
 }
 //for random numbers
 srand (time(NULL));
-next_t=&quot;t3&quot;;
+next_t=&quot;t1&quot;;
 Curr_State=INIT;
 
 
@@ -947,7 +948,8 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
             <transition xmi:type="uml:Transition" xmi:id="_fnsUwORnEeiwK5UPZ22vmQ" name="" source="_ayVIUORnEeiwK5UPZ22vmQ" target="_2YhyQH_gEeiMFcUmhpquNg">
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_cTFv8O9pEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
                 <language>C++</language>
-                <body>CreateCoverageUtilTable();</body>
+                <body>//CreateCoverageUtilTable();
+transition_util::create_coverage_util(CoverageUtilTable);</body>
               </effect>
               <trigger xmi:type="uml:Trigger" xmi:id="_oqCfAORnEeiwK5UPZ22vmQ" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
             </transition>
@@ -1610,7 +1612,7 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
 
 
 //Selecting next transition
-SelectNextTransition();
+transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
 
 </body>
               </entry>
@@ -1904,10 +1906,10 @@ return allCoverred;</body>
           <language>C++</language>
           <body>  
   // send message to the current transition
-  if (next_t == &quot;t3&quot;) {
+  if (next_t == &quot;t1&quot;) {
     data.setup(0, 0).send();
     log.log (&quot;++++++Harness: msg 'setup' sent&quot;);
-  } else if (next_t == &quot;t4&quot;) {
+  } else if (next_t == &quot;t2&quot;) {
     data.start(0, 0, 0, 0).send();
     log.log (&quot;++++++Harness: msg 'start' sent&quot;);
   }</body>
@@ -2094,7 +2096,7 @@ return allCoverred;</body>
   <UMLRealTime:RTConnector xmi:id="_nU7kQWhHEeijRtS4FXxxtA" base_Connector="_nU5IAGhHEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_JjnrwGm0EeiLpMcT--nfLg" isWired="false" base_Port="_JjTisGm0EeiLpMcT--nfLg"/>
   <RTCppProperties:CapsuleProperties xmi:id="_QTsRYGm0EeiLpMcT--nfLg" headerPreface="#include &quot;umlrtmain.hh&quot;" base_Class="_C62aYGgnEeijRtS4FXxxtA"/>
-  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;#include &lt;algorithm>&#xA;&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;coverage_util.h>&#xA;#include &lt;branch_util.h>&#xA;#include &lt;transition_util.h>&#xA;#include &lt;STATES.hh>&#xA;&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;#include &lt;algorithm>&#xA;&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;//#include &lt;coverage_util.h>&#xA;#include &lt;branch_util.h>&#xA;#include &lt;transition_util.h>&#xA;#include &lt;STATES.hh>&#xA;&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
   <RTCppProperties:CapsuleProperties xmi:id="_6u_EAH5SEeipA49rzMw2KQ" headerPreface="#include &quot;STATES.hh&quot;&#xA;&#xA;#include &lt;map>&#xA;#include &lt;assert.h>&#xA;#include &lt;vector>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;&#xA;#include &quot;libcrest/crest.h&quot;" base_Class="_hpaO8GdiEeiqifykceCvxw"/>
   <RTCppProperties:AttributeProperties xmi:id="_bHwlUH5XEeipA49rzMw2KQ" type="string" base_Property="_dxTFUH5VEeipA49rzMw2KQ"/>
   <UMLRTStateMachines:RTState xmi:id="_2YpuEH_gEeiMFcUmhpquNg" base_State="_2YhyQH_gEeiMFcUmhpquNg"/>

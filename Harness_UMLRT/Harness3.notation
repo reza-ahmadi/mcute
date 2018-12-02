@@ -525,7 +525,7 @@
               <layoutConstraint xmi:type="notation:Location" xmi:id="_UEualfT_Eei0JrDYvmKv7w" x="25" y="-10"/>
             </children>
             <element xmi:type="uml:Port" href="Harness3.uml#_d3yFUfTZEei0JrDYvmKv7w"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UEuakfT_Eei0JrDYvmKv7w" x="251" y="49" width="11" height="11"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UEuakfT_Eei0JrDYvmKv7w" x="291" y="48" width="11" height="11"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_UEualvT_Eei0JrDYvmKv7w" type="Port_Shape">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_UN5ktPT_Eei0JrDYvmKv7w" source="PapyrusCSSForceValue">
@@ -538,10 +538,10 @@
               <layoutConstraint xmi:type="notation:Location" xmi:id="_UEuam_T_Eei0JrDYvmKv7w" x="25" y="-10"/>
             </children>
             <element xmi:type="uml:Port" href="Harness3.uml#_d3yFVfTZEei0JrDYvmKv7w"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UEual_T_Eei0JrDYvmKv7w" x="18" y="-5" width="11" height="11"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UEual_T_Eei0JrDYvmKv7w" x="21" y="-5" width="11" height="11"/>
           </children>
           <element xmi:type="uml:Property" href="Harness3.uml#_UDwxQPT_Eei0JrDYvmKv7w"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UEWAEfT_Eei0JrDYvmKv7w" x="101" y="281" width="256" height="173"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UEWAEfT_Eei0JrDYvmKv7w" x="47" y="281" width="296" height="173"/>
         </children>
         <styles xmi:type="notation:TitleStyle" xmi:id="_C7xAZGgnEeijRtS4FXxxtA"/>
         <element xmi:type="uml:Class" href="Harness3.uml#_C62aYGgnEeijRtS4FXxxtA"/>
@@ -622,14 +622,14 @@
       <owner xmi:type="uml:Class" href="Harness3.uml#_C62aYGgnEeijRtS4FXxxtA"/>
     </styles>
     <element xmi:type="uml:Class" href="Harness3.uml#_C62aYGgnEeijRtS4FXxxtA"/>
-    <edges xmi:type="notation:Connector" xmi:id="_18xEQGgvEeijRtS4FXxxtA" type="Connector_Edge" source="_z-1_AGgvEeijRtS4FXxxtA" target="_UEuakPT_Eei0JrDYvmKv7w">
+    <edges xmi:type="notation:Connector" xmi:id="_18xEQGgvEeijRtS4FXxxtA" type="Connector_Edge" source="_z-1_AGgvEeijRtS4FXxxtA" target="_tCYjMGgvEeijRtS4FXxxtA">
       <styles xmi:type="notation:FontStyle" xmi:id="_18xEQWgvEeijRtS4FXxxtA"/>
       <element xmi:type="uml:Connector" href="Harness3.uml#_18iawGgvEeijRtS4FXxxtA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_18xEQmgvEeijRtS4FXxxtA" points="[464, 143, -643984, -643984]$[342, 139, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_19PlYGgvEeijRtS4FXxxtA" id="(0.09090909090909091,0.18181818181818182)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_XJelAPT_Eei0JrDYvmKv7w" id="(0.36363636363636365,0.8181818181818182)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_XJelAPT_Eei0JrDYvmKv7w" id="(0.18181818181818182,0.2727272727272727)"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_3AgZMGgvEeijRtS4FXxxtA" type="Connector_Edge" source="_rxuMkGgvEeijRtS4FXxxtA" target="_UEualvT_Eei0JrDYvmKv7w">
+    <edges xmi:type="notation:Connector" xmi:id="_3AgZMGgvEeijRtS4FXxxtA" type="Connector_Edge" source="_rxuMkGgvEeijRtS4FXxxtA" target="_uhEuwGgvEeijRtS4FXxxtA">
       <styles xmi:type="notation:FontStyle" xmi:id="_3AgZMWgvEeijRtS4FXxxtA"/>
       <element xmi:type="uml:Connector" href="Harness3.uml#_3ASWwGgvEeijRtS4FXxxtA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3AgZMmgvEeijRtS4FXxxtA" points="[464, 215, -643984, -643984]$[321, 229, -643984, -643984]"/>

@@ -28,7 +28,7 @@
 // #include <fileutil.h>
 #include "STATES.hh"
 
-// #include <coverage_util.h>
+#include <coverage_util.h>
 #include "base/basic_types.h"
 #include "base/symbolic_execution.h"
 #include "base/symbolic_expression.h"
@@ -52,6 +52,8 @@ namespace mcute {
 
 
 	public:
+		static void create_coverage_util(map<string, coverage_util*>& CoverageUtilTable);
+		// static void send_next_message(string next_t, Protocol1::Conj data);
 		static void select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions);
 	};
 
