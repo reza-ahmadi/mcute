@@ -787,7 +787,7 @@ else if (argc==4) {
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_DXKxkd7ZEeiBkYD2qJeUwg" value="0"/>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_Fp9s4OFFEeiBkYD2qJeUwg" name="Curr_State" visibility="public" type="_TEwR0H5PEeipA49rzMw2KQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Fp9s4OFFEeiBkYD2qJeUwg" name="Curr_State" visibility="public"/>
         <ownedAttribute xmi:type="uml:Port" xmi:id="_SkthcOIIEeitsrWbfpHoZQ" name="timingReport" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
@@ -1698,7 +1698,8 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
 	VisitedStates.push_back(Curr_State);
 }
 
-SelectNextTransition();
+transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+//SelectNextTransition();
 
 branch_util::negate_rand(ex, Depth);
 
@@ -1759,8 +1760,8 @@ else{
 	timingBFSId = timingBFSNextMsg.informIn(UMLRTTimespec(0,100));
 }
 
-SelectNextTransition();
-</body>
+//SelectNextTransition();
+transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);</body>
                   </entry>
                 </subvertex>
                 <subvertex xmi:type="uml:State" xmi:id="_z4x6cPC_EeiBrOAOs4BT-g" name="__InitialMsgSent__">
@@ -2024,15 +2025,6 @@ return allCoverred;</body>
         <packagedElement xmi:type="uml:Usage" xmi:id="_CV8wDWhHEeijRtS4FXxxtA" client="_CV8wAWhHEeijRtS4FXxxtA" supplier="_CV8wDGhHEeijRtS4FXxxtA"/>
         <packagedElement xmi:type="uml:CallEvent" xmi:id="_JglVQGhIEeijRtS4FXxxtA" operation="_JgeAgGhIEeijRtS4FXxxtA"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Enumeration" xmi:id="_TEwR0H5PEeipA49rzMw2KQ" name="STATES">
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR0X5PEeipA49rzMw2KQ" name="SETUP"/>
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR0n5PEeipA49rzMw2KQ" name="FILLING"/>
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR035PEeipA49rzMw2KQ" name="ABORTED"/>
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR1H5PEeipA49rzMw2KQ" name="DYEING"/>
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_TEwR1X5PEeipA49rzMw2KQ" name="DRAINING"/>
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_HhfGEH8XEeipA49rzMw2KQ" name="DONE"/>
-        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_pA-mIN7GEeiBkYD2qJeUwg" name="INIT"/>
-      </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_fuzjc2diEeiqifykceCvxw">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_fuzjdGdiEeiqifykceCvxw" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -2102,7 +2094,7 @@ return allCoverred;</body>
   <UMLRealTime:RTConnector xmi:id="_nU7kQWhHEeijRtS4FXxxtA" base_Connector="_nU5IAGhHEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_JjnrwGm0EeiLpMcT--nfLg" isWired="false" base_Port="_JjTisGm0EeiLpMcT--nfLg"/>
   <RTCppProperties:CapsuleProperties xmi:id="_QTsRYGm0EeiLpMcT--nfLg" headerPreface="#include &quot;umlrtmain.hh&quot;" base_Class="_C62aYGgnEeijRtS4FXxxtA"/>
-  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;#include &lt;algorithm>&#xA;&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;coverage_util.h>&#xA;#include &lt;branch_util.h>&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;#include &quot;STATES.hh&quot;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_YL6b8G7EEeiLpMcT--nfLg" headerPreface="#include &lt;assert.h>&#xA;#include &lt;stdio.h>&#xA;//#include &lt;sys/time.h>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;#include &lt;vector>&#xA;#include &lt;map>&#xA;#include &lt;algorithm>&#xA;&#xA;&#xA;#include &lt;limits>&#xA;#include &lt;cstdlib>&#xA;&#xA;#include &lt;ctime>&#xA;&#xA;#include &lt;concolic_search.h>&#xA;#include &lt;coverage_util.h>&#xA;#include &lt;branch_util.h>&#xA;#include &lt;transition_util.h>&#xA;#include &lt;STATES.hh>&#xA;&#xA;#include &quot;base/basic_types.h&quot;&#xA;#include &quot;base/symbolic_execution.h&quot;&#xA;#include &quot;base/symbolic_expression.h&quot;&#xA;#include &quot;base/symbolic_interpreter.h&quot;&#xA;#include &quot;base/symbolic_path.h&quot;&#xA;#include &quot;base/symbolic_predicate.h&quot;&#xA;#include &quot;base/yices_solver.h&quot;&#xA;&#xA;&#xA;using namespace mcute;" headerEnding="" implementationPreface="using namespace std;&#xA;using namespace mcute;" base_Class="_ZSoUsGgnEeijRtS4FXxxtA"/>
   <RTCppProperties:CapsuleProperties xmi:id="_6u_EAH5SEeipA49rzMw2KQ" headerPreface="#include &quot;STATES.hh&quot;&#xA;&#xA;#include &lt;map>&#xA;#include &lt;assert.h>&#xA;#include &lt;vector>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;&#xA;#include &quot;libcrest/crest.h&quot;" base_Class="_hpaO8GdiEeiqifykceCvxw"/>
   <RTCppProperties:AttributeProperties xmi:id="_bHwlUH5XEeipA49rzMw2KQ" type="string" base_Property="_dxTFUH5VEeipA49rzMw2KQ"/>
   <UMLRTStateMachines:RTState xmi:id="_2YpuEH_gEeiMFcUmhpquNg" base_State="_2YhyQH_gEeiMFcUmhpquNg"/>
@@ -2169,4 +2161,5 @@ return allCoverred;</body>
   <UMLRTStateMachines:RTState xmi:id="_d39EcPTZEei0JrDYvmKv7w" base_State="_d3yFdPTZEei0JrDYvmKv7w"/>
   <UMLRTStateMachines:RTState xmi:id="_d39rgPTZEei0JrDYvmKv7w" base_State="_d3yFdvTZEei0JrDYvmKv7w"/>
   <UMLRealTime:CapsulePart xmi:id="_UES8wPT_Eei0JrDYvmKv7w" base_Property="_UDwxQPT_Eei0JrDYvmKv7w"/>
+  <RTCppProperties:AttributeProperties xmi:id="_uorfcPZ1EeiHH8-AdwKg1Q" type="STATES" base_Property="_Fp9s4OFFEeiBkYD2qJeUwg"/>
 </xmi:XMI>
