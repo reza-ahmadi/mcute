@@ -1,19 +1,16 @@
-1 2 __CrestInt __CrestInt __CrestInt __CrestInt
-2 3 14
-3 4 13
-4 5 printf
-5 6 9
-6 7 8
-7 10 printf
-8 10 printf
+1 2 4
+2 3
+3 6
+4 5
+5 6
+6
+7 8 __CrestInt __CrestInt 1
+8 9 13
 9 10 printf
 10 11 12
-11 18 printf
-12 18 printf
-13 14
+11 14 printf
+12 14
+13 14 printf
 14 15 printf
-15 16 17
-16 18 printf
-17 18
-18 19
-19
+15 16
+16

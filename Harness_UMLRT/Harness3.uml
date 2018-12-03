@@ -677,7 +677,8 @@ cuteCommands.newState(INIT).send();
             <subvertex xmi:type="uml:State" xmi:id="_1XwGIGhEEeijRtS4FXxxtA" name="Starting">
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7bLoMGhEEeijRtS4FXxxtA" name="Entry" isReentrant="false">
                 <language>C++</language>
-                <body>char* strategy = &quot;DFS&quot;; //default strategy
+                <body>char* strategy = &quot;BFS&quot;; //default strategy
+map&lt;string,int> params;
 int transitionIterations = 5; //default
 int time = 0; //default time
 int totalIterations = 0;
@@ -685,38 +686,56 @@ int totalIterations = 0;
 int argc = UMLRTMain::getArgCount();
 log.log(&quot;params count: %d&quot;, argc);
 if (argc==1) {
-	const char * arg = UMLRTMain::getArg(0);
-	if (!strcmp(arg, &quot;-h&quot;)) {
-		log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
-		log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
-		log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
-	} 
+  const char * arg = UMLRTMain::getArg(0);
+  if (!strcmp(arg, &quot;-h&quot;)) {
+    log.log(&quot;mcute [program]&quot;);
+    log.log(&quot;[program] : the executable program to be tested&quot;);
+    log.log(&quot;for instance, to execute a program called sample1, run: mcute sample1&quot;);
+    log.log(&quot;mcute assumes that the test configurations are stored in a file called mcute.conf&quot;);
+  }else{
+    string name;
+    int value;
+    ifstream conf(arg);
+    while (conf>>name>>value){
+      params.insert(pair&lt;string,int>(name,value));
+    }
+    cout&lt;&lt;&quot;sanity checking the config file (mcute.conf)..&quot;&lt;&lt;endl;
+    assert(params.size()>=3);
+    if (params[&quot;strategy&quot;]==1){
+      strategy=&quot;conc&quot;;
+    }
+    else{
+      strategy=&quot;rnd1&quot;;
+    }
+    settings.start(strategy, params[&quot;time&quot;], params[&quot;totalIterations&quot;], params[&quot;transitionIterations&quot;]).send(); //default 5 seconds
+  }
 }
 else if (argc==4) {
-	//const char * arg = UMLRTMain::getArg(0);
-	//const char * arg1 = UMLRTMain::getArg(1);
-	//const char * arg2 = UMLRTMain::getArg(2);
-	//log.log(&quot;  0:%s, 1:%s, 2:%s  &quot; , arg, arg1, arg2);
+  //const char * arg = UMLRTMain::getArg(0);
+  //const char * arg1 = UMLRTMain::getArg(1);
+  //const char * arg2 = UMLRTMain::getArg(2);
+  //log.log(&quot;  0:%s, 1:%s, 2:%s  &quot; , arg, arg1, arg2);
 
 
-	strategy = (char*) UMLRTMain::getArg(0);
+  strategy = (char*) UMLRTMain::getArg(0);
 
-	const char * timeStr = UMLRTMain::getArg(1);
-	time = atoi(timeStr);
+  const char * timeStr = UMLRTMain::getArg(1);
+  time = atoi(timeStr);
 
-	const char * totalIterationsStr = UMLRTMain::getArg(2);
-	totalIterations = atoi(totalIterationsStr);
+  const char * totalIterationsStr = UMLRTMain::getArg(2);
+  totalIterations = atoi(totalIterationsStr);
 
-	const char * transitionIterationsStr = UMLRTMain::getArg(3);
-	if (atoi(transitionIterationsStr)>0) {
-		transitionIterations = atoi(transitionIterationsStr);
-	}
+  const char * transitionIterationsStr = UMLRTMain::getArg(3);
+  if (atoi(transitionIterationsStr)>0) {
+    transitionIterations = atoi(transitionIterationsStr);
+  }
 
-	settings.start(strategy, time, totalIterations, transitionIterations).send(); //default 5 seconds
+  settings.start(strategy, time, totalIterations, transitionIterations).send(); //default 5 seconds
 }else{
-	log.log(&quot; -ac : options for running the action code on transitions: comp, df &quot;);
-	log.log(&quot; -nt : options for selecting the next transition, either random, max branches, or transition depenencies: rand, branch, dep &quot;);
-	log.log(&quot; example run : ./ConcolicMain -nt random  —-—this command runs the concolic testing and when multiple outgoing transitions are available, randomly picks one &quot;);
+  log.log(&quot;mcute [program]&quot;);
+  log.log(&quot;[program] : the executable program to be tested&quot;);
+  log.log(&quot;for instance, to execute a program called sample1, run: mcute sample1&quot;);
+  log.log(&quot;mcute assumes that the test configurations are stored in a file called mcute.conf&quot;);
 }
 </body>
               </entry>

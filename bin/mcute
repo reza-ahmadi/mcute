@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+DIR=`dirname $0`
+
+CONF=${DIR}/mcute.conf
+
+#echo ${CONF}
+echo "Executing $1 with ${CONF} parameters"
+
+#executing
+./$1 -u ${CONF} 
