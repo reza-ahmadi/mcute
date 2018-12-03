@@ -1,4 +1,4 @@
 strategy 1
-time 4
-totalIterations 500
+time 2
+totalIterations 100
 transitionIterations 1

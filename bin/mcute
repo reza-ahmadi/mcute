@@ -4,10 +4,20 @@ set -e
 
 DIR=`dirname $0`
 
-CONF=${DIR}/mcute.conf
+CONF_FILE=$2
+
+if ["${CONF_FILE}" == ""]; then
+CONF_FILE="mcute.conf"
+fi
+
+#mcute.conf
+CONF=${DIR}/${CONF_FILE}
+
+
+echo "CONF is ${CONF} "
 
 #echo ${CONF}
 echo "Executing $1 with ${CONF} parameters"
 
 #executing
-./$1 -u ${CONF} 
+./$1 -u ${CONF}
