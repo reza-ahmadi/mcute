@@ -1,0 +1,7 @@
+//strategy can be [0..2] == [random1, random2, concolic]
+//branchSelect can be [0..1] == [random, systematic]
+strategy 0
+branchSelect 0
+time 4
+totalIterations 1000
+transitionIterations 200
