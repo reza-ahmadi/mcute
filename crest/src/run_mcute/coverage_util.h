@@ -41,10 +41,7 @@ namespace mcute {
 class coverage_util {
 
 protected:
-	vector<branch_id_t> paired_branch_;
 	vector<function_id_t> branch_function_;
-	vector<bool> total_covered_;
-	vector<bool> covered_;
 	branch_id_t max_branch_;
 	unsigned int num_covered_;
 	vector<bool> reached_;
@@ -58,6 +55,9 @@ protected:
 	typedef vector<branch_id_t>::const_iterator BranchIt;
 
 public:
+	vector<branch_id_t> paired_branch_;
+	vector<bool> total_covered_;
+	vector<bool> covered_;
 	vector<branch_id_t> branches_;
 	unsigned int total_num_covered_;
 	string transition;

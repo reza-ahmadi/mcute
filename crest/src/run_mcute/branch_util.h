@@ -29,7 +29,7 @@
 
 #include <concolic_search.h>
 #include <fileutil.h>
-// #include <coverage_util.h>
+#include <coverage_util.h>
 #include "base/basic_types.h"
 #include "base/symbolic_execution.h"
 #include "base/symbolic_expression.h"
@@ -55,6 +55,7 @@ namespace mcute {
 
 	public:
 		static void negate_rand(const SymbolicExecution& ex, int& depth);
+		static void negate_sys(const SymbolicExecution& ex, int& depth, map<string, coverage_util*> coverage_util_table, string next_t);
 
 	private:
 		static bool solveAtBranch(const SymbolicExecution& ex, int branch_idx, vector<value_t>& input);

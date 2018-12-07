@@ -1830,7 +1830,11 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
 transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
 //SelectNextTransition();
 
-branch_util::negate_rand(ex, Depth);
+if (Heuristic==0){ //random branch selection
+	branch_util::negate_rand(ex, Depth);
+}else{
+	branch_util::negate_sys(ex, Depth, CoverageUtilTable, next_t);
+}
 
 </body>
                   </effect>
