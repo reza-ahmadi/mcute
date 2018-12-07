@@ -8,6 +8,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See LICENSE
 // for details.
 
+#ifndef __COVERAGE__UTIL__H
+#define __COVERAGE__UTIL__H
+
 #include <algorithm>
 #include <assert.h>
 #include <cmath>
@@ -75,3 +78,5 @@ private:
 };
 
 }
+
+#endif

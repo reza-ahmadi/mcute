@@ -8,6 +8,10 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See LICENSE
 // for details.
 
+#ifndef __FILE__UTIL__H
+#define __FILE__UTIL__H
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -42,3 +46,5 @@ public:
 };
 
 }
+
+#endif

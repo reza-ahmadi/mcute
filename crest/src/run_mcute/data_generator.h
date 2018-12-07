@@ -8,8 +8,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See LICENSE
 // for details.
 
-#ifndef __TRANSITION__UTIL__H
-#define __TRANSITION__UTIL__H
+#ifndef __DATA__GENERATOR__H
+#define __DATA__GENERATOR__H
+
 
 #include <assert.h>
 #include <stdio.h>
@@ -21,19 +22,14 @@
 #include <map>
 #include <algorithm>
 
-#include <stdlib.h>     /* srand, rand */
-
 
 #include <limits>
 #include <cstdlib>
 
 #include <ctime>
 
-// #include <concolic_search.h>
-// #include <fileutil.h>
-#include "STATES.hh"
-
-#include <coverage_util.h>
+#include <fileutil.h>
+// #include <coverage_util.h>
 #include "base/basic_types.h"
 #include "base/symbolic_execution.h"
 #include "base/symbolic_expression.h"
@@ -41,6 +37,7 @@
 #include "base/symbolic_path.h"
 #include "base/symbolic_predicate.h"
 #include "base/yices_solver.h"
+
 
 
 using namespace std;
@@ -53,16 +50,14 @@ namespace mcute {
 	* author: reza
 	* */
 
-	class transition_util {
+	class data_generator {
 
 	private:
-		// std::vector<string> _transitions;
+		const static value_t _max = 1000000;
+		const static value_t _min = -1000000;
 
 	public:
-		static void create_coverage_util(map<string, coverage_util*>& CoverageUtilTable);
-		// static void send_next_message(string next_t, Protocol1::Conj data);
-		static void select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions);
-		static void select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions, string strategy);
+		static void generateInteger(int size, vector<value_t>& input);
 	};
 
 }

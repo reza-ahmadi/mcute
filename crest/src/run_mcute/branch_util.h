@@ -8,6 +8,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See LICENSE
 // for details.
 
+#ifndef __BRANCH__UTIL__H
+#define __BRANCH__UTIL__H
+
 #include <assert.h>
 #include <stdio.h>
 //#include <sys/time.h>
@@ -58,3 +61,5 @@ namespace mcute {
 	};
 
 }
+
+#endif
