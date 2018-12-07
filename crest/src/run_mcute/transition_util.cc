@@ -61,21 +61,37 @@ namespace mcute {
   // possible and exacutable transitions
   ////////////////////////////////////////////////////////////////////////
   void transition_util::select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions){
-    if (Curr_State==INIT){
-      //it is possible to run t3
-      next_t = "t1";
-      printf ("Curr state: INIT");
-    }else if (Curr_State==SETUP){
-      //it is possible to run t4
-      next_t = "t2";
-      printf ("Curr state: SETUP");
-    }
-    else{
-      printf ("Curr state: last state. Restarting..");
-      //commands.loopBack().send(); //to be able to re-execute the previous transitions
-      //printf ("++++++Harness: msg 'loopBack' sent");
-      Curr_State=INIT;
-      next_t = "t1";
+    select_next_transition(Curr_State, next_t, VisitedTransitions,"");
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // this method selects the next transition for execution based on the
+  // possible and exacutable transitions
+  ////////////////////////////////////////////////////////////////////////
+  void transition_util::select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions, string strategy){
+    if (strategy!="black-box"){//select the next transition systematically
+      if (Curr_State==INIT){
+        //it is possible to run t3
+        next_t = "t1";
+        printf ("Curr state: INIT");
+      }else if (Curr_State==SETUP){
+        //it is possible to run t4
+        next_t = "t2";
+        printf ("Curr state: SETUP");
+      }
+      else{
+        printf ("Curr state: last state. Restarting..");
+        //commands.loopBack().send(); //to be able to re-execute the previous transitions
+        //printf ("++++++Harness: msg 'loopBack' sent");
+        Curr_State=INIT;
+        next_t = "t1";
+      }
+    }else{ //select the next transition randomy
+      std::vector<string> transitions;
+      transitions.push_back("t1");
+      transitions.push_back("t2");
+      int irand = rand()%transitions.size();
+      next_t = transitions.at(irand);
     }
 
     //adding the transition to the list of covered transitions

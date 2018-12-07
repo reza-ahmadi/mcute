@@ -1,7 +1,7 @@
-//strategy can be [0..2] == [random1, random2, concolic]
-//branchSelect can be [0..1] == [random, systematic]
+//strategy: 1 = black-box testing, 2 = simple exploration1, 3 = concolic]
+//heuristic (branch selection technique): 0 = random, 1 = systematic
 strategy 1
-branchSelect 0
-time 10
-totalIterations 10000
-transitionIterations 20
+heuristic 0
+time 5
+totalIterations 1000
+transitionIterations 100

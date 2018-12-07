@@ -18,6 +18,8 @@
 #include <map>
 #include <algorithm>
 
+#include <stdlib.h>     /* srand, rand */
+
 
 #include <limits>
 #include <cstdlib>
@@ -50,11 +52,14 @@ namespace mcute {
 
 	class transition_util {
 
+	private:
+		// std::vector<string> _transitions;
 
 	public:
 		static void create_coverage_util(map<string, coverage_util*>& CoverageUtilTable);
 		// static void send_next_message(string next_t, Protocol1::Conj data);
 		static void select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions);
+		static void select_next_transition(STATES& Curr_State, string& next_t, vector<string>& VisitedTransitions, string strategy);
 	};
 
 }
