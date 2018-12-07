@@ -1,2 +1,2 @@
 LD_PATHS:=$(LD_PATHS) -L/home/reza/Dropbox/Qlab/code/MCUTE/crest/lib
-LD_LIBS:= $(LD_LIBS) -lumlcute -lyices
+LD_LIBS:= $(LD_LIBS) -lmcute -lyices

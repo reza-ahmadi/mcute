@@ -1,0 +1,7 @@
+//strategy can be [0..2] == [random1, random2, concolic]
+//heuristic (branch selection technique) [0..1] == [random, systematic]
+strategy 2
+heuristic 1
+time 4
+totalIterations 30000
+transitionIterations 1
