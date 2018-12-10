@@ -299,6 +299,7 @@ ifs.close();
   __CrestApply2(2, 12, (long long )(tank1 == 0));
 #line 18
   if (tank1 == 0) {
+    printf((char const   * __restrict  )&quot;----branch visited: tank1==0 ----&quot;);
     __CrestBranch(5, 103, 1);
     {
     __CrestLoad(9, (unsigned long )(&amp; tank2), (long long )tank2);
@@ -308,7 +309,7 @@ ifs.close();
     if (tank2 == 0) {
       __CrestBranch(10, 104, 1);
 #line 19
-      printf((char const   * __restrict  )&quot;----branch visited: tank1==0 &amp;&amp; tank2 == 0 ----&quot;);
+      printf((char const   * __restrict  )&quot;----branch visited: tank2 == 0 ----&quot;);
       __CrestClearStack(12);
       {
       __CrestLoad(15, (unsigned long )(&amp; Warnings), (long long )Warnings);
@@ -316,6 +317,7 @@ ifs.close();
       __CrestApply2(13, 14, (long long )(Warnings > 1));
 #line 20
       if (Warnings > 1) {
+        printf((char const   * __restrict  )&quot;----branch visited: Warnings>1 ----&quot;);
         __CrestBranch(16, 106, 1);
         {
         __CrestLoad(20, (unsigned long )(&amp; Warnings), (long long )Warnings);
@@ -325,19 +327,20 @@ ifs.close();
         if (Warnings &lt; 5) {
           __CrestBranch(21, 107, 1);
 #line 21
-          printf((char const   * __restrict  )&quot;----branch visited: Warnings>1 &amp;&amp; Warnings&lt;5 ----&quot;);
+          printf((char const   * __restrict  )&quot;----branch visited: Warnings&lt;5 ----&quot;);
           __CrestClearStack(23);
         } else {
+          printf((char const   * __restrict  )&quot;----branch visited: !(Warnings&lt;5) ----&quot;);
           __CrestBranch(22, 108, 0);
 #line 23
-          printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1 &amp;&amp; Warnings&lt;5) ----&quot;);
+
           __CrestClearStack(24);
         }
         }
       } else {
         __CrestBranch(17, 109, 0);
 #line 23
-        printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1 &amp;&amp; Warnings&lt;5) ----&quot;);
+        printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1) ----&quot;);
         __CrestClearStack(25);
       }
       }
@@ -360,15 +363,17 @@ ifs.close();
       }
     } else {
       __CrestBranch(11, 113, 0);
+      printf((char const   * __restrict  )&quot;----branch visited: !(tank2 == 0) ----&quot;);
+
 #line 18
       goto _L;
     }
     }
   } else {
     __CrestBranch(6, 114, 0);
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
 #line 32
-    printf((char const   * __restrict  )&quot;----branch visited: !(tank1==0 &amp;&amp; tank2 == 0) ----&quot;);
+    printf((char const   * __restrict  )&quot;----branch visited: !(tank1==0) ----&quot;);
     __CrestClearStack(33);
     {
     __CrestLoad(36, (unsigned long )(&amp; drain), (long long )drain);
@@ -382,7 +387,7 @@ ifs.close();
       __CrestClearStack(39);
     } else {
       __CrestBranch(38, 117, 0);
-
+printf((char const   * __restrict  )&quot;----branch visited: !(drain>0) ----&quot;);
     }
     }
   }
@@ -678,6 +683,7 @@ cuteCommands.newState(INIT).send();
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_7bLoMGhEEeijRtS4FXxxtA" name="Entry" isReentrant="false">
                 <language>C++</language>
                 <body>char* strategy = &quot;BFS&quot;; //default strategy
+char* heuristicStr = &quot;BFS&quot;; //default strategy
 int heuristic = 0; //default algorithm for branch selection
 map&lt;string,int> params;
 int transitionIterations = 5; //default
@@ -689,10 +695,10 @@ log.log(&quot;params count: %d&quot;, argc);
 if (argc==1) {
   const char * arg = UMLRTMain::getArg(0);
   if (!strcmp(arg, &quot;-h&quot;)) {
-    log.log(&quot;mcute [program]&quot;);
+    log.log(&quot;mcute [program] [test-conf]&quot;);
     log.log(&quot;[program] : the executable program to be tested&quot;);
-    log.log(&quot;for instance, to execute a program called sample1, run: mcute sample1&quot;);
-    log.log(&quot;mcute assumes that the test configurations are stored in a file called mcute.conf&quot;);
+    log.log(&quot;[test-conf] : a config file that describes various parameters&quot;);
+    log.log(&quot;for instance, to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1&quot;);
   }else{
     string name;
     int value;
@@ -720,7 +726,7 @@ if (argc==1) {
     settings.start(params[&quot;heuristic&quot;], strategy, params[&quot;time&quot;], params[&quot;totalIterations&quot;], params[&quot;transitionIterations&quot;]).send(); //default 5 seconds
   }
 }
-else if (argc==4) {
+else if (argc==5) {
   //const char * arg = UMLRTMain::getArg(0);
   //const char * arg1 = UMLRTMain::getArg(1);
   //const char * arg2 = UMLRTMain::getArg(2);
@@ -729,23 +735,27 @@ else if (argc==4) {
 
   strategy = (char*) UMLRTMain::getArg(0);
 
-  const char * timeStr = UMLRTMain::getArg(1);
+  heuristicStr = (char*) UMLRTMain::getArg(1);
+
+  heuristic = atoi(heuristicStr);
+
+  const char * timeStr = UMLRTMain::getArg(2);
   time = atoi(timeStr);
 
-  const char * totalIterationsStr = UMLRTMain::getArg(2);
+  const char * totalIterationsStr = UMLRTMain::getArg(3);
   totalIterations = atoi(totalIterationsStr);
 
-  const char * transitionIterationsStr = UMLRTMain::getArg(3);
+  const char * transitionIterationsStr = UMLRTMain::getArg(4);
   if (atoi(transitionIterationsStr)>0) {
     transitionIterations = atoi(transitionIterationsStr);
   }
 
   settings.start(heuristic, strategy, time, totalIterations, transitionIterations).send(); //default 5 seconds
 }else{
-  log.log(&quot;mcute [program]&quot;);
+  log.log(&quot;mcute [program] [test-conf]&quot;);
   log.log(&quot;[program] : the executable program to be tested&quot;);
-  log.log(&quot;for instance, to execute a program called sample1, run: mcute sample1&quot;);
-  log.log(&quot;mcute assumes that the test configurations are stored in a file called mcute.conf&quot;);
+  log.log(&quot;[test-conf] : a config file that describes various parameters&quot;);
+  log.log(&quot;for instance, to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1&quot;);
 }
 </body>
               </entry>

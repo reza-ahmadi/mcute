@@ -104,34 +104,82 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
 
   // vector<SymbolicPred*> constraints = ex.path().constraints();
   int constraints_size = ex.path().constraints().size();
-  const vector<branch_id_t>& branches = ex.path().branches();
+  vector<branch_id_t> branches;
 
-  int new_branch_selected = false;
-  for (map<string,coverage_util*>::iterator it=coverage_util_table.begin();it!=coverage_util_table.end();it++){
-    if (new_branch_selected)
-    break;
-    coverage_util* cu = it->second;
-    for (int i=0;i<branches.size();i++){
-      cout<<endl<<"[branch_util::negate_sys]: branch to check for negation: " << branches.at(i) <<endl;
-      cout<<"[branch_util::negate_sys]: branch belongs to transition " << cu->transition <<endl;
-      //if the branch belongs to this cu object and is  its pair was not covered
-      cout<<"[branch_util::negate_sys]: branchs already covered " << cu->total_num_covered_ << "out of" << cu->branches_.size() <<endl;
-      for (int l=0;l<cu->covered_.size();l++)
-        cout <<"covered["<<l<<"] = "<<cu->covered_[l]<<endl;
-      if (cu->branchBelongsToTransition(branches.at(i)) && !(cu->covered_[cu->paired_branch_[branches.at(i)]-1])){
-        branch_idx = i;
-        new_branch_selected = true;
-        cout<<"[branch_util::negate_sys]: pair of the branch not covered before, selecting branch: " << cu->paired_branch_[branches.at(i)] <<endl;
-        break;
-      }
-    }
+  for (int i=0;i<ex.path().branches().size();i++){
+    if (ex.path().branches().at(i)>0)
+    branches.push_back(ex.path().branches().at(i));
   }
 
-  if (!new_branch_selected){
-    if (constraints_size>0){
-      branch_idx =constraints_size-1;
-      cout<<"[branch_util::negate_sys]: pair of the branch already covered, selecting: " << branch_idx <<endl;
+  //remove negative numbers
+
+
+  // printf ("\n\t[branch_util::negate_sys]:: total branches: %d, total constraints are:%d\n", branches.size(), constraints_size);
+  // for (int i=0;i<branches.size();i++){
+  //   cout << "\t branch[" << i << "]=" << branches.at(i);
+  // }
+
+  // cout<<endl;
+  // for (int i=0;i<ex.path().constraints_idx().size();i++){
+  //   cout << "\t constraints_idx[" << i << "]=" << ex.path().constraints_idx()[i];
+  // }
+
+  int new_branch_selected = false;
+  cout << "\nsize of the coverage_util_table table is:" << coverage_util_table.size() <<endl;
+  for (map<string,coverage_util*>::iterator it=coverage_util_table.begin();it!=coverage_util_table.end();it++){
+
+    if (new_branch_selected){
+      break;
     }
+
+    cout << "coverage_util object for the transition:" << it->first <<endl;
+    coverage_util* cu = it->second;
+    // int bid = constraints_size;
+    for (int i=branches.size()-1;i>=0;i--){
+
+      // for some reason the first element in branches vector is -1
+      // if (branches.at(i)<0){
+      //   continue;
+      // }
+
+      // bid--;
+
+      //if this branch does not contain the current transition
+      if (!cu->branchBelongsToTransition(branches.at(i))){
+        continue;
+      }
+
+      cout<<endl<<"[branch_util::negate_sys]: branch to check for negation: " << branches.at(i) <<endl;
+      cout<<"[branch_util::negate_sys]: the pair of the branch is: " << cu->paired_branch_[branches.at(i)] <<endl;
+      // cout<<"[branch_util::negate_sys]: branch belongs to transition " << cu->transition <<endl;
+      //if the branch belongs to this cu object and is  its pair was not covered
+      // cout<<"[branch_util::negate_sys]: branchs already covered " << cu->total_num_covered_ << "out of" << cu->branches_.size() <<endl;
+
+      //printing the covered branches
+      for (int l=1;l<cu->covered_.size();l++)
+      {
+        if (cu->covered_[l]){
+          cout <<"covered["<<l<<"] = "<<cu->covered_[l]<<endl;
+        }
+      }
+
+      if (!(cu->covered_[cu->paired_branch_[branches.at(i)]])){
+        if (i>=0 && i<constraints_size){
+          branch_idx = i;
+          new_branch_selected = true;
+          cout<<"[branch_util::negate_sys]: pair of the branch not covered before, selecting branch: " << cu->paired_branch_[branches.at(i)] <<endl;
+        }
+        break;
+      }//if
+    }//for
+  }//for
+
+  if (!new_branch_selected){
+    // if (constraints_size>0){
+    branch_util::negate_rand(ex,branch_idx);
+    // branch_idx =constraints_size-1;
+    cout<<"[branch_util::negate_sys]: cannot continue systematic branch coverage, selecting randomly: " << branch_idx <<endl;
+    // }
   }
 
   printf ("\t[branch_util::negate_sys]:: branch_idx to negagte is: %d, total constraints are:%d\n", branch_idx, constraints_size);
