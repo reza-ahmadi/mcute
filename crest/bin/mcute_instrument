@@ -2,6 +2,8 @@
 
 set -e
 
+cp /tmp/mcute/bidSeed bidSeed
+
 DIR=`dirname $0`/..
 CILLY=${DIR}/cil/bin/cilly
 
@@ -12,3 +14,9 @@ rm -f idcount stmtcount funcount cfg_func_map cfg branches cfg_branches
 ${CILLY} $1 -o ${TARGET} --save-temps --doCrestInstrument \
     -I${DIR}/include -L${DIR}/lib -lcrest -lstdc++
 
+cp actioncode.cil.c /tmp/mcute/actioncode.cil.c
+
+
+BRANCH_FILE=$2
+
+cp ./branches /tmp/mcute/branches_${BRANCH_FILE} 
