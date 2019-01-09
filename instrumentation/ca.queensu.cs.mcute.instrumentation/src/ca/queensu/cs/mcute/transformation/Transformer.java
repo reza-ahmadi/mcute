@@ -70,6 +70,7 @@ import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Trigger;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
@@ -586,7 +587,8 @@ public class Transformer {
 				return false;
 
 			Region region = statemachine.getRegions().get(0);
-			List<Port> capsulePorts = UmlrtUtil.getPorts(cutCapsule);
+			List<Port> capsulePorts = UmlrtUtil.getPorts(cutCapsule).stream()
+					.filter(p -> !(p.getName().equals(commandsPort))).collect(Collectors.toList());
 			if (capsulePorts == null || capsulePorts.size() == 0)
 				return false;
 
@@ -921,11 +923,23 @@ public class Transformer {
 				modelUnderTest.getPackagedElements().add(createCoverageUtilTableOpaqueBehavior);
 			}
 
-			// ToDo:init the following attributes
+			// ToDo: initializing the following attributes
 			// next_t="t1";
 			// Curr_State=INIT;
 			// States=3;
 			// Transitions=2;
+			// List<Property> listAtt =
+			// cutCapsule.getAttributes().stream().filter(att->att.getName().equals("next_t")).collect(Collectors.toList());
+			// if (listAtt == null || listAtt.size() < 1)
+			// return false;
+			// Property next_t = listAtt.get(0);
+			// Vertex firstState =
+			// UmlrtUtil.getInitialState(statemachine).getOutgoings().get(0).getTarget();
+			// Transition firstTransition = firstState.getOutgoings().get(0);
+			// ValueSpecification firstTransitionValue =
+			// UMLFactory.eINSTANCE.createValueSpecificationAction().createValue(firstTransition.getName(),
+			// String.class, arg2)
+			// next_t.setDefaultValue(firstTransition.getName());
 
 		} else
 			return false;
@@ -1309,9 +1323,9 @@ public class Transformer {
 		// res = transformer.injectHarnessPackage();
 		// printRes(res);
 
-		System.out.print("constructing the top capsule... ");
-		res = transformer.configureTopCapsule();
-		printRes(res);
+		// System.out.print("constructing the top capsule... ");
+		// res = transformer.configureTopCapsule();
+		// printRes(res);
 
 		System.out.println("customizing the test harness for the CUT");
 		res = transformer.customizeTestHarness();
