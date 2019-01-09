@@ -1190,25 +1190,28 @@ public class Transformer {
 
 	public void createIterationTransitions() {
 		Pseudostate init = UmlrtUtil.getInitialState(statemachine);
-		Vertex firstState = init.getOutgoings().get(0).getTarget();
+		Vertex targetState = init.getOutgoings().get(0).getTarget();
 
 		Region region = getRegion();
-		List<Transition> transitions = region.getTransitions();
-		int size = transitions.size();
+		// List<Transition> transitions = region.getTransitions();
+		List<Vertex> vertexes = region.getSubvertices().stream().filter(v -> !(v instanceof Pseudostate))
+				.collect(Collectors.toList());
+		int size = vertexes.size();
 
 		for (int i = 0; i < size; i++) {
-			Transition transition = transitions.get(i);
-			if (transition.getSource() instanceof Pseudostate
-					&& ((Pseudostate) transition.getSource()).getKind() == PseudostateKind.INITIAL_LITERAL) {
-				continue;
-			}
-			createIterationTransition(firstState, transition, i);
+			// Transition transition = transitions.get(i);
+			// if (transition.getSource() instanceof Pseudostate
+			// && ((Pseudostate) transition.getSource()).getKind() ==
+			// PseudostateKind.INITIAL_LITERAL) {
+			// continue;
+			// }
+			createIterationTransition(targetState, vertexes.get(i), i);
 
 		}
 	}
 
-	public void createIterationTransition(Vertex target, Transition transition, int index) {
-		Vertex source = transition.getSource();
+	public void createIterationTransition(Vertex target, Vertex source, int index) {
+		// Vertex source = transition.getSource();
 		// Vertex target = transition.getTarget();
 		Transition iterate = UMLFactory.eINSTANCE.createTransition();
 		iterate.setSource(source);
