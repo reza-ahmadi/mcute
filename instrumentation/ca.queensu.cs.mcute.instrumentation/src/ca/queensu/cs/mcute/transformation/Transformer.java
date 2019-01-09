@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.EList;
@@ -48,6 +49,7 @@ import org.eclipse.uml2.common.util.UML2Util.EObjectMatcher;
 import org.eclipse.uml2.uml.CallEvent;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Collaboration;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Model;
@@ -73,11 +75,11 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 
 public class Transformer {
 
-	private final String harnessPath = "/home/reza/Dropbox/Qlab/code/UMLrtModels/Nicolas/Observer/ca.queensu.cs.observer.umlrt/libraries/observer.uml";
+	private String harnessPath;
 	// private final String harnessPackageName = "MCUTE";
-	private final String harnessCapsuleName = "mCUTE_Harness";
-	private final String topCapsuleName = "mCUTE__TOP";
-	private final String commandsPort = "commands";
+	private String harnessCapsuleName;
+	private String topCapsuleName;
+	private String commandsPort;
 
 	/**
 	 * The resource set containing the instrumented model
@@ -184,24 +186,43 @@ public class Transformer {
 		Collection<EObject> harnessObjs = modelCopier.copyAll(harnessResource.getContents());
 		modelCopier.copyReferences();
 
-		for (EObject obj : harnessObjs) {
-			if (obj instanceof Package) {
-				modelUnderTest.getPackagedElements().add((PackageableElement) obj);
-			} else {
-				if (obj instanceof Class) {
-					System.out.println("not a package:" + ((Class) obj).getName());
-				} else {
-					System.out.println("not a package:" + obj.toString());
-				}
+		// set copied elements in goods resources
+		final EList<EObject> contents = modelUnderTest.eResource().getContents();
 
-			}
+		// for (EObject umlObject : harnessObjs) {
+		// if (umlObject instanceof Model) {
+		// Model m = (Model) umlObject;
+		// Package newPackage = UMLFactory.eINSTANCE.createPackage();
+		// newPackage.setName("HARNESS");
+		// modelUnderTest.getPackagedElements().add(newPackage);
+		// for (int i = 0; i < m.getPackagedElements().size(); i++) {
+		// EObject elem = m.getPackagedElements().get(i);
+		// if (elem instanceof Class) {
+		// newPackage.getPackagedElements().add((Class) elem);
+		// modelUnderTest.getPackagedElements().add((Class)elem);
+		// }
+		// }
+		// } else
+		// contents.add(umlObject);
+		// }
+
+		for (EObject umlObject : harnessObjs) {
+			if (umlObject instanceof Model)
+				modelUnderTest.getPackagedElements().add((Model) umlObject);
+			else
+				contents.add(umlObject);
 		}
+		// for (EObject obj : harnessObjs) {
+		// if ((obj instanceof PackageableElement)) {
+		// modelUnderTest.getPackagedElements().add((PackageableElement) obj);
+		// }
+		// }
 
 		return true;
 
 	}
 
-	public boolean constructTopCapsule() {
+	public boolean configureTopCapsule() {
 
 		//
 		// TransactionalEditingDomain domain =
@@ -213,8 +234,8 @@ public class Transformer {
 		// retrieve the top capsule
 		Class topCapsule = null;
 		for (EObject element : modelUnderTest.getPackagedElements()) {
-			if (element instanceof Model) {
-				Model mcuteObjects = (Model) element;
+			if (element instanceof Package) {
+				Package mcuteObjects = (Package) element;
 				for (EObject subelement : mcuteObjects.getPackagedElements()) {
 					if (subelement instanceof Class && ((Class) subelement).getName().equals(topCapsuleName)) {
 						topCapsule = (Class) subelement;
@@ -229,8 +250,8 @@ public class Transformer {
 		// retrieve the harness capsule
 		Class thCapsule = null;
 		for (EObject element : modelUnderTest.getPackagedElements()) {
-			if (element instanceof Model) {
-				Model mcuteObjects = (Model) element;
+			if (element instanceof Package) {
+				Package mcuteObjects = (Package) element;
 				for (EObject subelement : mcuteObjects.getPackagedElements()) {
 					if (subelement instanceof Class && ((Class) subelement).getName().equals(harnessCapsuleName)) {
 						thCapsule = (Class) subelement;
@@ -248,21 +269,36 @@ public class Transformer {
 		if (port1.getAppliedStereotypes() != null && port1.getAppliedStereotypes().size() > 0)
 			newPort1.applyStereotype(port1.getAppliedStereotypes().get(0));
 		newPort1.setIsConjugated(!port1.isConjugated());
-		newPort1.setIsConjugated(!port1.isConjugated());
 		newPort1.setIsBehavior(true); // this is not a relay port
 
+		// adding CUT ports to the harness
+		for (Port portCUT : cutCapsule.getOwnedPorts()) {
+			Port newPortTH = thCapsule.createOwnedPort(portCUT.getName(), portCUT.getType());
+			if (portCUT.getAppliedStereotypes() != null && portCUT.getAppliedStereotypes().size() > 0)
+				newPortTH.applyStereotype(portCUT.getAppliedStereotypes().get(0));
+			newPortTH.setIsConjugated(!portCUT.isConjugated());
+			newPortTH.setIsBehavior(true); // this is not a relay port
+		}
+
 		// add an instance of the cut inside the top capsule
+		Property harnessPart = UmlrtUtil.getPartByName(topCapsule, "harness");
 		Property cut = UMLFactory.eINSTANCE.createProperty();
 		cut.setType(cutCapsule);
 		cut.setName("cut");
 		topCapsule.getOwnedAttributes().add(cut);
 
+		// apply stereotype to cut
+		if (harnessPart.getAppliedStereotypes() != null && harnessPart.getAppliedStereotypes().size() > 0)
+			cut.applyStereotype(harnessPart.getAppliedStereotypes().get(0));
+
 		// creating the connections between TH and the cut
+		// Property cutPart = UmlrtUtil.getPartByName(topCapsule, "cut");
 		for (Port portTH : thCapsule.getOwnedPorts()) {
+			if (portTH.getType().getName() == null)// system port? log, timing,..
+				continue;
 			Port portCUT = cutCapsule.getOwnedPort(portTH.getName(), portTH.getType());
 			if (portCUT != null) {
-				UmlrtUtil.createConnector(topCapsule, UmlrtUtil.getPartByName(topCapsule, "harness"),
-						UmlrtUtil.getPartByName(topCapsule, "cut"), portTH, portCUT);
+				UmlrtUtil.createConnector(topCapsule, harnessPart, cut, portTH, portCUT);
 			}
 		}
 
@@ -341,7 +377,7 @@ public class Transformer {
 
 	}
 
-	private Integer generatableTransitions;
+	private int generatableTransitions;
 
 	/**
 	 * Initialise the instrumentation
@@ -351,16 +387,23 @@ public class Transformer {
 	 * @return whether the initialization succeeded or failed
 	 * @throws Exception
 	 */
-	private boolean init(String[] args) throws Exception {
+	private boolean initialize(String[] args) throws Exception {
+
+		harnessPath = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/FSE2019/mcute_package.uml";
+		// private final String harnessPackageName = "MCUTE";
+		harnessCapsuleName = "mCUTE_Harness";
+		topCapsuleName = "mCUTE__TOP";
+		commandsPort = "commands";
+
 		if (args.length < 6) {
 			// throw new Exception("Not enough argument. Usage: java Instrumentation -i "
 			// + "<input file> -o <output file> -c <capsule name>");
 			System.out.println("NOTE: missing input parameters, using defaults...");
 			args = new String[10];
 			args[0] = "-i";
-			args[1] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM/testgen.uml";
+			args[1] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen.uml";
 			args[2] = "-o";
-			args[3] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM/testgen2.uml";
+			args[3] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen2.uml";
 			args[4] = "-c";
 			args[5] = "Capsule1";
 			args[6] = "-g";
@@ -394,8 +437,6 @@ public class Transformer {
 
 		return result;
 	}
-	
-	
 
 	public boolean instrumentActionCode() throws IOException, InterruptedException {
 		String bidFileName = "/tmp/mcute/bidSeed";
@@ -403,7 +444,7 @@ public class Transformer {
 		int seed = 0;
 		String firstStableState = UmlrtUtil.getInitialState(statemachine).getOutgoings().get(0).getTarget().getName();
 		for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
-			
+
 			// reading seed
 			Scanner scanner1 = new Scanner(new File(bidFileName));
 			if (scanner1.hasNext()) {
@@ -412,8 +453,8 @@ public class Transformer {
 					seed = Integer.parseInt(strSeed);
 			}
 			scanner1.close();
-			
-			//preparing action code for instrumentation
+
+			// preparing action code for instrumentation
 			String actionCode = "";
 			if (t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
 				actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
@@ -498,8 +539,8 @@ public class Transformer {
 			writer.write(String.valueOf(seed));
 			writer.flush();
 			writer.close();
-			
-		}//for
+
+		} // for
 		return true;
 	}
 
@@ -677,6 +718,10 @@ public class Transformer {
 				// trig.getEvent().eContainer().eContents().add(trig.getEvent());
 
 			}
+
+			System.out.println(String.format("state machine generated. info: %d states, %d transitions, %d loc. done.",
+					generatableTransitions + 1, generatableTransitions, loc));
+
 		} else
 			return false;
 		return true;
@@ -704,6 +749,188 @@ public class Transformer {
 			return actionCodeBuilder.toString();
 		} else
 			return "";
+	}
+
+	// generates SendNextMessageOpaqueBehavior and
+	// SelectNextTransitionOpaqueBehavior inside the harness
+	// based on the capsule under test
+	private boolean customizeTestHarness() {
+
+		// EObject harnessObj =
+		// UML2Util.findEObject(modelUnderTest.getPackagedElements(), new
+		// EObjectMatcher() {
+		//
+		// @Override
+		// public boolean matches(EObject el) {
+		// // TODO Auto-generated method stub
+		// return (el instanceof Class && ((Class)
+		// el).getName().equals(harnessCapsuleName));
+		// }
+		// });
+		// if (harnessObj == null)
+		// return false;
+
+		EObject harnessPackage = UML2Util.findEObject(modelUnderTest.getPackagedElements(), new EObjectMatcher() {
+
+			@Override
+			public boolean matches(EObject el) {
+				// TODO Auto-generated method stub
+				return (el instanceof Package && ((Package) el).getName().equals("mCUTE"));
+			}
+		});
+		EObject harnessObj = null;
+		if (harnessPackage == null)
+			return false;
+		else {
+			for (PackageableElement elem : ((Package) harnessPackage).getPackagedElements()) {
+				if (elem.getName().equals(harnessCapsuleName))
+					harnessObj = elem;
+			}
+		}
+
+		if (harnessObj != null && harnessObj instanceof Class) {
+			Class harness = (Class) harnessObj;
+
+			// finding the operations inside the harness
+			List<Operation> list = null;
+			list = harness.getAllOperations().stream().filter(prop -> prop.getName().equals("SelectNextTransition"))
+					.collect(Collectors.toList());
+			if (list == null || list.size() < 1)
+				return false;
+			Operation selectNextTransitionOperation = list.get(0);
+			list = harness.getAllOperations().stream().filter(prop -> prop.getName().equals("SendNextMessage"))
+					.collect(Collectors.toList());
+			if (list == null || list.size() < 1)
+				return false;
+			Operation sendNextMessageOperation = list.get(0);
+			list = harness.getAllOperations().stream().filter(prop -> prop.getName().equals("CreateCoverageUtilTable"))
+					.collect(Collectors.toList());
+			if (list == null || list.size() < 1)
+				return false;
+			Operation createCoverageUtilTableOperation = list.get(0);
+
+			// constructing SendNextMessageOpaqueBehavior
+			OpaqueBehavior sendNextMessageOpaqueBehavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
+			sendNextMessageOpaqueBehavior.setName("SendNextMessageOpaqueBehavior");
+			sendNextMessageOpaqueBehavior.getLanguages().add("C++");
+			String sendNextMessageBody = "";
+			/////////////////////////////////////////
+			// to generate something like this:
+			/////////////////////////////////////////
+			/*
+			 * if (next_t == "t1") { data.setup(0, 0).send();
+			 * log.log("++++++Harness: msg 'setup' sent"); } else if (next_t == "t2") {
+			 * data.start(0, 0, 0, 0).send(); log.log("++++++Harness: msg 'start' sent"); }
+			 */
+			/////////////////////////////////////////
+			// ToDo: only for Integers for now
+			sendNextMessageBody += "vector<value_t> inputs;"; // for random inputs to be written to a file
+			for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
+				String port = "", msg = "", params = "";
+				if (t.getTriggers() != null && t.getTriggers().size() > 0) {
+					port = t.getTriggers().get(0).getPorts().get(0).getName();
+					CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
+					msg = ce.getOperation().getName();
+					String writeInputsScript = "";
+					for (Parameter p : ce.getOperation().inputParameters()) {
+						int randomParam = new Random().nextInt();
+						params += String.format("%d,", randomParam);
+						writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
+					}
+					params = params.substring(0, params.length() - 1);
+					sendNextMessageBody += String.format(
+							"if (next_t==\"%s\"){%s \n %s.%s(%s).send();\n log.log(\"Harness: msg '%s' sent\"); \n}\n",
+							t.getName(), writeInputsScript, port, msg, params, msg);
+				}
+			}
+			// saving the inputs generated to a file so (in random testing) the action code
+			// can restore them from there
+			sendNextMessageBody += "fileutil::writeInputs(\"input\", inputs);";
+			sendNextMessageOpaqueBehavior.getBodies().add(sendNextMessageBody);
+			sendNextMessageOperation.getMethods().add(sendNextMessageOpaqueBehavior);
+			modelUnderTest.getPackagedElements().add(sendNextMessageOpaqueBehavior);
+
+			// constructing SelectNextTransitionOpaqueBehavior
+			OpaqueBehavior selectNextTransitionOpaqueBehavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
+			selectNextTransitionOpaqueBehavior.setName("SelectNextTransitionOpaqueBehavior");
+			selectNextTransitionOpaqueBehavior.getLanguages().add("C++");
+			String selectNextTransitionBody = "";
+			/////////////////////////////////////////
+			// to generate something like this:
+			/////////////////////////////////////////
+			/*
+			 * if (Curr_State == INIT) { // it is possible to run t3 next_t = "t3";
+			 * log.log("Curr state: INIT"); } if (Curr_State == SETUP) { // it is possible
+			 * to run t4 next_t = "t4"; log.log("Curr state: SETUP"); } // adding the
+			 * transition to the list of covered transitions
+			 * if(std::find(VisitedTransitions.begin(), VisitedTransitions.end(), next_t) ==
+			 * VisitedTransitions.end()){ VisitedTransitions.push_back(next_t); }
+			 */
+			/////////////////////////////////////////
+			// ToDo: only for Integers for now
+			for (Vertex v : statemachine.getRegions().get(0).getSubvertices()) {
+				if (v instanceof State) {
+					State s = (State) v;
+					if (s.getOutgoings() != null && s.getOutgoings().size() > 0) {
+						int randomTransitionIdx = new Random().nextInt(s.getOutgoings().size());
+						String candidateTransition = s.getOutgoings().get(randomTransitionIdx).getName();
+						selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t = \"%s\";\n }",
+								s.getName(), candidateTransition);
+					}
+				}
+			} // for
+			if (selectNextTransitionBody != "")
+				selectNextTransitionBody += "if(std::find(VisitedTransitions.begin(), VisitedTransitions.end(), next_t) == VisitedTransitions.end()){VisitedTransitions.push_back(next_t);}";
+			selectNextTransitionOpaqueBehavior.getBodies().add(selectNextTransitionBody);
+			selectNextTransitionOperation.getMethods().add(selectNextTransitionOpaqueBehavior);
+			modelUnderTest.getPackagedElements().add(selectNextTransitionOpaqueBehavior);
+
+			// constructing CreateCoverageUtilTableOpaqueBehavior
+			OpaqueBehavior createCoverageUtilTableOpaqueBehavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
+			createCoverageUtilTableOpaqueBehavior.setName("CreateCoverageUtilTableOpaqueBehavior");
+			createCoverageUtilTableOpaqueBehavior.getLanguages().add("C++");
+			String createCoverageUtilTableBody = "";
+			/////////////////////////////////////////
+			// to generate something like this:
+			/////////////////////////////////////////
+			/*
+			 * coverage_util* cu1 = new coverage_util(string("t3"));
+			 * cu1->initCoverageInfo();
+			 * 
+			 * coverage_util* cu2 = new coverage_util(string("t4"));
+			 * cu2->initCoverageInfo();
+			 * 
+			 * CoverageUtilTable.insert(pair<string, coverage_util*>("t3",cu1));
+			 * CoverageUtilTable.insert(pair<string, coverage_util*>("t4",cu2));
+			 */
+			/////////////////////////////////////////
+			// ToDo: only for Integers for now
+			for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
+				if (t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
+					createCoverageUtilTableBody += String.format(
+							"coverage_util* cu1_%s = new coverage_util(string(\"%s\")); \n cu1_%s->initCoverageInfo();",
+							t.getName(), t.getName(), t.getName());
+					createCoverageUtilTableBody += String.format(
+							"CoverageUtilTable.insert(pair<string, coverage_util*>(\"%s\",cu1_%s));", t.getName(),
+							t.getName());
+				}
+			} // for
+			if (createCoverageUtilTableBody != "") {
+				createCoverageUtilTableOpaqueBehavior.getBodies().add(createCoverageUtilTableBody);
+				createCoverageUtilTableOperation.getMethods().add(createCoverageUtilTableOpaqueBehavior);
+				modelUnderTest.getPackagedElements().add(createCoverageUtilTableOpaqueBehavior);
+			}
+
+			// ToDo:init the following attributes
+			// next_t="t1";
+			// Curr_State=INIT;
+			// States=3;
+			// Transitions=2;
+
+		} else
+			return false;
+
+		return true;
 	}
 
 	/**
@@ -750,27 +977,24 @@ public class Transformer {
 	/**
 	 * Create the transition enumeration
 	 */
-	public void createTransitionEnumeration() {
-		Enumeration transitionEnumeration = UMLFactory.eINSTANCE.createEnumeration();
-		transitionEnumeration.setName("TRANSITIONS");
-		transitionEnumeration.createOwnedLiteral("INITIAL");
-
-		// retrieve all transitions of the statemachine (assuming the state machine is
-		// flat)
-		Region region = statemachine.getRegions().get(0);
-		List<Transition> transitions = region.getTransitions();
-
-		for (int i = 0; i < transitions.size(); i++) {
-			Transition transition = transitions.get(i);
-			if (transition.getSource() instanceof Pseudostate
-					&& ((Pseudostate) transition.getSource()).getKind() == PseudostateKind.INITIAL_LITERAL) {
-				continue;
-			}
-			transitionEnumeration.createOwnedLiteral("T" + i);
-		}
-
-		modelUnderTest.getPackagedElements().add(transitionEnumeration);
-	}
+	/*
+	 * public void createTransitionEnumeration() { Enumeration transitionEnumeration
+	 * = UMLFactory.eINSTANCE.createEnumeration();
+	 * transitionEnumeration.setName("TRANSITIONS");
+	 * transitionEnumeration.createOwnedLiteral("INITIAL");
+	 * 
+	 * // retrieve all transitions of the statemachine (assuming the state machine
+	 * is // flat) Region region = statemachine.getRegions().get(0);
+	 * List<Transition> transitions = region.getTransitions();
+	 * 
+	 * for (int i = 0; i < transitions.size(); i++) { Transition transition =
+	 * transitions.get(i); if (transition.getSource() instanceof Pseudostate &&
+	 * ((Pseudostate) transition.getSource()).getKind() ==
+	 * PseudostateKind.INITIAL_LITERAL) { continue; }
+	 * transitionEnumeration.createOwnedLiteral("T" + i); }
+	 * 
+	 * modelUnderTest.getPackagedElements().add(transitionEnumeration); }
+	 */
 
 	/**
 	 * Create the state enumeration
@@ -834,7 +1058,7 @@ public class Transformer {
 			languageIndex = 0;
 			state.setEntry(entry);
 		}
-		body += "cuteCommands.newState(" + state.getName() + ").send();";
+		body += "commands.newState(" + state.getName() + ").send();";
 		entry.getBodies().set(languageIndex, body);
 	}
 
@@ -869,7 +1093,7 @@ public class Transformer {
 			languageIndex = 0;
 			transition.setEffect(effect);
 		}
-		body += "cuteCommands.newTransition(T" + index + ").send();";
+		body += "commands.newTransition(T" + index + ").send();";
 		effect.getBodies().set(languageIndex, body);
 	}
 
@@ -892,29 +1116,25 @@ public class Transformer {
 	/**
 	 * Save all variables before executing entry action code.
 	 */
-	public void saveCurrentAttributesValues() {
-
-		// retrieve all states of the statemachine (assuming states are non-composite)
-		Region region = getRegion();
-		List<Vertex> vertices = region.getSubvertices();
-		Stream<Vertex> states = vertices.stream().filter(v -> v instanceof State);
-		String prebody = "";
-
-		// For all attribute, prepare the prebody
-		Property[] attrs = getCapsuleAttributes();
-		for (int i = 0; i < attrs.length; i++) {
-			Property attr = attrs[i];
-			prebody += "restore_".concat(attr.getName()) + " = " + attr.getName() + ";\n";
-		}
-
-		for (Iterator<Vertex> it = states.iterator(); it.hasNext();) {
-			State state = (State) it.next();
-			OpaqueBehavior behavior = (OpaqueBehavior) state.getEntry();
-			int index = behavior.getLanguages().indexOf("C++");
-			String body = behavior.getBodies().get(index);
-			behavior.getBodies().set(index, prebody + body);
-		}
-	}
+	/*
+	 * public void saveCurrentAttributesValues() {
+	 * 
+	 * // retrieve all states of the statemachine (assuming states are
+	 * non-composite) Region region = getRegion(); List<Vertex> vertices =
+	 * region.getSubvertices(); Stream<Vertex> states = vertices.stream().filter(v
+	 * -> v instanceof State); String prebody = "";
+	 * 
+	 * // For all attribute, prepare the prebody Property[] attrs =
+	 * getCapsuleAttributes(); for (int i = 0; i < attrs.length; i++) { Property
+	 * attr = attrs[i]; prebody += "restore_".concat(attr.getName()) + " = " +
+	 * attr.getName() + ";\n"; }
+	 * 
+	 * for (Iterator<Vertex> it = states.iterator(); it.hasNext();) { State state =
+	 * (State) it.next(); OpaqueBehavior behavior = (OpaqueBehavior)
+	 * state.getEntry(); int index = behavior.getLanguages().indexOf("C++"); String
+	 * body = behavior.getBodies().get(index); behavior.getBodies().set(index,
+	 * prebody + body); } }
+	 */
 
 	/**
 	 * Restore all variables during transition effect of reset transitions.
@@ -922,7 +1142,8 @@ public class Transformer {
 	 * @param transition
 	 *            the transition to instrument
 	 */
-	public void restoreCurrentAttributesValues(Transition transition) {
+
+	public void restoreDefaultAttributesValues(Transition transition) {
 
 		String prebody = "";
 
@@ -942,74 +1163,18 @@ public class Transformer {
 	/**
 	 * Create the cute command for every transition. Invoke createEffectIfAny
 	 */
-	public void createCuteCommandsForTransitions() {
-
-		// retrieve all transitions of the statemachine (assuming states are
-		// non-composite)
-		Region region = getRegion();
-		List<Transition> transitions = region.getTransitions();
-
-		for (int i = 0; i < transitions.size(); i++) {
-			Transition transition = transitions.get(i);
-			if (transition.getSource() instanceof Pseudostate
-					&& ((Pseudostate) transition.getSource()).getKind() == PseudostateKind.INITIAL_LITERAL) {
-				continue;
-			}
-			createEffectIfAny(transition, i);
-		}
-	}
-
-	/**
-	 * Create an opposite transition for the transition passed as parameter
+	/*
+	 * public void createCuteCommandsForTransitions() { Region region = getRegion();
+	 * List<Transition> transitions = region.getTransitions();
 	 * 
-	 * @param transition
-	 *            the transition from which an opposite transition will be created
-	 * @param index
-	 *            the index of the transition
+	 * for (int i = 0; i < transitions.size(); i++) { Transition transition =
+	 * transitions.get(i); if (transition.getSource() instanceof Pseudostate &&
+	 * ((Pseudostate) transition.getSource()).getKind() ==
+	 * PseudostateKind.INITIAL_LITERAL) { continue; } createEffectIfAny(transition,
+	 * i); } }
 	 */
-	// public void createOppositeTransition(Transition transition, int index) {
-	// Vertex source = transition.getSource();
-	// Vertex target = transition.getTarget();
-	// Transition opposite = UMLFactory.eINSTANCE.createTransition();
-	// opposite.setSource(target);
-	// opposite.setTarget(source);
-	// opposite.setName("reset" + index);
-	// getRegion().getTransitions().add(opposite);
-	//
-	// OpaqueBehavior behavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
-	// behavior.getLanguages().add("C++");
-	// behavior.getBodies().add("");
-	// opposite.setEffect(behavior);
-	// restoreCurrentAttributesValues(opposite);
-	// }
-
-	/**
-	 * Create an opposite transition for every external transition but the initial
-	 * transition of the CUT Invoke createOppositeTransition(Transition transition,
-	 * int index)
-	 */
-	// public void createOppositeTransitions() {
-	// // retrieve all transitions of the statemachine (assuming states are
-	// // non-composite)
-	// Region region = getRegion();
-	// List<Transition> transitions = region.getTransitions();
-	// int size = transitions.size();
-	//
-	// for (int i = 0; i < size; i++) {
-	// Transition transition = transitions.get(i);
-	// if (transition.getSource() instanceof Pseudostate
-	// && ((Pseudostate) transition.getSource()).getKind() ==
-	// PseudostateKind.INITIAL_LITERAL) {
-	// continue;
-	// }
-	// createOppositeTransition(transition, i);
-	//
-	// }
-	// }
 
 	public void createIterationTransitions() {
-		// retrieve all transitions of the statemachine (assuming states are
-		// non-composite)
 		Pseudostate init = UmlrtUtil.getInitialState(statemachine);
 		Vertex firstState = init.getOutgoings().get(0).getTarget();
 
@@ -1046,8 +1211,8 @@ public class Transformer {
 			iterate.getTriggers().add(trig);
 		else
 			System.out.println("Note: transition: " + iterate.getName() + " has no trigger!");
-
-		restoreCurrentAttributesValues(iterate);
+		modelUnderTest.getPackagedElements().add(trig.getEvent());
+		// restoreDefaultAttributesValues(iterate);
 	}
 
 	/**
@@ -1099,74 +1264,65 @@ public class Transformer {
 		// HarnessImporter harnessImporter = new
 		// HarnessImporter("/home/reza/Dropbox/Qlab/code/MCUTE/Harness_UMLRT/mcute_package.uml");
 
-		if (!transformer.init(args)) {
+		if (!transformer.initialize(args)) {
 			throw new Exception("Error during initialization. Check the argments");
 		}
 
 		// transformer.getCapsuleAttributes();
 
-		// // Step 2: Duplicate capsule's attributes so the capsule state can be restore
 		// after a reset
 		// System.out.print("Duplicating the capsule's attributes... ");
 		// transformer.duplicateCapsuleAttributes();
 		// System.out.println("done.");
 
-		// // Step 3: Create a TRANSITIONS enumeration
 		// System.out.print("Creating a TRANSITIONS enumeration... ");
 		// transformer.createTransitionEnumeration();
 		// System.out.println("done.");
 
-		// Step 4: Create a STATES enumeration
 		System.out.print("Creating a STATES enumeration... ");
 		transformer.createStateEnumeration();
 		System.out.println("done.");
 
-		// // Step 5: Create a BRANCHES enumeration
 		// System.out.print("Creating a BRANCHES enumeration... ");
 		// transformer.createBranchEnumeration();
 		// System.out.println("done.");
 
-		// Step 6: Create cute commands for every state
-		// System.out.print("Adding cuteCommands.newState(STATE).send(); at the end of
-		// entry action code... ");
-		// transformer.createCuteCommandsForStates();
-		// System.out.println("done.");
+		System.out.print("Adding commands.newState(STATE).send(); at the end of entry action code... ");
+		transformer.createCuteCommandsForStates();
+		System.out.println("done.");
 
-		// // Step 6a: Create entry code to save current values of capsule attributes
 		// System.out.print("Saving current values of capsule attributes...");
 		// transformer.saveCurrentAttributesValues();
 		// System.out.println("done.");
 
-		// // Step 7: Create cute commands for every transition
 		// System.out.print("Adding cuteCommands.newTransition(Tx).send(); at the end of
 		// entry action code... ");
 		// transformer.createCuteCommandsForTransitions();
 		// System.out.println("done.");
 
-		// // Step 8: Create an opposite transition to every transition
-		// System.out.print("Creating iteration transitions for every transition of the
-		// system... ");
-		// transformer.createIterationTransitions();
-		// System.out.println("done.");
+		System.out.println("instrumenting the state machine");
+		res = transformer.instrumentActionCode();
+		printRes(res);
 
 		// System.out.print("injecting the harness package inside the model under
 		// test... ");
 		// res = transformer.injectHarnessPackage();
 		// printRes(res);
 
-		// System.out.print("constructing the top capsule... ");
-		// res = transformer.constructTopCapsule();
-		// printRes(res);
-
-		System.out.println("instrumenting the state machine");
-		res = transformer.instrumentActionCode();
+		System.out.print("constructing the top capsule... ");
+		res = transformer.configureTopCapsule();
 		printRes(res);
+
+		System.out.println("customizing the test harness for the CUT");
+		res = transformer.customizeTestHarness();
+		printRes(res);
+
+		System.out.print("Creating iteration transitions for every transition of the system... ");
+		transformer.createIterationTransitions();
+		System.out.println("done.");
 
 		// Saving the instrumented model
 		transformer.save();
-
-		System.out.println(String.format("model info: %d states, %d transitions, %d loc",
-				transformer.generatableTransitions + 1, transformer.generatableTransitions, transformer.loc));
 
 		System.out.println("end!");
 
