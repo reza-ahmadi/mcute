@@ -4,8 +4,8 @@
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
 # 1 "/tmp/mcute/actioncode.c"
-# 1 "/home/reza/Dropbox/Qlab/code/MCUTE/crest/bin/../include/crest.h" 1
-# 136 "/home/reza/Dropbox/Qlab/code/MCUTE/crest/bin/../include/crest.h"
+# 1 "/home/reza/Dropbox/Qlab/code/MCUTE/bin/../crest/include/crest.h" 1
+# 136 "/home/reza/Dropbox/Qlab/code/MCUTE/bin/../crest/include/crest.h"
 typedef enum {
 
   __CREST_ADD = 0,
@@ -36,7 +36,7 @@ typedef enum {
   __CREST_NOT = 20,
   __CREST_L_NOT = 21,
 };
-# 176 "/home/reza/Dropbox/Qlab/code/MCUTE/crest/bin/../include/crest.h"
+# 176 "/home/reza/Dropbox/Qlab/code/MCUTE/bin/../crest/include/crest.h"
 extern void __CrestInit() __attribute__((crest_skip));
 extern void __CrestLoad(int, unsigned long int, long long int) __attribute__((crest_skip));
 extern void __CrestStore(int, unsigned long int) __attribute__((crest_skip));
@@ -51,7 +51,7 @@ extern void __CrestHandleReturn(int, long long int) __attribute__((crest_skip));
 
 
 extern void __CrestWriteSE() __attribute__((crest_skip));
-# 201 "/home/reza/Dropbox/Qlab/code/MCUTE/crest/bin/../include/crest.h"
+# 201 "/home/reza/Dropbox/Qlab/code/MCUTE/bin/../crest/include/crest.h"
 extern void __CrestUChar(unsigned char* x) __attribute__((crest_skip));
 extern void __CrestUShort(unsigned short* x) __attribute__((crest_skip));
 extern void __CrestUInt(unsigned int* x) __attribute__((crest_skip));
@@ -900,16 +900,16 @@ int CopyOf_p1_3;
 __CrestInt(&CopyOf_p1_3);
 int CopyOf_p1_4;
 __CrestInt(&CopyOf_p1_4);
-printf ("MCUTESTART log.log(\"$transition t4 action code\"$) MCUTEEND");
-if(p1 > 453824451 && p1 <=1985103776){p1+= 453824451;
-p1*= 1985103776;
-if(CopyOf_p1_1 > 285238877 && CopyOf_p1_1 <=461310963){CopyOf_p1_1+= 285238877;
-CopyOf_p1_1*= 461310963;
-if(CopyOf_p1_2 > 139987537 && CopyOf_p1_2 <=1759082098){CopyOf_p1_2+= 139987537;
-CopyOf_p1_2*= 1759082098;
-if(CopyOf_p1_3 > 453636802 && CopyOf_p1_3 <=1726859609){CopyOf_p1_3+= 453636802;
-CopyOf_p1_3*= 1726859609;
-if(CopyOf_p1_4 > 197492637 && CopyOf_p1_4 <=359521823){CopyOf_p1_4+= 197492637;
-CopyOf_p1_4*= 359521823;
+printf ("MCUTESTART log.log(\"$transition t1 action code\"$) MCUTEEND");
+if(p1 > 8668570 && p1 <=12133578){p1+= 8668570;
+p1*= 12133578;
+if(CopyOf_p1_1 > 43682858 && CopyOf_p1_1 <=300378283){CopyOf_p1_1+= 43682858;
+CopyOf_p1_1*= 300378283;
+if(CopyOf_p1_2 > 93610807 && CopyOf_p1_2 <=541267557){CopyOf_p1_2+= 93610807;
+CopyOf_p1_2*= 541267557;
+if(CopyOf_p1_3 > 895073826 && CopyOf_p1_3 <=2017356839){CopyOf_p1_3+= 895073826;
+CopyOf_p1_3*= 2017356839;
+if(CopyOf_p1_4 > 517788892 && CopyOf_p1_4 <=540553761){CopyOf_p1_4+= 517788892;
+CopyOf_p1_4*= 540553761;
 }else{}}else{}}else{}}else{}}else{}
 };

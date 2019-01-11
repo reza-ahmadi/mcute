@@ -6,11 +6,23 @@
 //#include <iostream>
 
 int main(void) {
-  int HighTemps;
+  int amount, tmp=10;
 
-  if (HighTemps>=10){
-    printf("----branch visited: HighTemps>=10!!!, %d degrees more than standart!!!----\n", HighTemps);
-  }else{
-    printf("----branch visited: !(HighTemps>=10)----\n");
+  CREST_int(amount);
+  // CREST_int(temprature);
+  //CREST_int(HighTemps);
+
+  if (amount>=0 && amount<5){
+    printf("----branch visited: amount>=0 && amount<5 ----\n");
+    tmp*=amount;
+  }
+  else{
+    printf("----branch visited: !(amount>=0 && amount<5)----\n");
+  }
+  if (tmp>10 && tmp<50){
+    printf("----branch visited: tmp>10 && tmp<50----\n");
+  }else
+  {
+    printf("----branch visited: !tmp>10 && tmp<50----\n");
   }
 }//main

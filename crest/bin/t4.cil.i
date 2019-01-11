@@ -16,42 +16,98 @@ extern void __CrestApply1(int id , int op , long long val ) __attribute__((__cre
 extern void __CrestClearStack(int id ) __attribute__((__crest_skip__)) ;
 extern void __CrestStore(int id , unsigned long addr ) __attribute__((__crest_skip__)) ;
 extern void __CrestLoad(int id , unsigned long addr , long long val ) __attribute__((__crest_skip__)) ;
+# 206 "./../include/crest.h"
+extern void __CrestInt(int *x ) __attribute__((__crest_skip__)) ;
 # 362 "/usr/include/stdio.h"
 extern int printf(char const * __restrict __format , ...) ;
 # 8 "../test/t4.c"
 int main(void)
 {
-  int HighTemps ;
-  int __retres2 ;
+  int amount ;
+  int tmp ;
+  int __retres3 ;
 
   {
   __globinit_t4();
   __CrestCall(1, 1);
-  __CrestLoad(4, (unsigned long )(& HighTemps), (long long )HighTemps);
-  __CrestLoad(3, (unsigned long )0, (long long )10);
-  __CrestApply2(2, 17, (long long )(HighTemps >= 10));
+  __CrestLoad(2, (unsigned long )0, (long long )10);
+  __CrestStore(3, (unsigned long )(& tmp));
+# 9 "../test/t4.c"
+  tmp = 10;
 # 11 "../test/t4.c"
-  if (HighTemps >= 10) {
-    __CrestBranch(5, 9, 1);
-    __CrestLoad(7, (unsigned long )(& HighTemps), (long long )HighTemps);
-# 12 "../test/t4.c"
-    printf((char const * __restrict )"----branch visited: HighTemps>=10!!!, %d degrees more than standart!!!----\n",
-           HighTemps);
-    __CrestClearStack(8);
-  } else {
-    __CrestBranch(6, 10, 0);
-# 14 "../test/t4.c"
-    printf((char const * __restrict )"----branch visited: !(HighTemps>=10)----\n");
-    __CrestClearStack(9);
-  }
-  __CrestLoad(10, (unsigned long )0, (long long )0);
-  __CrestStore(11, (unsigned long )(& __retres2));
+  __CrestInt(& amount);
+  __CrestLoad(6, (unsigned long )(& amount), (long long )amount);
+  __CrestLoad(5, (unsigned long )0, (long long )0);
+  __CrestApply2(4, 17, (long long )(amount >= 0));
+# 15 "../test/t4.c"
+  if (amount >= 0) {
+    __CrestBranch(7, 63, 1);
+    {
+    __CrestLoad(11, (unsigned long )(& amount), (long long )amount);
+    __CrestLoad(10, (unsigned long )0, (long long )5);
+    __CrestApply2(9, 16, (long long )(amount < 5));
+# 15 "../test/t4.c"
+    if (amount < 5) {
+      __CrestBranch(12, 64, 1);
 # 16 "../test/t4.c"
-  __retres2 = 0;
-  __CrestLoad(12, (unsigned long )(& __retres2), (long long )__retres2);
-  __CrestReturn(13);
+      printf((char const * __restrict )"----branch visited: amount>=0 && amount<5 ----\n");
+      __CrestClearStack(14);
+      __CrestLoad(17, (unsigned long )(& tmp), (long long )tmp);
+      __CrestLoad(16, (unsigned long )(& amount), (long long )amount);
+      __CrestApply2(15, 2, (long long )(tmp * amount));
+      __CrestStore(18, (unsigned long )(& tmp));
+# 17 "../test/t4.c"
+      tmp *= amount;
+    } else {
+      __CrestBranch(13, 65, 0);
+# 20 "../test/t4.c"
+      printf((char const * __restrict )"----branch visited: !(amount>=0 && amount<5)----\n");
+      __CrestClearStack(19);
+    }
+    }
+  } else {
+    __CrestBranch(8, 66, 0);
+# 20 "../test/t4.c"
+    printf((char const * __restrict )"----branch visited: !(amount>=0 && amount<5)----\n");
+    __CrestClearStack(20);
+  }
+  __CrestLoad(23, (unsigned long )(& tmp), (long long )tmp);
+  __CrestLoad(22, (unsigned long )0, (long long )10);
+  __CrestApply2(21, 14, (long long )(tmp > 10));
+# 22 "../test/t4.c"
+  if (tmp > 10) {
+    __CrestBranch(24, 68, 1);
+    {
+    __CrestLoad(28, (unsigned long )(& tmp), (long long )tmp);
+    __CrestLoad(27, (unsigned long )0, (long long )50);
+    __CrestApply2(26, 16, (long long )(tmp < 50));
+# 22 "../test/t4.c"
+    if (tmp < 50) {
+      __CrestBranch(29, 69, 1);
+# 23 "../test/t4.c"
+      printf((char const * __restrict )"----branch visited: tmp>10 && tmp<50----\n");
+      __CrestClearStack(31);
+    } else {
+      __CrestBranch(30, 70, 0);
+# 26 "../test/t4.c"
+      printf((char const * __restrict )"----branch visited: !tmp>10 && tmp<50----\n");
+      __CrestClearStack(32);
+    }
+    }
+  } else {
+    __CrestBranch(25, 71, 0);
+# 26 "../test/t4.c"
+    printf((char const * __restrict )"----branch visited: !tmp>10 && tmp<50----\n");
+    __CrestClearStack(33);
+  }
+  __CrestLoad(34, (unsigned long )0, (long long )0);
+  __CrestStore(35, (unsigned long )(& __retres3));
+# 28 "../test/t4.c"
+  __retres3 = 0;
+  __CrestLoad(36, (unsigned long )(& __retres3), (long long )__retres3);
+  __CrestReturn(37);
 # 8 "../test/t4.c"
-  return (__retres2);
+  return (__retres3);
 }
 }
 void __globinit_t4(void)

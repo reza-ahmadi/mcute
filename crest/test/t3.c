@@ -6,19 +6,23 @@
 //#include <iostream>
 
 int main(void) {
-  int desiredLevel;
-  int temprature;
-  int HighTemps;
+  int color, tmp=0;
 
-  CREST_int(desiredLevel);
-  CREST_int(temprature);
+  CREST_int(color);
+  // CREST_int(temprature);
   //CREST_int(HighTemps);
 
-  if (temprature>=60 && desiredLevel>=5){
-    printf("----branch visited: temprature>=60 && desiredLevel>=5 ----\n");
-    HighTemps = temprature-60;
+  if (color>=0 && color<5){
+    printf("----branch visited: color>=0 && color<5 ----\n");
+    tmp+=color;
   }
   else{
-    printf("----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
+    printf("----branch visited: !(color>=0 && color<5)----\n");
+  }
+  if (tmp>=2){
+    printf("----branch visited: tmp>=2----\n");
+  }else
+  {
+    printf("----branch visited: !tmp>=2----\n");
   }
 }//main

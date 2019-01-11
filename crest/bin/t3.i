@@ -896,19 +896,23 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 
 int main(void) {
-  int desiredLevel;
-  int temprature;
-  int HighTemps;
+  int color, tmp=0;
 
-  __CrestInt(&desiredLevel);
-  __CrestInt(&temprature);
+  __CrestInt(&color);
 
 
-  if (temprature>=60 && desiredLevel>=5){
-    printf("----branch visited: temprature>=60 && desiredLevel>=5 ----\n");
-    HighTemps = temprature-60;
+
+  if (color>=0 && color<5){
+    printf("----branch visited: color>=0 && color<5 ----\n");
+    tmp+=color;
   }
   else{
-    printf("----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
+    printf("----branch visited: !(color>=0 && color<5)----\n");
+  }
+  if (tmp>=2){
+    printf("----branch visited: tmp>=2----\n");
+  }else
+  {
+    printf("----branch visited: !tmp>=2----\n");
   }
 }

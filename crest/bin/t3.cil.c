@@ -20,61 +20,77 @@ extern int printf(char const   * __restrict  __format  , ...) ;
 #line 8 "../test/t3.c"
 int main(void) 
 { 
-  int desiredLevel ;
-  int temprature ;
-  int HighTemps ;
-  int __retres4 ;
+  int color ;
+  int tmp ;
+  int __retres3 ;
 
   {
   __globinit_t3();
   __CrestCall(1, 1);
-#line 13
-  __CrestInt(& desiredLevel);
-#line 14
-  __CrestInt(& temprature);
-  __CrestLoad(4, (unsigned long )(& temprature), (long long )temprature);
-  __CrestLoad(3, (unsigned long )0, (long long )60);
-  __CrestApply2(2, 17, (long long )(temprature >= 60));
-#line 17
-  if (temprature >= 60) {
-    __CrestBranch(5, 3, 1);
+  __CrestLoad(2, (unsigned long )0, (long long )0);
+  __CrestStore(3, (unsigned long )(& tmp));
+#line 9
+  tmp = 0;
+#line 11
+  __CrestInt(& color);
+  __CrestLoad(6, (unsigned long )(& color), (long long )color);
+  __CrestLoad(5, (unsigned long )0, (long long )0);
+  __CrestApply2(4, 17, (long long )(color >= 0));
+#line 15
+  if (color >= 0) {
+    __CrestBranch(7, 43, 1);
     {
-    __CrestLoad(9, (unsigned long )(& desiredLevel), (long long )desiredLevel);
-    __CrestLoad(8, (unsigned long )0, (long long )5);
-    __CrestApply2(7, 17, (long long )(desiredLevel >= 5));
+    __CrestLoad(11, (unsigned long )(& color), (long long )color);
+    __CrestLoad(10, (unsigned long )0, (long long )5);
+    __CrestApply2(9, 16, (long long )(color < 5));
+#line 15
+    if (color < 5) {
+      __CrestBranch(12, 44, 1);
+#line 16
+      printf((char const   * __restrict  )"----branch visited: color>=0 && color<5 ----\n");
+      __CrestClearStack(14);
+      __CrestLoad(17, (unsigned long )(& tmp), (long long )tmp);
+      __CrestLoad(16, (unsigned long )(& color), (long long )color);
+      __CrestApply2(15, 0, (long long )(tmp + color));
+      __CrestStore(18, (unsigned long )(& tmp));
 #line 17
-    if (desiredLevel >= 5) {
-      __CrestBranch(10, 4, 1);
-#line 18
-      printf((char const   * __restrict  )"----branch visited: temprature>=60 && desiredLevel>=5 ----\n");
-      __CrestClearStack(12);
-      __CrestLoad(15, (unsigned long )(& temprature), (long long )temprature);
-      __CrestLoad(14, (unsigned long )0, (long long )60);
-      __CrestApply2(13, 1, (long long )(temprature - 60));
-      __CrestStore(16, (unsigned long )(& HighTemps));
-#line 19
-      HighTemps = temprature - 60;
+      tmp += color;
     } else {
-      __CrestBranch(11, 5, 0);
-#line 22
-      printf((char const   * __restrict  )"----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
-      __CrestClearStack(17);
+      __CrestBranch(13, 45, 0);
+#line 20
+      printf((char const   * __restrict  )"----branch visited: !(color>=0 && color<5)----\n");
+      __CrestClearStack(19);
     }
     }
   } else {
-    __CrestBranch(6, 6, 0);
-#line 22
-    printf((char const   * __restrict  )"----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
-    __CrestClearStack(18);
+    __CrestBranch(8, 46, 0);
+#line 20
+    printf((char const   * __restrict  )"----branch visited: !(color>=0 && color<5)----\n");
+    __CrestClearStack(20);
   }
-  __CrestLoad(19, (unsigned long )0, (long long )0);
-  __CrestStore(20, (unsigned long )(& __retres4));
-#line 24
-  __retres4 = 0;
-  __CrestLoad(21, (unsigned long )(& __retres4), (long long )__retres4);
-  __CrestReturn(22);
+  __CrestLoad(23, (unsigned long )(& tmp), (long long )tmp);
+  __CrestLoad(22, (unsigned long )0, (long long )2);
+  __CrestApply2(21, 17, (long long )(tmp >= 2));
+#line 22
+  if (tmp >= 2) {
+    __CrestBranch(24, 48, 1);
+#line 23
+    printf((char const   * __restrict  )"----branch visited: tmp>=2----\n");
+    __CrestClearStack(26);
+  } else {
+    __CrestBranch(25, 49, 0);
+#line 26
+    printf((char const   * __restrict  )"----branch visited: !tmp>=2----\n");
+    __CrestClearStack(27);
+  }
+  __CrestLoad(28, (unsigned long )0, (long long )0);
+  __CrestStore(29, (unsigned long )(& __retres3));
+#line 28
+  __retres3 = 0;
+  __CrestLoad(30, (unsigned long )(& __retres3), (long long )__retres3);
+  __CrestReturn(31);
 #line 8
-  return (__retres4);
+  return (__retres3);
 }
 }
 void __globinit_t3(void) 

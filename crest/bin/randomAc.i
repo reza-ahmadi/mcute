@@ -1,12 +1,9 @@
-# 1 "../test/t4.c"
+# 1 "../test/randomAc.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "../test/t4.c"
-
-
-
+# 1 "../test/randomAc.c"
 # 1 "./../include/crest.h" 1
 # 136 "./../include/crest.h"
 typedef enum {
@@ -61,7 +58,7 @@ extern void __CrestUInt(unsigned int* x) __attribute__((crest_skip));
 extern void __CrestChar(char* x) __attribute__((crest_skip));
 extern void __CrestShort(short* x) __attribute__((crest_skip));
 extern void __CrestInt(int* x) __attribute__((crest_skip));
-# 5 "../test/t4.c" 2
+# 2 "../test/randomAc.c" 2
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -892,27 +889,41 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 6 "../test/t4.c" 2
+# 3 "../test/randomAc.c" 2
+int main(void){
+  int p1,CopyOf_p1_1,
+  CopyOf_p1_2,
+  CopyOf_p1_3,
+  CopyOf_p1_4;
+  __CrestInt(&p1);
+  __CrestInt(&CopyOf_p1_1);
+  __CrestInt(&CopyOf_p1_2);
+  __CrestInt(&CopyOf_p1_3);
+  __CrestInt(&CopyOf_p1_4);
 
-
-int main(void) {
-  int amount, tmp=10;
-
-  __CrestInt(&amount);
-
-
-
-  if (amount>=0 && amount<5){
-    printf("----branch visited: amount>=0 && amount<5 ----\n");
-    tmp*=amount;
+if (p1 > 945243205 && p1 <= 985125732) {
+  p1 += 945243205;
+  p1 *= 985125732;
+  if (CopyOf_p1_1 > 37265035 && CopyOf_p1_1 <= 106224505) {
+    CopyOf_p1_1 += 37265035;
+    CopyOf_p1_1 *= 106224505;
+    if (CopyOf_p1_2 > 974363458 && CopyOf_p1_2 <= 1444801314) {
+      CopyOf_p1_2 += 974363458;
+      CopyOf_p1_2 *= 1444801314;
+      if (CopyOf_p1_3 > 624222804 && CopyOf_p1_3 <= 701649992) {
+        CopyOf_p1_3 += 624222804;
+        CopyOf_p1_3 *= 701649992;
+        if (CopyOf_p1_4 > 75561988 && CopyOf_p1_4 <= 369957327) {
+          CopyOf_p1_4 += 75561988;
+          CopyOf_p1_4 *= 369957327;
+        } else {
+        }
+      } else {
+      }
+    } else {
+    }
+  } else {
   }
-  else{
-    printf("----branch visited: !(amount>=0 && amount<5)----\n");
-  }
-  if (tmp>10 && tmp<50){
-    printf("----branch visited: tmp>10 && tmp<50----\n");
-  }else
-  {
-    printf("----branch visited: !tmp>10 && tmp<50----\n");
-  }
+} else {
+}
 }

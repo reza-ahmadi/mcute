@@ -23,61 +23,77 @@ extern int printf(char const * __restrict __format , ...) ;
 # 8 "../test/t3.c"
 int main(void)
 {
-  int desiredLevel ;
-  int temprature ;
-  int HighTemps ;
-  int __retres4 ;
+  int color ;
+  int tmp ;
+  int __retres3 ;
 
   {
   __globinit_t3();
   __CrestCall(1, 1);
-# 13 "../test/t3.c"
-  __CrestInt(& desiredLevel);
-# 14 "../test/t3.c"
-  __CrestInt(& temprature);
-  __CrestLoad(4, (unsigned long )(& temprature), (long long )temprature);
-  __CrestLoad(3, (unsigned long )0, (long long )60);
-  __CrestApply2(2, 17, (long long )(temprature >= 60));
-# 17 "../test/t3.c"
-  if (temprature >= 60) {
-    __CrestBranch(5, 3, 1);
+  __CrestLoad(2, (unsigned long )0, (long long )0);
+  __CrestStore(3, (unsigned long )(& tmp));
+# 9 "../test/t3.c"
+  tmp = 0;
+# 11 "../test/t3.c"
+  __CrestInt(& color);
+  __CrestLoad(6, (unsigned long )(& color), (long long )color);
+  __CrestLoad(5, (unsigned long )0, (long long )0);
+  __CrestApply2(4, 17, (long long )(color >= 0));
+# 15 "../test/t3.c"
+  if (color >= 0) {
+    __CrestBranch(7, 43, 1);
     {
-    __CrestLoad(9, (unsigned long )(& desiredLevel), (long long )desiredLevel);
-    __CrestLoad(8, (unsigned long )0, (long long )5);
-    __CrestApply2(7, 17, (long long )(desiredLevel >= 5));
+    __CrestLoad(11, (unsigned long )(& color), (long long )color);
+    __CrestLoad(10, (unsigned long )0, (long long )5);
+    __CrestApply2(9, 16, (long long )(color < 5));
+# 15 "../test/t3.c"
+    if (color < 5) {
+      __CrestBranch(12, 44, 1);
+# 16 "../test/t3.c"
+      printf((char const * __restrict )"----branch visited: color>=0 && color<5 ----\n");
+      __CrestClearStack(14);
+      __CrestLoad(17, (unsigned long )(& tmp), (long long )tmp);
+      __CrestLoad(16, (unsigned long )(& color), (long long )color);
+      __CrestApply2(15, 0, (long long )(tmp + color));
+      __CrestStore(18, (unsigned long )(& tmp));
 # 17 "../test/t3.c"
-    if (desiredLevel >= 5) {
-      __CrestBranch(10, 4, 1);
-# 18 "../test/t3.c"
-      printf((char const * __restrict )"----branch visited: temprature>=60 && desiredLevel>=5 ----\n");
-      __CrestClearStack(12);
-      __CrestLoad(15, (unsigned long )(& temprature), (long long )temprature);
-      __CrestLoad(14, (unsigned long )0, (long long )60);
-      __CrestApply2(13, 1, (long long )(temprature - 60));
-      __CrestStore(16, (unsigned long )(& HighTemps));
-# 19 "../test/t3.c"
-      HighTemps = temprature - 60;
+      tmp += color;
     } else {
-      __CrestBranch(11, 5, 0);
-# 22 "../test/t3.c"
-      printf((char const * __restrict )"----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
-      __CrestClearStack(17);
+      __CrestBranch(13, 45, 0);
+# 20 "../test/t3.c"
+      printf((char const * __restrict )"----branch visited: !(color>=0 && color<5)----\n");
+      __CrestClearStack(19);
     }
     }
   } else {
-    __CrestBranch(6, 6, 0);
-# 22 "../test/t3.c"
-    printf((char const * __restrict )"----branch visited: !(temprature>=60 && desiredLevel>=5)----\n");
-    __CrestClearStack(18);
+    __CrestBranch(8, 46, 0);
+# 20 "../test/t3.c"
+    printf((char const * __restrict )"----branch visited: !(color>=0 && color<5)----\n");
+    __CrestClearStack(20);
   }
-  __CrestLoad(19, (unsigned long )0, (long long )0);
-  __CrestStore(20, (unsigned long )(& __retres4));
-# 24 "../test/t3.c"
-  __retres4 = 0;
-  __CrestLoad(21, (unsigned long )(& __retres4), (long long )__retres4);
-  __CrestReturn(22);
+  __CrestLoad(23, (unsigned long )(& tmp), (long long )tmp);
+  __CrestLoad(22, (unsigned long )0, (long long )2);
+  __CrestApply2(21, 17, (long long )(tmp >= 2));
+# 22 "../test/t3.c"
+  if (tmp >= 2) {
+    __CrestBranch(24, 48, 1);
+# 23 "../test/t3.c"
+    printf((char const * __restrict )"----branch visited: tmp>=2----\n");
+    __CrestClearStack(26);
+  } else {
+    __CrestBranch(25, 49, 0);
+# 26 "../test/t3.c"
+    printf((char const * __restrict )"----branch visited: !tmp>=2----\n");
+    __CrestClearStack(27);
+  }
+  __CrestLoad(28, (unsigned long )0, (long long )0);
+  __CrestStore(29, (unsigned long )(& __retres3));
+# 28 "../test/t3.c"
+  __retres3 = 0;
+  __CrestLoad(30, (unsigned long )(& __retres3), (long long )__retres3);
+  __CrestReturn(31);
 # 8 "../test/t3.c"
-  return (__retres4);
+  return (__retres3);
 }
 }
 void __globinit_t3(void)

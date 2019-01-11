@@ -18,8 +18,8 @@ extern void __CrestInt(int *x )  __attribute__((__crest_skip__)) ;
 #line 362 "/usr/include/stdio.h"
 extern int printf(char const   * __restrict  __format  , ...) ;
 #line 7 "../test/t2.c"
-void main(void)
-{
+void main(void) 
+{ 
   int tank1 ;
   int tank2 ;
   int solution ;
@@ -42,17 +42,16 @@ void main(void)
   __CrestApply2(2, 12, (long long )(tank1 == 0));
 #line 18
   if (tank1 == 0) {
-    printf((char const   * __restrict  )"----branch visited: tank1==0 ----");
-    __CrestBranch(5, 103, 1);
+    __CrestBranch(5, 23, 1);
     {
     __CrestLoad(9, (unsigned long )(& tank2), (long long )tank2);
     __CrestLoad(8, (unsigned long )0, (long long )0);
     __CrestApply2(7, 12, (long long )(tank2 == 0));
 #line 18
     if (tank2 == 0) {
-      __CrestBranch(10, 104, 1);
+      __CrestBranch(10, 24, 1);
 #line 19
-      printf((char const   * __restrict  )"----branch visited: tank2 == 0 ----");
+      printf((char const   * __restrict  )"----branch visited: tank1==0 && tank2 == 0 ----");
       __CrestClearStack(12);
       {
       __CrestLoad(15, (unsigned long )(& Warnings), (long long )Warnings);
@@ -60,30 +59,28 @@ void main(void)
       __CrestApply2(13, 14, (long long )(Warnings > 1));
 #line 20
       if (Warnings > 1) {
-        printf((char const   * __restrict  )"----branch visited: Warnings>1 ----");
-        __CrestBranch(16, 106, 1);
+        __CrestBranch(16, 26, 1);
         {
         __CrestLoad(20, (unsigned long )(& Warnings), (long long )Warnings);
         __CrestLoad(19, (unsigned long )0, (long long )5);
         __CrestApply2(18, 16, (long long )(Warnings < 5));
 #line 20
         if (Warnings < 5) {
-          __CrestBranch(21, 107, 1);
+          __CrestBranch(21, 27, 1);
 #line 21
-          printf((char const   * __restrict  )"----branch visited: Warnings<5 ----");
+          printf((char const   * __restrict  )"----branch visited: Warnings>1 && Warnings<5 ----");
           __CrestClearStack(23);
         } else {
-          printf((char const   * __restrict  )"----branch visited: !(Warnings<5) ----");
-          __CrestBranch(22, 108, 0);
+          __CrestBranch(22, 28, 0);
 #line 23
-
+          printf((char const   * __restrict  )"----branch visited: !(Warnings>1 && Warnings<5) ----");
           __CrestClearStack(24);
         }
         }
       } else {
-        __CrestBranch(17, 109, 0);
+        __CrestBranch(17, 29, 0);
 #line 23
-        printf((char const   * __restrict  )"----branch visited: !(Warnings>1) ----");
+        printf((char const   * __restrict  )"----branch visited: !(Warnings>1 && Warnings<5) ----");
         __CrestClearStack(25);
       }
       }
@@ -93,30 +90,28 @@ void main(void)
       __CrestApply2(26, 14, (long long )(solution > 0));
 #line 25
       if (solution > 0) {
-        __CrestBranch(29, 111, 1);
+        __CrestBranch(29, 31, 1);
 #line 26
         printf((char const   * __restrict  )"----branch visited: solution>0 ----");
         __CrestClearStack(31);
       } else {
-        __CrestBranch(30, 112, 0);
+        __CrestBranch(30, 32, 0);
 #line 28
         printf((char const   * __restrict  )"----branch visited: !(solution>0) ----");
         __CrestClearStack(32);
       }
       }
     } else {
-      __CrestBranch(11, 113, 0);
-      printf((char const   * __restrict  )"----branch visited: !(tank2 == 0) ----");
-
+      __CrestBranch(11, 33, 0);
 #line 18
       goto _L;
     }
     }
   } else {
-    __CrestBranch(6, 114, 0);
-    _L: /* CIL Label */
+    __CrestBranch(6, 34, 0);
+    _L: /* CIL Label */ 
 #line 32
-    printf((char const   * __restrict  )"----branch visited: !(tank1==0) ----");
+    printf((char const   * __restrict  )"----branch visited: !(tank1==0 && tank2 == 0) ----");
     __CrestClearStack(33);
     {
     __CrestLoad(36, (unsigned long )(& drain), (long long )drain);
@@ -124,13 +119,13 @@ void main(void)
     __CrestApply2(34, 14, (long long )(drain > 0));
 #line 33
     if (drain > 0) {
-      __CrestBranch(37, 116, 1);
+      __CrestBranch(37, 36, 1);
 #line 34
       printf((char const   * __restrict  )"----branch visited: drain>0 ----");
       __CrestClearStack(39);
     } else {
-      __CrestBranch(38, 117, 0);
-printf((char const   * __restrict  )"----branch visited: !(drain>0) ----");
+      __CrestBranch(38, 37, 0);
+
     }
     }
   }
@@ -139,8 +134,8 @@ printf((char const   * __restrict  )"----branch visited: !(drain>0) ----");
   return;
 }
 }
-void __globinit_t2(void)
-{
+void __globinit_t2(void) 
+{ 
 
 
   {

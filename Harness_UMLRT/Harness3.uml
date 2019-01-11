@@ -275,17 +275,7 @@ Temprature=50;
           <transition xmi:type="uml:Transition" xmi:id="_yFV14GdiEeiqifykceCvxw" name="t2" source="_jRLeAGdiEeiqifykceCvxw" target="_xgSBAGdiEeiqifykceCvxw">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_rbYGAGdnEeijRtS4FXxxtA" name="Effect" isReentrant="false">
               <language>C++</language>
-              <body>int strategy;
-std::ifstream ifs (&quot;strategy&quot;, std::ifstream::in);
-ifs >> strategy;
-if (strategy!=2){
-  //Initializing the Symbolic Interpreter
-  __CrestInit();
-
-}
-ifs.close();
-
-  __CrestCall(1, 1);
+              <body>  __CrestCall(1, 1);
 #line 13
   __CrestInt(&amp; tank1);
 #line 14
@@ -299,17 +289,16 @@ ifs.close();
   __CrestApply2(2, 12, (long long )(tank1 == 0));
 #line 18
   if (tank1 == 0) {
-    printf((char const   * __restrict  )&quot;----branch visited: tank1==0 ----&quot;);
-    __CrestBranch(5, 103, 1);
+    __CrestBranch(5, 23, 1);
     {
     __CrestLoad(9, (unsigned long )(&amp; tank2), (long long )tank2);
     __CrestLoad(8, (unsigned long )0, (long long )0);
     __CrestApply2(7, 12, (long long )(tank2 == 0));
 #line 18
     if (tank2 == 0) {
-      __CrestBranch(10, 104, 1);
+      __CrestBranch(10, 24, 1);
 #line 19
-      printf((char const   * __restrict  )&quot;----branch visited: tank2 == 0 ----&quot;);
+      printf((char const   * __restrict  )&quot;----branch visited: tank1==0 &amp;&amp; tank2 == 0 ----&quot;);
       __CrestClearStack(12);
       {
       __CrestLoad(15, (unsigned long )(&amp; Warnings), (long long )Warnings);
@@ -317,30 +306,28 @@ ifs.close();
       __CrestApply2(13, 14, (long long )(Warnings > 1));
 #line 20
       if (Warnings > 1) {
-        printf((char const   * __restrict  )&quot;----branch visited: Warnings>1 ----&quot;);
-        __CrestBranch(16, 106, 1);
+        __CrestBranch(16, 26, 1);
         {
         __CrestLoad(20, (unsigned long )(&amp; Warnings), (long long )Warnings);
         __CrestLoad(19, (unsigned long )0, (long long )5);
         __CrestApply2(18, 16, (long long )(Warnings &lt; 5));
 #line 20
         if (Warnings &lt; 5) {
-          __CrestBranch(21, 107, 1);
+          __CrestBranch(21, 27, 1);
 #line 21
-          printf((char const   * __restrict  )&quot;----branch visited: Warnings&lt;5 ----&quot;);
+          printf((char const   * __restrict  )&quot;----branch visited: Warnings>1 &amp;&amp; Warnings&lt;5 ----&quot;);
           __CrestClearStack(23);
         } else {
-          printf((char const   * __restrict  )&quot;----branch visited: !(Warnings&lt;5) ----&quot;);
-          __CrestBranch(22, 108, 0);
+          __CrestBranch(22, 28, 0);
 #line 23
-
+          printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1 &amp;&amp; Warnings&lt;5) ----&quot;);
           __CrestClearStack(24);
         }
         }
       } else {
-        __CrestBranch(17, 109, 0);
+        __CrestBranch(17, 29, 0);
 #line 23
-        printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1) ----&quot;);
+        printf((char const   * __restrict  )&quot;----branch visited: !(Warnings>1 &amp;&amp; Warnings&lt;5) ----&quot;);
         __CrestClearStack(25);
       }
       }
@@ -350,30 +337,28 @@ ifs.close();
       __CrestApply2(26, 14, (long long )(solution > 0));
 #line 25
       if (solution > 0) {
-        __CrestBranch(29, 111, 1);
+        __CrestBranch(29, 31, 1);
 #line 26
         printf((char const   * __restrict  )&quot;----branch visited: solution>0 ----&quot;);
         __CrestClearStack(31);
       } else {
-        __CrestBranch(30, 112, 0);
+        __CrestBranch(30, 32, 0);
 #line 28
         printf((char const   * __restrict  )&quot;----branch visited: !(solution>0) ----&quot;);
         __CrestClearStack(32);
       }
       }
     } else {
-      __CrestBranch(11, 113, 0);
-      printf((char const   * __restrict  )&quot;----branch visited: !(tank2 == 0) ----&quot;);
-
+      __CrestBranch(11, 33, 0);
 #line 18
       goto _L;
     }
     }
   } else {
-    __CrestBranch(6, 114, 0);
-    _L: /* CIL Label */
+    __CrestBranch(6, 34, 0);
+    _L: /* CIL Label */ 
 #line 32
-    printf((char const   * __restrict  )&quot;----branch visited: !(tank1==0) ----&quot;);
+    printf((char const   * __restrict  )&quot;----branch visited: !(tank1==0 &amp;&amp; tank2 == 0) ----&quot;);
     __CrestClearStack(33);
     {
     __CrestLoad(36, (unsigned long )(&amp; drain), (long long )drain);
@@ -381,23 +366,18 @@ ifs.close();
     __CrestApply2(34, 14, (long long )(drain > 0));
 #line 33
     if (drain > 0) {
-      __CrestBranch(37, 116, 1);
+      __CrestBranch(37, 36, 1);
 #line 34
       printf((char const   * __restrict  )&quot;----branch visited: drain>0 ----&quot;);
       __CrestClearStack(39);
     } else {
-      __CrestBranch(38, 117, 0);
-printf((char const   * __restrict  )&quot;----branch visited: !(drain>0) ----&quot;);
+      __CrestBranch(38, 37, 0);
+
     }
     }
   }
   __CrestReturn(40);
 #line 7
-#line 7
-#line 7
-
-printf(&quot;\ninputs sent by harness: tank1:%d, tank2:%d, drain:%d, solution:%d, warnings:%d\n&quot;, tank1,tank2,drain, solution, Warnings);
-
 __CrestClearStack(0);
 
 __CrestWriteSE();
@@ -412,7 +392,7 @@ __CrestWriteSE();
 
     //Initializing the Symbolic Interpreter
     __CrestInit();
-  __CrestCall(1, 1);
+   __CrestCall(1, 1);
 #line 15
   __CrestInt(&amp; desiredLevel);
 #line 16
@@ -517,11 +497,6 @@ __CrestWriteSE();
   __retres7 = 0;
   __CrestLoad(48, (unsigned long )(&amp; __retres7), (long long )__retres7);
   __CrestReturn(49);
-#line 8
-#line 8
-
-printf(&quot;\ninputs sent by harness: desiredLevel:%d, temprature:%d, HighTemps:%d\n&quot;, desiredLevel,temprature,HighTemps);
-
 __CrestClearStack(0);
 
 __CrestWriteSE();
@@ -529,7 +504,7 @@ __CrestWriteSE();
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_bcGQsGgpEeijRtS4FXxxtA" event="_CXoYoGdjEeiqifykceCvxw" port="_GQwmUGdjEeiqifykceCvxw"/>
           </transition>
-          <transition xmi:type="uml:Transition" xmi:id="_vaGlQIY7EeiKGobklzfqdw" name="reset2" source="_xgSBAGdiEeiqifykceCvxw" target="_jRLeAGdiEeiqifykceCvxw">
+          <transition xmi:type="uml:Transition" xmi:id="_vaGlQIY7EeiKGobklzfqdw" name="" source="_xgSBAGdiEeiqifykceCvxw" target="_bigO0N7GEeiBkYD2qJeUwg">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_sHfQQJK4EeiPG4gJcsWGbA" name="Effect" isReentrant="false">
               <language>C++</language>
               <body>    //restore previously saved global variables 
@@ -537,17 +512,7 @@ __CrestWriteSE();
 
 //cuteCommands.newIteration().send();</body>
             </effect>
-            <trigger xmi:type="uml:Trigger" xmi:id="_xthZYIY7EeiKGobklzfqdw" event="_a97JIGg4EeijRtS4FXxxtA" port="_ugLW4GgvEeijRtS4FXxxtA"/>
-          </transition>
-          <transition xmi:type="uml:Transition" xmi:id="_doiSwOEtEeiBkYD2qJeUwg" name="reset1" source="_jRLeAGdiEeiqifykceCvxw" target="_bigO0N7GEeiBkYD2qJeUwg">
-            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_y5o44OEtEeiBkYD2qJeUwg" name="Effect" isReentrant="false">
-              <language>C++</language>
-              <body>    //restore previously saved global variables 
-	//Todo
-
-//cuteCommands.newIteration().send();</body>
-            </effect>
-            <trigger xmi:type="uml:Trigger" xmi:id="_mUkOwOEtEeiBkYD2qJeUwg" event="_a97JIGg4EeijRtS4FXxxtA" port="_ugLW4GgvEeijRtS4FXxxtA"/>
+            <trigger xmi:type="uml:Trigger" xmi:id="_xthZYIY7EeiKGobklzfqdw" event="_CveIEORuEeiwK5UPZ22vmQ" port="_ugLW4GgvEeijRtS4FXxxtA"/>
           </transition>
           <transition xmi:type="uml:Transition" xmi:id="_rczS0ORtEeiwK5UPZ22vmQ" name="" source="_xgSBAGdiEeiqifykceCvxw" target="_bigO0N7GEeiBkYD2qJeUwg">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_HzolgORuEeiwK5UPZ22vmQ" name="Effect" isReentrant="false">
@@ -556,6 +521,181 @@ __CrestWriteSE();
 Warnings=0;</body>
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_E422cORuEeiwK5UPZ22vmQ" event="_CveIEORuEeiwK5UPZ22vmQ" port="_ugLW4GgvEeijRtS4FXxxtA"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_4KIkEBUgEemVzrLkFHwAfQ" name="t3" kind="external" source="_xgSBAGdiEeiqifykceCvxw" target="_3fCYoBUgEemVzrLkFHwAfQ">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_Aic54BUhEemVzrLkFHwAfQ" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>  int __retres3 ;
+int tmp=0;
+
+   __CrestCall(1, 1);
+  __CrestLoad(2, (unsigned long )0, (long long )0);
+  __CrestStore(3, (unsigned long )(&amp; tmp));
+#line 9
+  tmp = 0;
+#line 11
+  __CrestInt(&amp; color);
+  __CrestLoad(6, (unsigned long )(&amp; color), (long long )color);
+  __CrestLoad(5, (unsigned long )0, (long long )0);
+  __CrestApply2(4, 17, (long long )(color >= 0));
+#line 15
+  if (color >= 0) {
+    __CrestBranch(7, 43, 1);
+    {
+    __CrestLoad(11, (unsigned long )(&amp; color), (long long )color);
+    __CrestLoad(10, (unsigned long )0, (long long )5);
+    __CrestApply2(9, 16, (long long )(color &lt; 5));
+#line 15
+    if (color &lt; 5) {
+      __CrestBranch(12, 44, 1);
+#line 16
+      printf((char const   * __restrict  )&quot;----branch visited: color>=0 &amp;&amp; color&lt;5 ----\n&quot;);
+      __CrestClearStack(14);
+      __CrestLoad(17, (unsigned long )(&amp; tmp), (long long )tmp);
+      __CrestLoad(16, (unsigned long )(&amp; color), (long long )color);
+      __CrestApply2(15, 0, (long long )(tmp + color));
+      __CrestStore(18, (unsigned long )(&amp; tmp));
+#line 17
+      tmp += color;
+    } else {
+      __CrestBranch(13, 45, 0);
+#line 20
+      printf((char const   * __restrict  )&quot;----branch visited: !(color>=0 &amp;&amp; color&lt;5)----\n&quot;);
+      __CrestClearStack(19);
+    }
+    }
+  } else {
+    __CrestBranch(8, 46, 0);
+#line 20
+    printf((char const   * __restrict  )&quot;----branch visited: !(color>=0 &amp;&amp; color&lt;5)----\n&quot;);
+    __CrestClearStack(20);
+  }
+  __CrestLoad(23, (unsigned long )(&amp; tmp), (long long )tmp);
+  __CrestLoad(22, (unsigned long )0, (long long )2);
+  __CrestApply2(21, 17, (long long )(tmp >= 2));
+#line 22
+  if (tmp >= 2) {
+    __CrestBranch(24, 48, 1);
+#line 23
+    printf((char const   * __restrict  )&quot;----branch visited: tmp>=2----\n&quot;);
+    __CrestClearStack(26);
+  } else {
+    __CrestBranch(25, 49, 0);
+#line 26
+    printf((char const   * __restrict  )&quot;----branch visited: !tmp>=2----\n&quot;);
+    __CrestClearStack(27);
+  }
+  __CrestLoad(28, (unsigned long )0, (long long )0);
+  __CrestStore(29, (unsigned long )(&amp; __retres3));
+#line 28
+  __retres3 = 0;
+  __CrestLoad(30, (unsigned long )(&amp; __retres3), (long long )__retres3);
+  __CrestReturn(31);
+__CrestClearStack(0);
+
+__CrestWriteSE();
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_8OLL0BUhEemVzrLkFHwAfQ" event="_aNGGEH8WEeipA49rzMw2KQ" port="_GQwmUGdjEeiqifykceCvxw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_5UF1wBUgEemVzrLkFHwAfQ" name="t4" kind="external" source="_3fCYoBUgEemVzrLkFHwAfQ" target="_4nE-wBUgEemVzrLkFHwAfQ">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_FGiwIBUhEemVzrLkFHwAfQ" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>int __retres3;
+int tmp=10;
+  __CrestCall(1, 1);
+  __CrestLoad(2, (unsigned long )0, (long long )10);
+  __CrestStore(3, (unsigned long )(&amp; tmp));
+#line 9
+  tmp = 10;
+#line 11
+  __CrestInt(&amp; amount);
+  __CrestLoad(6, (unsigned long )(&amp; amount), (long long )amount);
+  __CrestLoad(5, (unsigned long )0, (long long )0);
+  __CrestApply2(4, 17, (long long )(amount >= 0));
+#line 15
+  if (amount >= 0) {
+    __CrestBranch(7, 63, 1);
+    {
+    __CrestLoad(11, (unsigned long )(&amp; amount), (long long )amount);
+    __CrestLoad(10, (unsigned long )0, (long long )5);
+    __CrestApply2(9, 16, (long long )(amount &lt; 5));
+#line 15
+    if (amount &lt; 5) {
+      __CrestBranch(12, 64, 1);
+#line 16
+      printf((char const   * __restrict  )&quot;----branch visited: amount>=0 &amp;&amp; amount&lt;5 ----\n&quot;);
+      __CrestClearStack(14);
+      __CrestLoad(17, (unsigned long )(&amp; tmp), (long long )tmp);
+      __CrestLoad(16, (unsigned long )(&amp; amount), (long long )amount);
+      __CrestApply2(15, 2, (long long )(tmp * amount));
+      __CrestStore(18, (unsigned long )(&amp; tmp));
+#line 17
+      tmp *= amount;
+    } else {
+      __CrestBranch(13, 65, 0);
+#line 20
+      printf((char const   * __restrict  )&quot;----branch visited: !(amount>=0 &amp;&amp; amount&lt;5)----\n&quot;);
+      __CrestClearStack(19);
+    }
+    }
+  } else {
+    __CrestBranch(8, 66, 0);
+#line 20
+    printf((char const   * __restrict  )&quot;----branch visited: !(amount>=0 &amp;&amp; amount&lt;5)----\n&quot;);
+    __CrestClearStack(20);
+  }
+  __CrestLoad(23, (unsigned long )(&amp; tmp), (long long )tmp);
+  __CrestLoad(22, (unsigned long )0, (long long )10);
+  __CrestApply2(21, 14, (long long )(tmp > 10));
+#line 22
+  if (tmp > 10) {
+    __CrestBranch(24, 68, 1);
+    {
+    __CrestLoad(28, (unsigned long )(&amp; tmp), (long long )tmp);
+    __CrestLoad(27, (unsigned long )0, (long long )50);
+    __CrestApply2(26, 16, (long long )(tmp &lt; 50));
+#line 22
+    if (tmp &lt; 50) {
+      __CrestBranch(29, 69, 1);
+#line 23
+      printf((char const   * __restrict  )&quot;----branch visited: tmp>10 &amp;&amp; tmp&lt;50----\n&quot;);
+      __CrestClearStack(31);
+    } else {
+      __CrestBranch(30, 70, 0);
+#line 26
+      printf((char const   * __restrict  )&quot;----branch visited: !tmp>10 &amp;&amp; tmp&lt;50----\n&quot;);
+      __CrestClearStack(32);
+    }
+    }
+  } else {
+    __CrestBranch(25, 71, 0);
+#line 26
+    printf((char const   * __restrict  )&quot;----branch visited: !tmp>10 &amp;&amp; tmp&lt;50----\n&quot;);
+    __CrestClearStack(33);
+  }
+  __CrestLoad(34, (unsigned long )0, (long long )0);
+  __CrestStore(35, (unsigned long )(&amp; __retres3));
+#line 28
+  __retres3 = 0;
+  __CrestLoad(36, (unsigned long )(&amp; __retres3), (long long )__retres3);
+  __CrestReturn(37);
+
+
+__CrestClearStack(0);
+__CrestWriteSE();
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="__dGl8BUhEemVzrLkFHwAfQ" event="_b5XaoH8WEeipA49rzMw2KQ" port="_GQwmUGdjEeiqifykceCvxw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_LdymEBUhEemVzrLkFHwAfQ" name="" kind="external" source="_3fCYoBUgEemVzrLkFHwAfQ" target="_bigO0N7GEeiBkYD2qJeUwg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_TbT2QBUhEemVzrLkFHwAfQ" event="_CveIEORuEeiwK5UPZ22vmQ" port="_ugLW4GgvEeijRtS4FXxxtA"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_VfzdkBUhEemVzrLkFHwAfQ" name="" kind="external" source="_4nE-wBUgEemVzrLkFHwAfQ" target="_bigO0N7GEeiBkYD2qJeUwg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_WjST0BUhEemVzrLkFHwAfQ" event="_CveIEORuEeiwK5UPZ22vmQ" port="_ugLW4GgvEeijRtS4FXxxtA"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_7B33IBUpEemVzrLkFHwAfQ" name="" kind="external" source="_jRLeAGdiEeiqifykceCvxw" target="_bigO0N7GEeiBkYD2qJeUwg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_7qsKoBUpEemVzrLkFHwAfQ" event="_CveIEORuEeiwK5UPZ22vmQ" port="_ugLW4GgvEeijRtS4FXxxtA"/>
           </transition>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_jREJQGdiEeiqifykceCvxw"/>
           <subvertex xmi:type="uml:State" xmi:id="_jRLeAGdiEeiqifykceCvxw" name="Setup">
@@ -592,6 +732,26 @@ cuteCommands.newState(INIT).send();
 </body>
             </entry>
           </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_3fCYoBUgEemVzrLkFHwAfQ" name="Dyeing">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_aHn9QBUhEemVzrLkFHwAfQ" name="Entry" isReentrant="false">
+              <language>C++</language>
+              <body>    //save global variables for future executions
+	//Todo
+
+log.log (&quot;@@@@ MUT: Dyeing---!\n&quot;);
+cuteCommands.newState(DYEING).send();</body>
+            </entry>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_4nE-wBUgEemVzrLkFHwAfQ" name="Draining">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_bjyZQBUhEemVzrLkFHwAfQ" name="Entry" isReentrant="false">
+              <language>C++</language>
+              <body>    //save global variables for future executions
+	//Todo
+
+log.log (&quot;@@@@ MUT: Draining---!\n&quot;);
+cuteCommands.newState(DRAINING).send();</body>
+            </entry>
+          </subvertex>
         </region>
       </ownedBehavior>
     </packagedElement>
@@ -625,10 +785,18 @@ cuteCommands.newState(INIT).send();
         </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_Sr3UsGgqEeijRtS4FXxxtA" name="reset"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_VIXn8H8WEeipA49rzMw2KQ" name="abort"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_aNEQ4H8WEeipA49rzMw2KQ" name="dye"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_b5UXUH8WEeipA49rzMw2KQ" name="drain"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_aNEQ4H8WEeipA49rzMw2KQ" name="dye">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_1mV8MBUhEemVzrLkFHwAfQ" name="color">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_b5UXUH8WEeipA49rzMw2KQ" name="drain">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_4zHaMBUhEemVzrLkFHwAfQ" name="amount">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          </ownedParameter>
+        </ownedOperation>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_dCLc0H8WEeipA49rzMw2KQ" name="level">
-          <ownedParameter xmi:type="uml:Parameter" xmi:id="_qr7vsH8ZEeipA49rzMw2KQ" name="amount">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_qr7vsH8ZEeipA49rzMw2KQ" name="amount1">
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
           </ownedParameter>
         </ownedOperation>
@@ -657,18 +825,17 @@ cuteCommands.newState(INIT).send();
         <ownedAttribute xmi:type="uml:Port" xmi:id="_4Yk0cORnEeiwK5UPZ22vmQ" name="timingInit" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
           <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_UDwxQPT_Eei0JrDYvmKv7w" name="dyeingRunController2" visibility="protected" type="_d3yFUPTZEei0JrDYvmKv7w" isOrdered="true" aggregation="composite"/>
-        <ownedConnector xmi:type="uml:Connector" xmi:id="_18iawGgvEeijRtS4FXxxtA" name="RTConnector1">
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_z-v4YGgvEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_18kP8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_GQwmUGdjEeiqifykceCvxw"/>
-        </ownedConnector>
-        <ownedConnector xmi:type="uml:Connector" xmi:id="_3ASWwGgvEeijRtS4FXxxtA" name="RTConnector2">
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8GgvEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_rximYGgvEeijRtS4FXxxtA"/>
-          <end xmi:type="uml:ConnectorEnd" xmi:id="_3AUL8WgvEeijRtS4FXxxtA" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_ugLW4GgvEeijRtS4FXxxtA"/>
-        </ownedConnector>
         <ownedConnector xmi:type="uml:Connector" xmi:id="_nU5IAGhHEeijRtS4FXxxtA" name="RTConnector3">
           <end xmi:type="uml:ConnectorEnd" xmi:id="_nU69MGhHEeijRtS4FXxxtA" role="_jct8kGhHEeijRtS4FXxxtA"/>
           <end xmi:type="uml:ConnectorEnd" xmi:id="_nU7kQGhHEeijRtS4FXxxtA" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_gsG2IGhHEeijRtS4FXxxtA"/>
+        </ownedConnector>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_AdvnwBUbEemVzrLkFHwAfQ" name="RTConnector4">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_AeAtgBUbEemVzrLkFHwAfQ" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_GQwmUGdjEeiqifykceCvxw"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_AeBUkBUbEemVzrLkFHwAfQ" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_z-v4YGgvEeijRtS4FXxxtA"/>
+        </ownedConnector>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_BHwOEBUbEemVzrLkFHwAfQ" name="RTConnector5">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_BHyqUBUbEemVzrLkFHwAfQ" partWithPort="_tCMV8GgvEeijRtS4FXxxtA" role="_ugLW4GgvEeijRtS4FXxxtA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_BHyqURUbEemVzrLkFHwAfQ" partWithPort="_wtzlsGgnEeijRtS4FXxxtA" role="_rximYGgvEeijRtS4FXxxtA"/>
         </ownedConnector>
         <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_1XUoUGhEEeijRtS4FXxxtA" name="StateMachineTOP_Test" isReentrant="false">
           <region xmi:type="uml:Region" xmi:id="_1XoKUGhEEeijRtS4FXxxtA" name="Region">
@@ -922,8 +1089,8 @@ log.log (&quot;Running MCUTE with the following settings:\n&quot;);
 log.log(&quot;Strategy = %s, Execution time = %d, Transition Iterations = %d, Total Iterations (for all transitions)= %d \n&quot;, strategy, RunningTime, TransitionIterations, TotalIterationsPromised);
 log.log(&quot;------------------------------------------\n&quot;);
 //all states, transition, branches are set statically
-States=3;
-Transitions=2;
+States=5;
+Transitions=4;
 ActionCodeBranches=6;
 //loop execution default values for all transitions with loop
 //LoopExecutions[T2]=0;
@@ -998,8 +1165,8 @@ log.log(&quot;-- choice2, false --\n&quot;);</body>
             <transition xmi:type="uml:Transition" xmi:id="_fnsUwORnEeiwK5UPZ22vmQ" name="" source="_ayVIUORnEeiwK5UPZ22vmQ" target="_2YhyQH_gEeiMFcUmhpquNg">
               <effect xmi:type="uml:OpaqueBehavior" xmi:id="_cTFv8O9pEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
                 <language>C++</language>
-                <body>//CreateCoverageUtilTable();
-transition_util::create_coverage_util(CoverageUtilTable);</body>
+                <body>CreateCoverageUtilTable();
+//transition_util::create_coverage_util(CoverageUtilTable);</body>
               </effect>
               <trigger xmi:type="uml:Trigger" xmi:id="_oqCfAORnEeiwK5UPZ22vmQ" event="_YYw3AGgzEeijRtS4FXxxtA" port="_rximYGgvEeijRtS4FXxxtA"/>
             </transition>
@@ -1502,7 +1669,8 @@ timingRunning.cancelTimer(timingRunningId);</body>
               <entry xmi:type="uml:OpaqueBehavior" xmi:id="_qs6voOjvEeidvedyZ74wtA" name="Entry" isReentrant="false">
                 <language>C++</language>
                 <body>//selecting the next transition
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+SelectNextTransition();
 
 //initialize the coverage info object for the transition
 //CoverageInfo.transition = next_t;
@@ -1545,7 +1713,8 @@ TotalIterationsExecuted++;</body>
                     <language>C++</language>
                     <body>log.log(&quot;\nexecuting next transition: %s\n&quot;, next_t.c_str());
 
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+SelectNextTransition();
 
     //initialize the coverage info object for the transition
     //CoverageInfo.transition = next_t;
@@ -1749,7 +1918,8 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
 
 
 //Selecting next transition
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+SelectNextTransition();
 
 </body>
               </entry>
@@ -1757,7 +1927,7 @@ transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
                 <transition xmi:type="uml:Transition" xmi:id="_cPmZQO94EeiBrOAOs4BT-g" kind="local" source="_agpkIO94EeiBrOAOs4BT-g" target="_bXr50O94EeiBrOAOs4BT-g">
                   <effect xmi:type="uml:OpaqueBehavior" xmi:id="_cXhHMPDNEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
                     <language>C++</language>
-                    <body>ConsecutiveTransitionsPromised=2;
+                    <body>ConsecutiveTransitionsPromised=4;
 ConsecutiveTransitionsExecuted=0;
 TotalIterationsExecuted=0;
 Depth=0;</body>
@@ -1837,8 +2007,8 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
 	VisitedStates.push_back(Curr_State);
 }
 
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
-//SelectNextTransition();
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+SelectNextTransition();
 
 if (Heuristic==0){ //random branch selection
 	branch_util::negate_rand(ex, Depth);
@@ -1903,8 +2073,8 @@ else{
 	timingBFSId = timingBFSNextMsg.informIn(UMLRTTimespec(0,100));
 }
 
-//SelectNextTransition();
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);</body>
+SelectNextTransition();
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);</body>
                   </entry>
                 </subvertex>
                 <subvertex xmi:type="uml:State" xmi:id="_z4x6cPC_EeiBrOAOs4BT-g" name="__InitialMsgSent__">
@@ -1965,7 +2135,7 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
                 <transition xmi:type="uml:Transition" xmi:id="_WXskhff5EeiHH8-AdwKg1Q" kind="local" source="_WXskgff5EeiHH8-AdwKg1Q" target="_WXskl_f5EeiHH8-AdwKg1Q">
                   <effect xmi:type="uml:OpaqueBehavior" xmi:id="_WXskhvf5EeiHH8-AdwKg1Q" name="Effect" isReentrant="false">
                     <language>C++</language>
-                    <body>ConsecutiveTransitionsPromised=2;
+                    <body>ConsecutiveTransitionsPromised=4;
 ConsecutiveTransitionsExecuted=0;
 TotalIterationsExecuted=0;
 Depth=0;</body>
@@ -2011,8 +2181,8 @@ if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedS
 	VisitedStates.push_back(Curr_State);
 }
 
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
-//SelectNextTransition();
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
+SelectNextTransition();
 
 
 
@@ -2036,8 +2206,8 @@ transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions);
                 <subvertex xmi:type="uml:State" xmi:id="_WXskl_f5EeiHH8-AdwKg1Q" name="MsgSending">
                   <entry xmi:type="uml:OpaqueBehavior" xmi:id="_WXskmPf5EeiHH8-AdwKg1Q" name="Entry" isReentrant="false">
                     <language>C++</language>
-                    <body>//SelectNextTransition();
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions, Strategy);
+                    <body>SelectNextTransition();
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions, Strategy);
 
 //generating 10 data
 vector&lt;value_t> inputs;
@@ -2089,8 +2259,8 @@ else{
 	timingBFSId = timingBFSNextMsg.informIn(UMLRTTimespec(0,100));
 }
 
-//SelectNextTransition();
-transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions, Strategy);</body>
+SelectNextTransition();
+//transition_util::select_next_transition(Curr_State, next_t, VisitedTransitions, Strategy);</body>
                   </entry>
                 </subvertex>
                 <subvertex xmi:type="uml:Pseudostate" xmi:id="_WXsknff5EeiHH8-AdwKg1Q" kind="choice"/>
@@ -2163,21 +2333,40 @@ for (size_t i = pos; (i &lt; path.constraints().size()) &amp;&amp; (depth > 0); 
         </ownedBehavior>
         <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_FRWKUOnREeiYVL3mrKgfUA" name="SelectNextTransitionOpaqueBehavior" specification="__6ZTwOnQEeiYVL3mrKgfUA">
           <language>C++</language>
-          <body>if (Curr_State==INIT){
-  //it is possible to run t3
-  next_t = &quot;t3&quot;;
-  log.log (&quot;Curr state: INIT&quot;);
-}else if (Curr_State==SETUP){
-  //it is possible to run t4
-  next_t = &quot;t4&quot;;
-  log.log (&quot;Curr state: SETUP&quot;);
+          <body>if (Strategy!=&quot;black-box&quot;){//select the next transition systematically
+  if (Curr_State==INIT){
+    //it is possible to run t1
+    next_t = &quot;t1&quot;;
+    log.log (&quot;Curr state: INIT&quot;);
+  }else if (Curr_State==SETUP){
+    //it is possible to run t2
+    next_t = &quot;t2&quot;;
+    log.log (&quot;Curr state: SETUP&quot;);
+  }else if (Curr_State==FILLING){
+    //it is possible to run t3
+    next_t = &quot;t3&quot;;
+    log.log (&quot;Curr state: FILLING&quot;);
+  }else if (Curr_State==DYEING){
+    //it is possible to run t4
+    next_t = &quot;t4&quot;;
+    log.log (&quot;Curr state: DYEING&quot;);
+  }
+  else{
+    log.log (&quot;Curr state: last state, Draining. Restarting..&quot;);
+    //commands.loopBack().send(); //to be able to re-execute the previous transitions
+    //log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
+    Curr_State=INIT;
+    next_t = &quot;t1&quot;;
+  }
 }
 else{
-  log.log (&quot;Curr state: last state. Restarting..&quot;);
-  //commands.loopBack().send(); //to be able to re-execute the previous transitions
-  //log.log (&quot;++++++Harness: msg 'loopBack' sent&quot;);
-  Curr_State=INIT;
-  next_t = &quot;t3&quot;;
+  std::vector&lt;string> transitions;
+  transitions.push_back(&quot;t1&quot;);
+  transitions.push_back(&quot;t2&quot;);
+  transitions.push_back(&quot;t3&quot;);
+  transitions.push_back(&quot;t4&quot;);
+  int irand = rand()%transitions.size();
+  next_t = transitions.at(irand);
 }
 
 //adding the transition to the list of covered transitions
@@ -2207,19 +2396,34 @@ return allCoverred;</body>
   } else if (next_t == &quot;t2&quot;) {
     data.start(0, 0, 0, 0).send();
     log.log (&quot;++++++Harness: msg 'start' sent&quot;);
+  } else if (next_t == &quot;t3&quot;) {
+    data.dye(0).send();
+    log.log (&quot;++++++Harness: msg 'dye' sent&quot;);
+  } else if (next_t == &quot;t4&quot;) {
+    data.drain(0).send();
+    log.log (&quot;++++++Harness: msg 'drain' sent&quot;);
   }</body>
         </ownedBehavior>
         <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_TJ7XUPTgEei0JrDYvmKv7w" name="CreateCoverageUtilTableOpaqueBehavior" specification="_QeEOAPTgEei0JrDYvmKv7w">
           <language>C++</language>
           <body>
-   coverage_util* cu1 = new coverage_util(string(&quot;t3&quot;));
+   coverage_util* cu1 = new coverage_util(string(&quot;t1&quot;));
    cu1->initCoverageInfo();
 
-   coverage_util* cu2 = new coverage_util(string(&quot;t4&quot;));
+   coverage_util* cu2 = new coverage_util(string(&quot;t2&quot;));
    cu2->initCoverageInfo();
 
-   CoverageUtilTable.insert(pair&lt;string, coverage_util*>(&quot;t3&quot;,cu1));
-   CoverageUtilTable.insert(pair&lt;string, coverage_util*>(&quot;t4&quot;,cu2));
+
+   coverage_util* cu3 = new coverage_util(string(&quot;t3&quot;));
+   cu3->initCoverageInfo();
+
+   coverage_util* cu4 = new coverage_util(string(&quot;t4&quot;));
+   cu4->initCoverageInfo();
+
+   CoverageUtilTable.insert(pair&lt;string, coverage_util*>(&quot;t1&quot;,cu1));
+   CoverageUtilTable.insert(pair&lt;string, coverage_util*>(&quot;t2&quot;,cu2));
+   CoverageUtilTable.insert(pair&lt;string, coverage_util*>(&quot;t3&quot;,cu3));
+   CoverageUtilTable.insert(pair&lt;string, coverage_util*>(&quot;t4&quot;,cu4));
 </body>
         </ownedBehavior>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_us69IPENEeiEK7ZB4QGZMA" name="AllBranchesCovered" concurrency="guarded" method="_GLA_QPEOEeiEK7ZB4QGZMA">
@@ -2370,8 +2574,6 @@ return allCoverred;</body>
   <UMLRealTime:CapsulePart xmi:id="_tCOyMGgvEeijRtS4FXxxtA" base_Property="_tCMV8GgvEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_ugNzIGgvEeijRtS4FXxxtA" base_Port="_ugLW4GgvEeijRtS4FXxxtA"/>
   <UMLRealTime:RTPort xmi:id="_z-yUoGgvEeijRtS4FXxxtA" base_Port="_z-v4YGgvEeijRtS4FXxxtA"/>
-  <UMLRealTime:RTConnector xmi:id="_18k3AGgvEeijRtS4FXxxtA" base_Connector="_18iawGgvEeijRtS4FXxxtA"/>
-  <UMLRealTime:RTConnector xmi:id="_3AUL8mgvEeijRtS4FXxxtA" base_Connector="_3ASWwGgvEeijRtS4FXxxtA"/>
   <UMLRTStateMachines:RTPseudostate xmi:id="_FrK20GgwEeijRtS4FXxxtA" base_Pseudostate="_FrJBoGgwEeijRtS4FXxxtA"/>
   <UMLRTStateMachines:RTState xmi:id="_FrNTEGgwEeijRtS4FXxxtA" base_State="_FrLd4GgwEeijRtS4FXxxtA"/>
   <UMLRTStateMachines:RTRegion xmi:id="_FrN6IGgwEeijRtS4FXxxtA" base_Region="_FrHMcGgwEeijRtS4FXxxtA"/>
@@ -2460,7 +2662,6 @@ return allCoverred;</body>
   <UMLRTStateMachines:RTState xmi:id="_d38dYPTZEei0JrDYvmKv7w" base_State="_d3yFcvTZEei0JrDYvmKv7w"/>
   <UMLRTStateMachines:RTState xmi:id="_d39EcPTZEei0JrDYvmKv7w" base_State="_d3yFdPTZEei0JrDYvmKv7w"/>
   <UMLRTStateMachines:RTState xmi:id="_d39rgPTZEei0JrDYvmKv7w" base_State="_d3yFdvTZEei0JrDYvmKv7w"/>
-  <UMLRealTime:CapsulePart xmi:id="_UES8wPT_Eei0JrDYvmKv7w" base_Property="_UDwxQPT_Eei0JrDYvmKv7w"/>
   <RTCppProperties:AttributeProperties xmi:id="_uorfcPZ1EeiHH8-AdwKg1Q" type="STATES" base_Property="_Fp9s4OFFEeiBkYD2qJeUwg"/>
   <UMLRTStateMachines:RTState xmi:id="_WX8cIPf5EeiHH8-AdwKg1Q" base_State="_WXskmff5EeiHH8-AdwKg1Q"/>
   <UMLRTStateMachines:RTPseudostate xmi:id="_WX9DMPf5EeiHH8-AdwKg1Q" base_Pseudostate="_WXskgff5EeiHH8-AdwKg1Q"/>
@@ -2470,4 +2671,8 @@ return allCoverred;</body>
   <UMLRTStateMachines:RTState xmi:id="_WX_fcPf5EeiHH8-AdwKg1Q" base_State="_WXskgPf5EeiHH8-AdwKg1Q"/>
   <UMLRTStateMachines:RTState xmi:id="_WX_fcff5EeiHH8-AdwKg1Q" base_State="_WXskl_f5EeiHH8-AdwKg1Q"/>
   <UMLRealTime:RTPort xmi:id="_nQyrkPpJEei2ZJ2NX_kRBg" isPublish="false" isWired="false" base_Port="_nQqvwPpJEei2ZJ2NX_kRBg"/>
+  <UMLRealTime:RTConnector xmi:id="_AeB7oBUbEemVzrLkFHwAfQ" base_Connector="_AdvnwBUbEemVzrLkFHwAfQ"/>
+  <UMLRealTime:RTConnector xmi:id="_BHzRYBUbEemVzrLkFHwAfQ" base_Connector="_BHwOEBUbEemVzrLkFHwAfQ"/>
+  <UMLRTStateMachines:RTState xmi:id="_3fE04BUgEemVzrLkFHwAfQ" base_State="_3fCYoBUgEemVzrLkFHwAfQ"/>
+  <UMLRTStateMachines:RTState xmi:id="_4nHbABUgEemVzrLkFHwAfQ" base_State="_4nE-wBUgEemVzrLkFHwAfQ"/>
 </xmi:XMI>

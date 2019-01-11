@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.papyrusrt.codegen.cpp.profile.RTCppProperties.RTCppPropertiesPackage;
 import org.eclipse.papyrusrt.umlrt.uml.util.UMLRTResourcesUtil;
 import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.common.util.UML2Util.EObjectMatcher;
@@ -52,6 +53,7 @@ import org.eclipse.uml2.uml.Collaboration;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.Operation;
@@ -81,6 +83,7 @@ public class Transformer {
 	private String harnessCapsuleName;
 	private String topCapsuleName;
 	private String commandsPort;
+	private final boolean debug = true;
 
 	/**
 	 * The resource set containing the instrumented model
@@ -145,6 +148,12 @@ public class Transformer {
 	 *            - the path of the input/output file
 	 * @return {@link Resource} - a Resource located at the corresponding path
 	 */
+	// public Resource getResource(String path) {
+	// URI uri = URI.createFileURI(path);
+	// Resource resource = resourceSet.getResource(uri, true);
+	// EcoreUtil.resolveAll(resourceSet);
+	// return resource;
+	// }
 	public Resource getResource(String path) {
 		URI uri = URI.createFileURI(path);
 		Resource resource = resourceSet.getResource(uri, true);
@@ -166,58 +175,81 @@ public class Transformer {
 
 	public boolean injectHarnessPackage() {
 
+		/*
+		 * // loading the harness resources ResourceSet resourceSetHarness = new
+		 * ResourceSetImpl(); UMLRTResourcesUtil.init(resourceSetHarness); URI uri =
+		 * URI.createFileURI(harnessPath); Resource harnessResource =
+		 * resourceSetHarness.getResource(uri, true);
+		 * EcoreUtil.resolveAll(resourceSetHarness); if (harnessResource == null) return
+		 * false;
+		 * 
+		 * // getting the harness model // Model harnessModel = (Model) element;
+		 * 
+		 * // retrieve the harness objects to be imported into the model under test if
+		 * (modelUnderTest == null) return false;
+		 * 
+		 * // copy all harness elements EcoreUtil.Copier modelCopier = new
+		 * EcoreUtil.Copier(); Collection<EObject> harnessObjs =
+		 * modelCopier.copyAll(harnessResource.getContents());
+		 * modelCopier.copyReferences();
+		 * 
+		 * // set copied elements in goods resources final EList<EObject> contents =
+		 * modelUnderTest.eResource().getContents();
+		 * 
+		 * // for (EObject umlObject : harnessObjs) { // if (umlObject instanceof Model)
+		 * { // Model m = (Model) umlObject; // Package newPackage =
+		 * UMLFactory.eINSTANCE.createPackage(); // newPackage.setName("HARNESS"); //
+		 * modelUnderTest.getPackagedElements().add(newPackage); // for (int i = 0; i <
+		 * m.getPackagedElements().size(); i++) { // EObject elem =
+		 * m.getPackagedElements().get(i); // if (elem instanceof Class) { //
+		 * newPackage.getPackagedElements().add((Class) elem); //
+		 * modelUnderTest.getPackagedElements().add((Class)elem); // } // } // } else //
+		 * contents.add(umlObject); // }
+		 * 
+		 * for (EObject umlObject : harnessObjs) { if (umlObject instanceof Model)
+		 * modelUnderTest.getPackagedElements().add((Model) umlObject); else
+		 * contents.add(umlObject); } // for (EObject obj : harnessObjs) { // if ((obj
+		 * instanceof PackageableElement)) { //
+		 * modelUnderTest.getPackagedElements().add((PackageableElement) obj); // } // }
+		 * 
+		 * return true;
+		 */
+
 		// loading the harness resources
-		ResourceSet resourceSetHarness = new ResourceSetImpl();
-		UMLRTResourcesUtil.init(resourceSetHarness);
-		URI uri = URI.createFileURI(harnessPath);
-		Resource harnessResource = resourceSetHarness.getResource(uri, true);
-		EcoreUtil.resolveAll(resourceSetHarness);
-		if (harnessResource == null)
-			return false;
+		Resource harnessResource = getResource(harnessPath);
 
-		// getting the harness model
-		// Model harnessModel = (Model) element;
+		// copy all elements
+		EcoreUtil.Copier copier = new EcoreUtil.Copier();
+		Collection<EObject> umlObjects = copier.copyAll(harnessResource.getContents());
+		copier.copyReferences();
 
-		// retrieve the harness objects to be imported into the model under test
-		if (modelUnderTest == null)
-			return false;
-
-		// copy all harness elements
-		EcoreUtil.Copier modelCopier = new EcoreUtil.Copier();
-		Collection<EObject> harnessObjs = modelCopier.copyAll(harnessResource.getContents());
-		modelCopier.copyReferences();
-
-		// set copied elements in goods resources
-		final EList<EObject> contents = modelUnderTest.eResource().getContents();
-
-		// for (EObject umlObject : harnessObjs) {
-		// if (umlObject instanceof Model) {
-		// Model m = (Model) umlObject;
-		// Package newPackage = UMLFactory.eINSTANCE.createPackage();
-		// newPackage.setName("HARNESS");
-		// modelUnderTest.getPackagedElements().add(newPackage);
-		// for (int i = 0; i < m.getPackagedElements().size(); i++) {
-		// EObject elem = m.getPackagedElements().get(i);
-		// if (elem instanceof Class) {
-		// newPackage.getPackagedElements().add((Class) elem);
-		// modelUnderTest.getPackagedElements().add((Class)elem);
-		// }
-		// }
-		// } else
-		// contents.add(umlObject);
-		// }
-
-		for (EObject umlObject : harnessObjs) {
-			if (umlObject instanceof Model)
-				modelUnderTest.getPackagedElements().add((Model) umlObject);
+		for (EObject umlObject : umlObjects) {
+			if (umlObject instanceof Package && ((Package) umlObject).getName().equalsIgnoreCase("MCUTE_FSE"))
+				modelUnderTest.getPackagedElements().add((Package) umlObject);
 			else
-				contents.add(umlObject);
+				modelUnderTest.eResource().getContents().add(umlObject);
 		}
-		// for (EObject obj : harnessObjs) {
-		// if ((obj instanceof PackageableElement)) {
-		// modelUnderTest.getPackagedElements().add((PackageableElement) obj);
-		// }
-		// }
+
+		// Hack for collaborations
+		Package mcute_fse = (Package) modelUnderTest.getPackagedElement("MCUTE_FSE");
+		for (PackageableElement el : mcute_fse.getPackagedElements()) {
+			if (el instanceof Package) { // This is a protocol
+				Collaboration protocol = (Collaboration) ((Package) el).getPackagedElements().get(0);
+				Interface collaborationInterface = protocol.getInterfaceRealizations().get(0).getContract();
+				Interface collaborationInterfaceIO = protocol.getInterfaceRealizations().get(0).getContract();
+				protocol.getInterfaceRealizations().clear();
+
+				InterfaceRealization collaborationInterfaceRealization = UMLFactory.eINSTANCE
+						.createInterfaceRealization();
+				InterfaceRealization collaborationInterfaceRealizationIO = UMLFactory.eINSTANCE
+						.createInterfaceRealization();
+
+				collaborationInterfaceRealization.setContract(collaborationInterface);
+				collaborationInterfaceRealizationIO.setContract(collaborationInterfaceIO);
+				protocol.getInterfaceRealizations().add(collaborationInterfaceRealization);
+				protocol.getInterfaceRealizations().add(collaborationInterfaceRealizationIO);
+			}
+		}
 
 		return true;
 
@@ -375,7 +407,7 @@ public class Transformer {
 	public void initResourceSet() {
 		resourceSet = new ResourceSetImpl();
 		UMLRTResourcesUtil.init(resourceSet);
-
+		resourceSet.getPackageRegistry().put(RTCppPropertiesPackage.eNS_URI, RTCppPropertiesPackage.eINSTANCE);
 	}
 
 	private int generatableTransitions;
@@ -433,9 +465,6 @@ public class Transformer {
 
 		boolean result = duplicateModelUnderTest() & initCutCapsule(arguments.get(++c));
 
-		if (generatableTransitions > 0)
-			result = generateRandomStateMachine() & result;
-
 		return result;
 	}
 
@@ -443,9 +472,12 @@ public class Transformer {
 		String bidFileName = "/tmp/mcute/bidSeed";
 		String strSeed = "";
 		int seed = 0;
+		//init seed with 0
+		writeSeed(bidFileName, seed);
 		String firstStableState = UmlrtUtil.getInitialState(statemachine).getOutgoings().get(0).getTarget().getName();
 		for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
 
+			System.out.print(".");
 			// reading seed
 			Scanner scanner1 = new Scanner(new File(bidFileName));
 			if (scanner1.hasNext()) {
@@ -491,7 +523,7 @@ public class Transformer {
 				fw.close();
 
 				// instrument it
-				final String instrumentScriptPath = "/home/reza/Dropbox/Qlab/code/MCUTE/crest/bin/mcute_instrument";
+				final String instrumentScriptPath = "/home/reza/Dropbox/Qlab/code/MCUTE/bin/mcute_instrument";
 				Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile, t.getName())
 						.start();
 				int res = instrumentCommand.waitFor();
@@ -536,13 +568,21 @@ public class Transformer {
 
 			// update the branch seed
 			seed += 100; // todo this must be based on the largest branch id
-			FileWriter writer = new FileWriter(new File(bidFileName));
-			writer.write(String.valueOf(seed));
-			writer.flush();
-			writer.close();
+			writeSeed(bidFileName, seed);
+//			FileWriter writer = new FileWriter(new File(bidFileName));
+//			writer.write(String.valueOf(seed));
+//			writer.flush();
+//			writer.close();
 
 		} // for
 		return true;
+	}
+	
+	private void writeSeed(String bidFileName, int seed) throws IOException {
+		FileWriter writer = new FileWriter(new File(bidFileName));
+		writer.write(String.valueOf(seed));
+		writer.flush();
+		writer.close();
 	}
 
 	public List<Operation> getMessages(Class capsule, String portName) {
@@ -579,6 +619,8 @@ public class Transformer {
 	private boolean generateRandomStateMachine() {
 		// Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new
 		// XMLResourceFactoryImpl());
+
+		long time1 = System.currentTimeMillis();
 
 		if (generatableTransitions > 0) {
 			Vertex initialState = UmlrtUtil.getInitialState(statemachine);
@@ -692,7 +734,7 @@ public class Transformer {
 				// Also an action code for adding the current TestEvent to the TestReportObj
 				// if the first transition of the test state machine
 				UmlrtUtil.addEffectToTransition(trans, String.format("log.log(\"transition %s action code\");%s\n",
-						trans.getName(), generateRandomActioncode(messageParams)));
+						trans.getName(), generateRandomActioncode(messageParams, trans.getName())));
 
 				// ToDo: use UML-RT Facade objects
 				// UMLRTFactory.createTransition(trans);
@@ -726,12 +768,16 @@ public class Transformer {
 
 		} else
 			return false;
+
+		System.out.println(String.format("random state machine generation took %s seconds",
+				(System.currentTimeMillis() - time1) / 1000));
+
 		return true;
 	}
 
 	int loc = 0;
 
-	private String generateRandomActioncode(List<Parameter> messageParams) {
+	private String generateRandomActioncode(List<Parameter> messageParams, String transition) {
 		// TODO Auto-generated method stub
 		if (messageParams != null && messageParams.size() > 0) {
 			StringBuilder actionCodeBuilder = new StringBuilder();
@@ -748,6 +794,9 @@ public class Transformer {
 				loc += 7;
 			}
 			actionCodeBuilder.append(endIf);
+			if (debug == true)
+				System.out.println(
+						String.format("action code %s----\n %s \n ------", transition, actionCodeBuilder.toString()));
 			return actionCodeBuilder.toString();
 		} else
 			return "";
@@ -847,7 +896,7 @@ public class Transformer {
 			}
 			// saving the inputs generated to a file so (in random testing) the action code
 			// can restore them from there
-			sendNextMessageBody += "fileutil::writeInputs(\"input\", inputs);";
+			sendNextMessageBody += "if (Strategy!=\"conc\"){ fileutil::writeInputs(\"input\", inputs);}";
 			sendNextMessageOpaqueBehavior.getBodies().add(sendNextMessageBody);
 			sendNextMessageOperation.getMethods().add(sendNextMessageOpaqueBehavior);
 			modelUnderTest.getPackagedElements().add(sendNextMessageOpaqueBehavior);
@@ -870,12 +919,23 @@ public class Transformer {
 			 */
 			/////////////////////////////////////////
 			// ToDo: only for Integers for now
+			// ToDo: fix random selecting next transition for black-box testing e.g.,:
+			// if (Strategy=="black-box"){//select the next transition systematically
+			// std::vector<string> transitions;
+			// transitions.push_back("t1");
+			// transitions.push_back("t2");
+			// transitions.push_back("t3");
+			// transitions.push_back("t4");
+			// int irand = rand()%transitions.size();
+			// next_t = transitions.at(irand);
 			for (Vertex v : statemachine.getRegions().get(0).getSubvertices()) {
 				if (v instanceof State) {
 					State s = (State) v;
-					if (s.getOutgoings() != null && s.getOutgoings().size() > 0) {
-						int randomTransitionIdx = new Random().nextInt(s.getOutgoings().size());
-						String candidateTransition = s.getOutgoings().get(randomTransitionIdx).getName();
+					List<Transition> outgoings = s.getOutgoings();
+					System.out.print(".");
+					if (outgoings != null && outgoings.size() > 0) {
+						int randomTransitionIdx = new Random().nextInt(outgoings.size());
+						String candidateTransition = outgoings.get(randomTransitionIdx).getName();
 						selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t = \"%s\";\n }",
 								s.getName(), candidateTransition);
 					}
@@ -928,6 +988,8 @@ public class Transformer {
 			// Curr_State=INIT;
 			// States=3;
 			// Transitions=2;
+			// ConsecutiveTransitionsPromised = Transitions
+
 			// List<Property> listAtt =
 			// cutCapsule.getAttributes().stream().filter(att->att.getName().equals("next_t")).collect(Collectors.toList());
 			// if (listAtt == null || listAtt.size() < 1)
@@ -1277,6 +1339,8 @@ public class Transformer {
 	 */
 	public static void main(String[] args) throws Exception {
 		boolean res;
+		int c = 1;
+		long timeMain = System.currentTimeMillis();
 		Transformer transformer = new Transformer();
 		// HarnessImporter harnessImporter = new
 		// HarnessImporter("/home/reza/Dropbox/Qlab/code/MCUTE/Harness_UMLRT/mcute_package.uml");
@@ -1285,6 +1349,11 @@ public class Transformer {
 			throw new Exception("Error during initialization. Check the argments");
 		}
 
+		if (transformer.generatableTransitions > 0) {
+			res = transformer.generateRandomStateMachine();
+			printRes(res, c);
+			c++;
+		}
 		// transformer.getCapsuleAttributes();
 
 		// after a reset
@@ -1298,7 +1367,8 @@ public class Transformer {
 
 		System.out.print("Creating a STATES enumeration... ");
 		transformer.createStateEnumeration();
-		System.out.println("done.");
+		printRes(true, c);
+		c++;
 
 		// System.out.print("Creating a BRANCHES enumeration... ");
 		// transformer.createBranchEnumeration();
@@ -1306,7 +1376,8 @@ public class Transformer {
 
 		System.out.print("Adding commands.newState(STATE).send(); at the end of entry action code... ");
 		transformer.createCuteCommandsForStates();
-		System.out.println("done.");
+		printRes(true, c);
+		c++;
 
 		// System.out.print("Saving current values of capsule attributes...");
 		// transformer.saveCurrentAttributesValues();
@@ -1319,7 +1390,8 @@ public class Transformer {
 
 		System.out.println("instrumenting the state machine");
 		res = transformer.instrumentActionCode();
-		printRes(res);
+		printRes(res, c);
+		c++;
 
 		// System.out.print("injecting the harness package inside the model under
 		// test... ");
@@ -1332,24 +1404,27 @@ public class Transformer {
 
 		System.out.println("customizing the test harness for the CUT");
 		res = transformer.customizeTestHarness();
-		printRes(res);
+		printRes(res, c);
+		c++;
 
 		System.out.print("Creating iteration transitions for every transition of the system... ");
 		transformer.createIterationTransitions();
-		System.out.println("done.");
+		printRes(true, c);
+		c++;
 
 		// Saving the instrumented model
 		transformer.save();
 
-		System.out.println("end!");
+		System.out.println(String.format("end! model preparation took %s seconds",
+				(System.currentTimeMillis() - timeMain) / 1000));
 
 	}
 
-	static void printRes(boolean res) {
+	static void printRes(boolean res, int n) {
 		if (res)
-			System.out.println("done.");
+			System.out.println(n + ". done.");
 		else
-			System.out.println("failed!");
+			System.out.println(n + ". failed!");
 	}
 
 }
