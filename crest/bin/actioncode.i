@@ -890,26 +890,7 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 # 943 "/usr/include/stdio.h" 3 4
 
 # 3 "/tmp/mcute/actioncode.c" 2
- void main(){int p1;
-__CrestInt(&p1);
-int CopyOf_p1_1;
-__CrestInt(&CopyOf_p1_1);
-int CopyOf_p1_2;
-__CrestInt(&CopyOf_p1_2);
-int CopyOf_p1_3;
-__CrestInt(&CopyOf_p1_3);
-int CopyOf_p1_4;
-__CrestInt(&CopyOf_p1_4);
-printf ("MCUTESTART log.log(\"$transition t4 action code\"$) MCUTEEND");
-if(p1 > 203006830 && p1 <=2030287832){p1+= 203006830;
-p1*= 2030287832;
-if(CopyOf_p1_1 > 736896042 && CopyOf_p1_1 <=2138387347){CopyOf_p1_1+= 736896042;
-CopyOf_p1_1*= 2138387347;
-if(CopyOf_p1_2 > 475537330 && CopyOf_p1_2 <=1398121914){CopyOf_p1_2+= 475537330;
-CopyOf_p1_2*= 1398121914;
-if(CopyOf_p1_3 > 47829028 && CopyOf_p1_3 <=52709588){CopyOf_p1_3+= 47829028;
-CopyOf_p1_3*= 52709588;
-if(CopyOf_p1_4 > 9151860 && CopyOf_p1_4 <=11557494){CopyOf_p1_4+= 9151860;
-CopyOf_p1_4*= 11557494;
-}else{}}else{}}else{}}else{}}else{}
-};
+ void main(){
+int p1;__CrestInt(&p1);int CopyOf_p1_1;__CrestInt(&CopyOf_p1_1);int CopyOf_p1_2;__CrestInt(&CopyOf_p1_2);int CopyOf_p1_3;__CrestInt(&CopyOf_p1_3);int CopyOf_p1_4;__CrestInt(&CopyOf_p1_4);printf ("MCUTESTART log.log(\"$transition t19 action code\"$);if(p1 > 814103662 && p1 <=897033810){p1+= 814103662;p1*= 897033810;if(CopyOf_p1_1 > 566498792 && CopyOf_p1_1 <=1521067732){CopyOf_p1_1+= 566498792;CopyOf_p1_1*= 1521067732;if(CopyOf_p1_2 > 916130954 && CopyOf_p1_2 <=1364126752){CopyOf_p1_2+= 916130954;CopyOf_p1_2*= 1364126752;if(CopyOf_p1_3 > 456238838 && CopyOf_p1_3 <=890032181){CopyOf_p1_3+= 456238838;CopyOf_p1_3*= 890032181;if(CopyOf_p1_4 > 752951849 && CopyOf_p1_4 <=1267609542){CopyOf_p1_4+= 752951849;CopyOf_p1_4*= 1267609542;}else{}}else{}}else{}}else{}}else{} MCUTEEND");
+
+}

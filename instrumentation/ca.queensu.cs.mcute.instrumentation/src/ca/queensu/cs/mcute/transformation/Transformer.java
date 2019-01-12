@@ -440,7 +440,13 @@ public class Transformer {
 			args[4] = "-c";
 			args[5] = "Capsule1";
 			args[6] = "-g";
-			args[7] = "5";
+			args[7] = "100";
+			
+//			-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog
+//			-i /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3.uml
+//			-o /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3__gen.uml
+//			-c CA_Main
+//			-g 50
 		}
 
 		List<String> arguments = Arrays.asList(args);
@@ -472,10 +478,10 @@ public class Transformer {
 		String bidFileName = "/tmp/mcute/bidSeed";
 		String strSeed = "";
 		int seed = 0;
-		//init seed with 0
+		// init seed with 0
 		writeSeed(bidFileName, seed);
 		String firstStableState = UmlrtUtil.getInitialState(statemachine).getOutgoings().get(0).getTarget().getName();
-		for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
+		for (Transition t : UmlrtUtil.getAllTransitions(statemachine)) {
 
 			System.out.print(".");
 			// reading seed
@@ -491,6 +497,16 @@ public class Transformer {
 			String actionCode = "";
 			if (t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
 				actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
+
+				// comment out message sending commands
+				String[] actionCodeLines = actionCode.split(";");
+				actionCode = "";
+				for (String line : actionCodeLines) {
+					if (line.contains(".log") || line.contains("send()") || line.contains("informsIn"))
+						line = String.format("printf (\"MCUTESTART %s MCUTEEND\")", line.replace("\"", "\\\"$"));
+					actionCode += line + ";\n";
+				}
+
 				String actionCodeParams = "";
 				for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
 						.getOwnedParameters()) {
@@ -502,17 +518,8 @@ public class Transformer {
 					if (parameterTypeName.equals("int"))
 						actionCodeParams += String.format("CREST_int(%s);", p.getName());
 				}
-				actionCode = String.format("#include <crest.h> \n #include <stdio.h>\n void main(){%s%s}",
+				actionCode = String.format("#include <crest.h> \n #include <stdio.h>\n void main(){\n%s%s\n}",
 						actionCodeParams, actionCode);
-
-				// comment out message sending commands
-				String[] actionCodeLines = actionCode.split(";");
-				actionCode = "";
-				for (String line : actionCodeLines) {
-					if (line.contains(".log") || line.contains("send()") || line.contains("informsIn"))
-						line = String.format("printf (\"MCUTESTART %s MCUTEEND\")", line.replace("\"", "\\\"$"));
-					actionCode += line + ";\n";
-				}
 
 				// copy the action code in a file
 				// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
@@ -527,8 +534,10 @@ public class Transformer {
 				Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile, t.getName())
 						.start();
 				int res = instrumentCommand.waitFor();
-				if (res != 0)
+				if (res != 0) {
+					System.out.println(String.format("failed to instrument:\n%s", actionCode));
 					return false;
+				}
 
 				// reading and customizing the instrumented action code
 				String actionCodeInstrumented = "";
@@ -569,15 +578,15 @@ public class Transformer {
 			// update the branch seed
 			seed += 100; // todo this must be based on the largest branch id
 			writeSeed(bidFileName, seed);
-//			FileWriter writer = new FileWriter(new File(bidFileName));
-//			writer.write(String.valueOf(seed));
-//			writer.flush();
-//			writer.close();
+			// FileWriter writer = new FileWriter(new File(bidFileName));
+			// writer.write(String.valueOf(seed));
+			// writer.flush();
+			// writer.close();
 
 		} // for
 		return true;
 	}
-	
+
 	private void writeSeed(String bidFileName, int seed) throws IOException {
 		FileWriter writer = new FileWriter(new File(bidFileName));
 		writer.write(String.valueOf(seed));
