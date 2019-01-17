@@ -94,6 +94,10 @@ namespace mcute {
       next_t = transitions.at(irand);
     }
 
+    // if (strategy!="black-box"){
+    //
+    // }
+
     //adding the transition to the list of covered transitions
     if(std::find(VisitedTransitions.begin(), VisitedTransitions.end(), next_t) == VisitedTransitions.end()){
       VisitedTransitions.push_back(next_t);

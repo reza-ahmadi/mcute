@@ -13,6 +13,7 @@
 
 package ca.queensu.cs.mcute.transformation;
 
+import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.CallEvent;
 import org.eclipse.uml2.uml.Class;
@@ -541,7 +542,7 @@ public class UmlrtUtil {
 
 		Trigger trig = UMLFactory.eINSTANCE.createTrigger();
 		Port port = UmlrtUtil.getPort(capsule, portName);
-		if (port==null)
+		if (port == null)
 			return null;
 		trig.getPorts().add(port);
 		Operation nextStateOp = null;
@@ -608,7 +609,7 @@ public class UmlrtUtil {
 		}
 		return getInitialState(stateMachine);
 	}
-	
+
 	public static void addOpaqueBehaviourToState(Vertex state, String actionCode, OpaqueBehaviourPoint point) {
 		OpaqueBehavior ob = UMLFactory.eINSTANCE.createOpaqueBehavior();
 		ob.getLanguages().add("C++");
@@ -621,9 +622,9 @@ public class UmlrtUtil {
 			ob.getBodies().add(actionCode);
 			((State) state).setEntry(ob);
 
-		} else { //OpaqueBehaviourPoint.OnExit
+		} else { // OpaqueBehaviourPoint.OnExit
 			if (((State) state).getExit() != null && ((OpaqueBehavior) ((State) state).getExit()).getBodies() != null) {
-				actionCode = ((OpaqueBehavior) ((State) state).getExit()).getBodies().get(0) + actionCode; 
+				actionCode = ((OpaqueBehavior) ((State) state).getExit()).getBodies().get(0) + actionCode;
 			}
 
 			ob.getBodies().add(actionCode);
@@ -876,20 +877,29 @@ public class UmlrtUtil {
 		return res;
 	}
 
-	public static void createConnector(Class container, Property part1, Property part2, Port port1, Port port2) {
+	public static void createConnector(Class container, Property part1, Property part2, Port port1, Port port2,
+			Connector sampleConnector) {
 		// TODO Auto-generated method stub
 		// RTConnector
 		if (part1 != null && part2 != null && port1 != null && port2 != null) {
-			Connector con = container.createOwnedConnector("");
-			Stereotype rtConnector = con.getApplicableStereotypes().get(0); // con.getApplicableStereotype("RTConnector");
-			if (rtConnector != null)
-				con.applyStereotype(rtConnector);
+			String connectorName = String.format("con_%s_%s_%s", port1.getName(), part1.getName(), part2.getName());
+			Connector con = container.createOwnedConnector(connectorName);
 			ConnectorEnd ce1 = con.createEnd();
 			ConnectorEnd ce2 = con.createEnd();
 			ce1.setPartWithPort(part1);
 			ce1.setRole(port1);
 			ce2.setPartWithPort(part2);
 			ce2.setRole(port2);
+			Stereotype rtConnector = null;
+			if (sampleConnector != null && sampleConnector.getAppliedStereotypes() != null
+					&& sampleConnector.getAppliedStereotypes().size() > 0) {
+				rtConnector = sampleConnector.getAppliedStereotypes().get(0);
+			} else {
+				rtConnector = con.getApplicableStereotypes().get(0); // con.getApplicableStereotype("RTConnector");
+			}
+			if (rtConnector != null) {
+				con.applyStereotype(rtConnector);
+			}
 			container.getOwnedConnectors().add(con);
 		}
 	}
@@ -899,6 +909,15 @@ public class UmlrtUtil {
 			if (p.getName().equals(name))
 				return true;
 		return false;
+	}
+
+	public static Connector getConnector(Class topCapsule, String name) {
+		// TODO Auto-generated method stub
+		for (Element elem : topCapsule.getOwnedElements()) {
+			if (elem instanceof Connector && ((Connector) elem).getName().equals(name))
+				return (Connector) elem;
+		}
+		return null;
 	}
 
 	// private void printTest(TestData test){

@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.PackageNotFoundException;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -50,6 +51,7 @@ import org.eclipse.uml2.common.util.UML2Util.EObjectMatcher;
 import org.eclipse.uml2.uml.CallEvent;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Collaboration;
+import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interface;
@@ -224,14 +226,14 @@ public class Transformer {
 		copier.copyReferences();
 
 		for (EObject umlObject : umlObjects) {
-			if (umlObject instanceof Package && ((Package) umlObject).getName().equalsIgnoreCase("MCUTE_FSE"))
+			if (umlObject instanceof Package && ((Package) umlObject).getName().equalsIgnoreCase("mCUTE"))
 				modelUnderTest.getPackagedElements().add((Package) umlObject);
 			else
 				modelUnderTest.eResource().getContents().add(umlObject);
 		}
 
 		// Hack for collaborations
-		Package mcute_fse = (Package) modelUnderTest.getPackagedElement("MCUTE_FSE");
+		Package mcute_fse = (Package) modelUnderTest.getPackagedElement("mCUTE");
 		for (PackageableElement el : mcute_fse.getPackagedElements()) {
 			if (el instanceof Package) { // This is a protocol
 				Collaboration protocol = (Collaboration) ((Package) el).getPackagedElements().get(0);
@@ -324,14 +326,17 @@ public class Transformer {
 		if (harnessPart.getAppliedStereotypes() != null && harnessPart.getAppliedStereotypes().size() > 0)
 			cut.applyStereotype(harnessPart.getAppliedStereotypes().get(0));
 
-		// creating the connections between TH and the cut
+		// creating the connectors between TH and the cut
 		// Property cutPart = UmlrtUtil.getPartByName(topCapsule, "cut");
+
+		// there is one connector on the topCapsule
+		Connector con3 = UmlrtUtil.getConnector(topCapsule, "RTConnector3");
 		for (Port portTH : thCapsule.getOwnedPorts()) {
 			if (portTH.getType().getName() == null)// system port? log, timing,..
 				continue;
 			Port portCUT = cutCapsule.getOwnedPort(portTH.getName(), portTH.getType());
 			if (portCUT != null) {
-				UmlrtUtil.createConnector(topCapsule, harnessPart, cut, portTH, portCUT);
+				UmlrtUtil.createConnector(topCapsule, harnessPart, cut, portTH, portCUT, con3);
 			}
 		}
 
@@ -422,7 +427,7 @@ public class Transformer {
 	 */
 	private boolean initialize(String[] args) throws Exception {
 
-		harnessPath = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/FSE2019/mcute_package.uml";
+		harnessPath = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/FSE2019/mcute_package3.uml";
 		// private final String harnessPackageName = "MCUTE";
 		harnessCapsuleName = "mCUTE_Harness";
 		topCapsuleName = "mCUTE__TOP";
@@ -434,19 +439,22 @@ public class Transformer {
 			System.out.println("NOTE: missing input parameters, using defaults...");
 			args = new String[10];
 			args[0] = "-i";
-			args[1] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen.uml";
+			args[1] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/emptyModel.uml";
 			args[2] = "-o";
-			args[3] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen2.uml";
+			args[3] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen3.uml";
 			args[4] = "-c";
 			args[5] = "Capsule1";
 			args[6] = "-g";
-			args[7] = "100";
-			
-//			-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog
-//			-i /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3.uml
-//			-o /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3__gen.uml
-//			-c CA_Main
-//			-g 50
+			args[7] = "2";
+
+			// -os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}
+			// -consoleLog
+			// -i
+			// /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3.uml
+			// -o
+			// /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3__gen.uml
+			// -c CA_Main
+			// -g 50
 		}
 
 		List<String> arguments = Arrays.asList(args);
@@ -870,6 +878,8 @@ public class Transformer {
 			Operation createCoverageUtilTableOperation = list.get(0);
 
 			// constructing SendNextMessageOpaqueBehavior
+			// ToDo: fix sending random messages in black-box testing e.g.,:
+			// if (Strategy=="black-box"){//send a random message
 			OpaqueBehavior sendNextMessageOpaqueBehavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
 			sendNextMessageOpaqueBehavior.setName("SendNextMessageOpaqueBehavior");
 			sendNextMessageOpaqueBehavior.getLanguages().add("C++");
@@ -899,8 +909,8 @@ public class Transformer {
 					}
 					params = params.substring(0, params.length() - 1);
 					sendNextMessageBody += String.format(
-							"if (next_t==\"%s\"){%s \n %s.%s(%s).send();\n log.log(\"Harness: msg '%s' sent\"); \n}\n",
-							t.getName(), writeInputsScript, port, msg, params, msg);
+							"if (next_t==\"%s\"){%s \n %s.%s(%s).send();\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
+							t.getName(), writeInputsScript, port, msg, params, port, msg);
 				}
 			}
 			// saving the inputs generated to a file so (in random testing) the action code
@@ -928,19 +938,14 @@ public class Transformer {
 			 */
 			/////////////////////////////////////////
 			// ToDo: only for Integers for now
-			// ToDo: fix random selecting next transition for black-box testing e.g.,:
-			// if (Strategy=="black-box"){//select the next transition systematically
-			// std::vector<string> transitions;
-			// transitions.push_back("t1");
-			// transitions.push_back("t2");
-			// transitions.push_back("t3");
-			// transitions.push_back("t4");
-			// int irand = rand()%transitions.size();
-			// next_t = transitions.at(irand);
+			List<Transition> allTransitions = new ArrayList<Transition>();
+			// selectNextTransitionBody += "if (Strategy!=\"black-box\"){";
 			for (Vertex v : statemachine.getRegions().get(0).getSubvertices()) {
 				if (v instanceof State) {
 					State s = (State) v;
 					List<Transition> outgoings = s.getOutgoings();
+					for (Transition t : outgoings)
+						allTransitions.add(t);
 					System.out.print(".");
 					if (outgoings != null && outgoings.size() > 0) {
 						int randomTransitionIdx = new Random().nextInt(outgoings.size());
@@ -950,6 +955,16 @@ public class Transformer {
 					}
 				}
 			} // for
+				// selectNextTransitionBody += "}else{";
+				// selectNextTransitionBody += "std::vector<string> transitions;";
+				// for (Transition t : allTransitions) {
+				// selectNextTransitionBody += String.format("transitions.push_back(\"%s\");",
+				// t.getName());
+				// }
+				// selectNextTransitionBody += "int irand = rand()%transitions.size();";
+				// selectNextTransitionBody+="next_t = transitions.at(irand);";
+				// selectNextTransitionBody += "}";
+
 			if (selectNextTransitionBody != "")
 				selectNextTransitionBody += "if(std::find(VisitedTransitions.begin(), VisitedTransitions.end(), next_t) == VisitedTransitions.end()){VisitedTransitions.push_back(next_t);}";
 			selectNextTransitionOpaqueBehavior.getBodies().add(selectNextTransitionBody);
@@ -1397,21 +1412,22 @@ public class Transformer {
 		// transformer.createCuteCommandsForTransitions();
 		// System.out.println("done.");
 
-		System.out.println("instrumenting the state machine");
+		System.out.println("instrumenting the state machine.");
 		res = transformer.instrumentActionCode();
 		printRes(res, c);
 		c++;
 
-		// System.out.print("injecting the harness package inside the model under
-		// test... ");
-		// res = transformer.injectHarnessPackage();
-		// printRes(res);
+		System.out.print("injecting the harness package inside the model under test... ");
+		res = transformer.injectHarnessPackage();
+		printRes(res, c);
+		c++;
 
-		// System.out.print("constructing the top capsule... ");
-		// res = transformer.configureTopCapsule();
-		// printRes(res);
+		System.out.print("constructing the top capsule... ");
+		res = transformer.configureTopCapsule();
+		printRes(res, c);
+		c++;
 
-		System.out.println("customizing the test harness for the CUT");
+		System.out.println("customizing the test harness for the CUT...");
 		res = transformer.customizeTestHarness();
 		printRes(res, c);
 		c++;

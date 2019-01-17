@@ -100,29 +100,19 @@ branch_idx=0;
 ////////////////////////////////////////////////////////////////////////
 void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<string, coverage_util*> coverage_util_table, string next_t){
 
+  bool debug=false;
+
+
   // coverage_util* cu = coverage_util_table[next_t];
 
   // vector<SymbolicPred*> constraints = ex.path().constraints();
   int constraints_size = ex.path().constraints().size();
-  vector<branch_id_t> branches;
+  vector<branch_id_t> branches_ids;
 
   for (int i=0;i<ex.path().branches().size();i++){
     if (ex.path().branches().at(i)>0)
-    branches.push_back(ex.path().branches().at(i));
+    branches_ids.push_back(ex.path().branches().at(i));
   }
-
-  //remove negative numbers
-
-
-  // printf ("\n\t[branch_util::negate_sys]:: total branches: %d, total constraints are:%d\n", branches.size(), constraints_size);
-  // for (int i=0;i<branches.size();i++){
-  //   cout << "\t branch[" << i << "]=" << branches.at(i);
-  // }
-
-  // cout<<endl;
-  // for (int i=0;i<ex.path().constraints_idx().size();i++){
-  //   cout << "\t constraints_idx[" << i << "]=" << ex.path().constraints_idx()[i];
-  // }
 
   int new_branch_selected = false;
   cout << "\nsize of the coverage_util_table table is:" << coverage_util_table.size() <<endl;
@@ -135,42 +125,62 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
     cout << "coverage_util object for the transition:" << it->first <<endl;
     coverage_util* cu = it->second;
     // int bid = constraints_size;
-    for (int i=branches.size()-1;i>=0;i--){
+    for (int i=branches_ids.size()-1;i>=0;i--){
 
       // for some reason the first element in branches vector is -1
-      // if (branches.at(i)<0){
-      //   continue;
-      // }
-
-      // bid--;
 
       //if this branch does not contain the current transition
-      if (!cu->branchBelongsToTransition(branches.at(i))){
+      if (!cu->branchBelongsToTransition(branches_ids.at(i))){
         continue;
       }
 
-      cout<<endl<<"[branch_util::negate_sys]: branch to check for negation: " << branches.at(i) <<endl;
-      cout<<"[branch_util::negate_sys]: the pair of the branch is: " << cu->paired_branch_[branches.at(i)] <<endl;
+      cout<<endl<<"[branch_util::negate_sys]: branch to check for negation: " << branches_ids.at(i) <<endl;
+      cout<<"[branch_util::negate_sys]: the pair of the branch is: " << cu->paired_branch_[branches_ids.at(i)] <<endl;
       // cout<<"[branch_util::negate_sys]: branch belongs to transition " << cu->transition <<endl;
       //if the branch belongs to this cu object and is  its pair was not covered
       // cout<<"[branch_util::negate_sys]: branchs already covered " << cu->total_num_covered_ << "out of" << cu->branches_.size() <<endl;
 
-      //printing the covered branches
-      for (int l=1;l<cu->covered_.size();l++)
-      {
-        if (cu->covered_[l]){
-          cout <<"covered["<<l<<"] = "<<cu->covered_[l]<<endl;
+      if (debug){
+        //printing the covered branches
+        for (int l=1;l<cu->covered_.size();l++)
+        {
+          if (cu->covered_[l]){
+            cout <<"covered["<<l<<"] = "<<cu->covered_[l]<<endl;
+          }
         }
       }
 
-      if (!(cu->covered_[cu->paired_branch_[branches.at(i)]])){
-        if (i>=0 && i<constraints_size){
-          branch_idx = i;
-          new_branch_selected = true;
-          cout<<"[branch_util::negate_sys]: pair of the branch not covered before, selecting branch: " << cu->paired_branch_[branches.at(i)] <<endl;
-        }
-        break;
-      }//if
+      //selecting a branch for negation
+      branch_idx=i;
+      int pair_branch_idx = cu->paired_branch_[branches_ids.at(i)];
+      int ubound = max(branch_idx,pair_branch_idx);
+      int lbound = min(branch_idx,pair_branch_idx);
+      for (int b=lbound;b<=ubound;b++){
+        //pair was not covered
+        if (cu->branches_.at(b)>=0){
+          if (!(cu->covered_[cu->paired_branch_[branches_ids.at(b)]])){
+            // if (b>=0 && b<constraints_size){
+              branch_idx=b;
+              new_branch_selected = true;
+              cout<<"[branch_util::negate_sys]: pair of the branch not covered before, selecting branch: " << cu->paired_branch_[branches_ids.at(i)] <<endl;
+              break;
+            // }//if
+          }//if
+        }//if
+      }//for bound
+
+      //now branch_idx is b;
+      //selected branch is the pair of the currently executed branch
+      if (branches_ids.at(branch_idx)==cu->paired_branch_[branches_ids.at(i)]) {
+        branch_idx = i;
+      }
+
+      //if the constraint of the selected branch is not available,
+      //then run the pair of the current branch again
+      if (branches_ids.size()<=branch_idx){
+        branch_idx = i;
+      }
+
     }//for
   }//for
 
@@ -183,18 +193,23 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
   }
 
   printf ("\t[branch_util::negate_sys]:: branch_idx to negagte is: %d, total constraints are:%d\n", branch_idx, constraints_size);
-  //print SE object info
-  fileutil::printSymExObj(false, true, false);
+
+  if (debug){
+    //print SE object info
+    fileutil::printSymExObj(false, true, false);
+  }
 
   //1. negate and solve the PCs
   vector<value_t> input;
   printf("\n---Call SolveAtBranch, branch_idx: %d", branch_idx);
   solveAtBranch(ex, branch_idx, input);
 
-  //print the generated inputs
-  std::cout << "\n-----printing inputs generated by the Concolic engine-------\n";
-  for (size_t i = 0; i < input.size(); i++) {
-    std::cout << ":" << input[i] << std::endl;
+  if (debug){
+    //print the generated inputs
+    std::cout << "\n-----printing inputs generated by the Concolic engine-------\n";
+    for (size_t i = 0; i < input.size(); i++) {
+      std::cout << ":" << input[i] << std::endl;
+    }
   }
 
   //write the inputs to a file, since SI object is initialized by these inputs
@@ -209,6 +224,8 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
 ////////////////////////////////////////////////////////////////////////
 void branch_util::negate_rand(const SymbolicExecution& ex, int& branch_idx){
 
+  bool debug=false;
+
   int constraints = ex.path().constraints().size();
 
   int min = 0; // min int value
@@ -220,9 +237,11 @@ void branch_util::negate_rand(const SymbolicExecution& ex, int& branch_idx){
     branch_idx = rand() % max + min;
   }
 
-  printf ("\t[branch_util::negate_rand]:: branch_idx to negagte is: %d, total constraints are:%d\n", branch_idx, constraints);
-  //print SE object info
-  fileutil::printSymExObj(false, true, false);
+  if (debug){
+    printf ("\t[branch_util::negate_rand]:: branch_idx to negagte is: %d, total constraints are:%d\n", branch_idx, constraints);
+    //print SE object info
+    fileutil::printSymExObj(false, true, false);
+  }
 
   //1. negate and solve the PCs
   vector<value_t> input;
@@ -230,9 +249,11 @@ void branch_util::negate_rand(const SymbolicExecution& ex, int& branch_idx){
   solveAtBranch(ex, branch_idx, input);
 
   //print the generated inputs
-  std::cout << "\n-----printing inputs generated by the Concolic engine-------\n";
-  for (size_t i = 0; i < input.size(); i++) {
-    std::cout << ":" << input[i] << std::endl;
+  if (debug){
+    std::cout << "\n-----printing inputs generated by the Concolic engine-------\n";
+    for (size_t i = 0; i < input.size(); i++) {
+      std::cout << ":" << input[i] << std::endl;
+    }
   }
 
   //write the inputs to a file, since SI object is initialized by these inputs

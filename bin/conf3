@@ -3,5 +3,5 @@
 strategy 3
 heuristic 0
 time 300
-totalIterations 5000000
+totalIterations 50000
 transitionIterations 1
