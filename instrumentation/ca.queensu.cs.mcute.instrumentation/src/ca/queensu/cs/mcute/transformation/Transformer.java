@@ -25,8 +25,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -894,7 +897,9 @@ public class Transformer {
 			 */
 			/////////////////////////////////////////
 			// ToDo: only for Integers for now
+			Map<String, String> messagesCallInfo = new HashMap<String, String>();
 			sendNextMessageBody += "vector<value_t> inputs;"; // for random inputs to be written to a file
+			sendNextMessageBody += "if (Strategy!=\"black-box\"){ ";
 			for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
 				String port = "", msg = "", params = "";
 				if (t.getTriggers() != null && t.getTriggers().size() > 0) {
@@ -905,17 +910,31 @@ public class Transformer {
 					for (Parameter p : ce.getOperation().inputParameters()) {
 						int randomParam = new Random().nextInt();
 						params += String.format("%d,", randomParam);
-						writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
+						// writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
 					}
 					params = params.substring(0, params.length() - 1);
+					String messageCall = String.format("%s.%s(%s).send()", port, msg, params);
+					messagesCallInfo.put(String.format("%s.%s", port, msg), messageCall);
 					sendNextMessageBody += String.format(
-							"if (next_t==\"%s\"){%s \n %s.%s(%s).send();\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
-							t.getName(), writeInputsScript, port, msg, params, port, msg);
+							"if (next_t==\"%s\"){%s \n %s;\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
+							t.getName(), writeInputsScript, messageCall, port, msg);
 				}
 			}
+			sendNextMessageBody += "}else{"; // if strategy is black-box
+			sendNextMessageBody += "int x;";
+			int c = 0;
+			sendNextMessageBody += String.format("x = rand() %% %d + 0;", messagesCallInfo.size());
+			for (Map.Entry<String, String> messageCall : messagesCallInfo.entrySet()) {
+				sendNextMessageBody += String.format("if (x==%d) {%s; \n log.log(\"Harness: msg '%s' sent\");}", c,
+						messageCall.getValue(), messageCall.getKey());
+				c++;
+			}
+			sendNextMessageBody += "}";
+
 			// saving the inputs generated to a file so (in random testing) the action code
 			// can restore them from there
-			sendNextMessageBody += "if (Strategy!=\"conc\"){ fileutil::writeInputs(\"input\", inputs);}";
+			// sendNextMessageBody += "if (Strategy!=\"conc\"){
+			// fileutil::writeInputs(\"input\", inputs);}";
 			sendNextMessageOpaqueBehavior.getBodies().add(sendNextMessageBody);
 			sendNextMessageOperation.getMethods().add(sendNextMessageOpaqueBehavior);
 			modelUnderTest.getPackagedElements().add(sendNextMessageOpaqueBehavior);
@@ -965,8 +984,10 @@ public class Transformer {
 				// selectNextTransitionBody+="next_t = transitions.at(irand);";
 				// selectNextTransitionBody += "}";
 
-			if (selectNextTransitionBody != "")
-				selectNextTransitionBody += "if(std::find(VisitedTransitions.begin(), VisitedTransitions.end(), next_t) == VisitedTransitions.end()){VisitedTransitions.push_back(next_t);}";
+			// if (selectNextTransitionBody != "")
+			// selectNextTransitionBody += "if(std::find(VisitedTransitions.begin(),
+			// VisitedTransitions.end(), next_t) ==
+			// VisitedTransitions.end()){VisitedTransitions.push_back(next_t);}";
 			selectNextTransitionOpaqueBehavior.getBodies().add(selectNextTransitionBody);
 			selectNextTransitionOperation.getMethods().add(selectNextTransitionOpaqueBehavior);
 			modelUnderTest.getPackagedElements().add(selectNextTransitionOpaqueBehavior);
@@ -1019,8 +1040,9 @@ public class Transformer {
 
 			Vertex harnessInitState = UmlrtUtil.getStateMachine(harness).getRegions().get(0).getSubvertex("Init");
 			if (harnessInitState != null) {
-				String actionCode = String.format("\n next_t=\"%s\";\n Curr_State = %s;\n States=%d;\n Transitions=%d;\n  ",
-						next_t, currState, totalStates, totalTransitions);
+				String actionCode = String.format(
+						"\n next_t=\"%s\";\n Curr_State = %s;\n States=%d;\n Transitions=%d;\n  ", next_t, currState,
+						totalStates, totalTransitions);
 				UmlrtUtil.addOpaqueBehaviourToState(harnessInitState, actionCode, OpaqueBehaviourPoint.OnEntry);
 			} else {
 				return false;
@@ -1047,6 +1069,17 @@ public class Transformer {
 			return false;
 
 		return true;
+	}
+
+	private Collection<Operation> getAllMessages(Class capsule) {
+		Collection<Operation> allMessages = new ArrayList<Operation>();
+		List<Port> capsulePorts = UmlrtUtil.getPorts(capsule).stream().filter(p -> !(p.getName().equals(commandsPort)))
+				.collect(Collectors.toList());
+		for (Port p : capsulePorts) {
+			List<Operation> portMessages = getMessages(capsule, p.getName());
+			allMessages.addAll(portMessages);
+		}
+		return allMessages;
 	}
 
 	/**
