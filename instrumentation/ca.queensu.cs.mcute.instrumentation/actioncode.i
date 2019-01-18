@@ -891,17 +891,17 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 3 "/tmp/mcute/actioncode.c" 2
  void main(){
-int p1;__CrestInt(&p1);int CopyOf_p1_1;__CrestInt(&CopyOf_p1_1);int CopyOf_p1_2;__CrestInt(&CopyOf_p1_2);int CopyOf_p1_3;__CrestInt(&CopyOf_p1_3);int CopyOf_p1_4;__CrestInt(&CopyOf_p1_4);printf ("MCUTESTART log.log(\"$transition t1 action code\"$) MCUTEEND");
-if(p1 > 1545398851 && p1 <=1673813144){p1+= 1545398851;
-p1*= 1673813144;
-if(CopyOf_p1_1 > 15550577 && CopyOf_p1_1 <=1716682218){CopyOf_p1_1+= 15550577;
-CopyOf_p1_1*= 1716682218;
-if(CopyOf_p1_2 > 2085103299 && CopyOf_p1_2 <=2109814638){CopyOf_p1_2+= 2085103299;
-CopyOf_p1_2*= 2109814638;
-if(CopyOf_p1_3 > 294980408 && CopyOf_p1_3 <=332595742){CopyOf_p1_3+= 294980408;
-CopyOf_p1_3*= 332595742;
-if(CopyOf_p1_4 > 1204093902 && CopyOf_p1_4 <=1969523490){CopyOf_p1_4+= 1204093902;
-CopyOf_p1_4*= 1969523490;
+int p1;__CrestInt(&p1);int CopyOf_p1_1;__CrestInt(&CopyOf_p1_1);int CopyOf_p1_2;__CrestInt(&CopyOf_p1_2);int CopyOf_p1_3;__CrestInt(&CopyOf_p1_3);int CopyOf_p1_4;__CrestInt(&CopyOf_p1_4);printf ("MCUTESTART log.log(\"$transition t19 action code\"$) MCUTEEND");
+if(p1 > 211090349 && p1 <=1268287606){p1+= 211090349;
+p1*= 1268287606;
+if(CopyOf_p1_1 > 69745681 && CopyOf_p1_1 <=179646772){CopyOf_p1_1+= 69745681;
+CopyOf_p1_1*= 179646772;
+if(CopyOf_p1_2 > 14251884 && CopyOf_p1_2 <=47213930){CopyOf_p1_2+= 14251884;
+CopyOf_p1_2*= 47213930;
+if(CopyOf_p1_3 > 1597113657 && CopyOf_p1_3 <=1702575789){CopyOf_p1_3+= 1597113657;
+CopyOf_p1_3*= 1702575789;
+if(CopyOf_p1_4 > 87632519 && CopyOf_p1_4 <=1217694863){CopyOf_p1_4+= 87632519;
+CopyOf_p1_4*= 1217694863;
 }else{}}else{}}else{}}else{}}else{}
 ;
 

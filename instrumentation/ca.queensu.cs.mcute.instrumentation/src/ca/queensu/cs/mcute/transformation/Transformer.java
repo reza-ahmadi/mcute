@@ -85,7 +85,7 @@ public class Transformer {
 	private String harnessCapsuleName;
 	private String topCapsuleName;
 	private String commandsPort;
-	private final boolean debug = true;
+	private final boolean debug = false;
 
 	/**
 	 * The resource set containing the instrumented model
@@ -427,7 +427,7 @@ public class Transformer {
 	 */
 	private boolean initialize(String[] args) throws Exception {
 
-		harnessPath = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/FSE2019/mcute_package3.uml";
+		harnessPath = "/home/reza/Dropbox/Qlab/code/MCUTE/Harness_UMLRT/mcute_package3.uml";
 		// private final String harnessPackageName = "MCUTE";
 		harnessCapsuleName = "mCUTE_Harness";
 		topCapsuleName = "mCUTE__TOP";
@@ -445,7 +445,7 @@ public class Transformer {
 			args[4] = "-c";
 			args[5] = "Capsule1";
 			args[6] = "-g";
-			args[7] = "2";
+			args[7] = "20";
 
 			// -os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}
 			// -consoleLog
@@ -1007,12 +1007,28 @@ public class Transformer {
 				modelUnderTest.getPackagedElements().add(createCoverageUtilTableOpaqueBehavior);
 			}
 
-			// ToDo: initializing the following attributes
+			// initializing the next_t, Curr_State, States, and Transitions
+			// finding some information about the model to write in the hanress
+			String currState = "", next_t = "";
+			Vertex initialState = UmlrtUtil.getInitialState(statemachine);
+			Vertex firstStateState = initialState.getOutgoings().get(0).getTarget();
+			currState = firstStateState.getName();
+			next_t = firstStateState.getOutgoings().get(0).getName();
+			int totalStates = UmlrtUtil.getAllVertexes(statemachine).size();
+			int totalTransitions = UmlrtUtil.getAllTransitions(statemachine).size();
+
+			Vertex harnessInitState = UmlrtUtil.getStateMachine(harness).getRegions().get(0).getSubvertex("Init");
+			if (harnessInitState != null) {
+				String actionCode = String.format("\n next_t=\"%s\";\n Curr_State = %s;\n States=%d;\n Transitions=%d;\n  ",
+						next_t, currState, totalStates, totalTransitions);
+				UmlrtUtil.addOpaqueBehaviourToState(harnessInitState, actionCode, OpaqueBehaviourPoint.OnEntry);
+			} else {
+				return false;
+			}
 			// next_t="t1";
 			// Curr_State=INIT;
 			// States=3;
 			// Transitions=2;
-			// ConsecutiveTransitionsPromised = Transitions
 
 			// List<Property> listAtt =
 			// cutCapsule.getAttributes().stream().filter(att->att.getName().equals("next_t")).collect(Collectors.toList());
