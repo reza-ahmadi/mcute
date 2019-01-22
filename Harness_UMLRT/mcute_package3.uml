@@ -968,7 +968,7 @@ SendNextMessage();
 
 //it is possible that the model under test cannot consume a particular message
 //so the harness waits for a short while before sending a new possibly different message
-timingNewMsgId = timingNewMsg.informIn(UMLRTTimespec(0,100000));
+timingNewMsgId = timingNewMsg.informIn(UMLRTTimespec(0,30000000));
 
 cout &lt;&lt;endl&lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl;
 cout &lt;&lt; &quot;\t\t\tExecuting the transition: &quot; &lt;&lt; next_t.c_str() &lt;&lt; endl;
