@@ -114,20 +114,20 @@ module RD :
       end
     module DF :
       sig
-        type 't action =
-          't Dataflow.action =
+        type 'a action =
+          'a Dataflow.action =
             Default
-          | Done of 't
-          | Post of ('t -> 't)
-        type 't stmtaction =
-          't Dataflow.stmtaction =
+          | Done of 'a
+          | Post of ('a -> 'a)
+        type 'a stmtaction =
+          'a Dataflow.stmtaction =
             SDefault
           | SDone
-          | SUse of 't
-        type 't guardaction =
-          't Dataflow.guardaction =
+          | SUse of 'a
+        type 'a guardaction =
+          'a Dataflow.guardaction =
             GDefault
-          | GUse of 't
+          | GUse of 'a
           | GUnreachable
         module type ForwardsTransfer =
           sig
@@ -252,14 +252,13 @@ module RD :
             val max_elt : t -> elt
             val choose : t -> elt
             val split : elt -> t -> t * bool * t
-            val find : elt -> t -> elt
           end
         val getUseDefFunctionRef :
           (Cil.exp -> Cil.exp list -> VS.t * VS.t * Cil.exp list) ref
-        val considerVariableUse : (Cil.varinfo -> bool) ref
-        val considerVariableDef : (Cil.varinfo -> bool) ref
-        val considerVariableAddrOfAsUse : (Cil.varinfo -> bool) ref
-        val considerVariableAddrOfAsDef : (Cil.varinfo -> bool) ref
+        val considerVariableUse : (VS.elt -> bool) ref
+        val considerVariableDef : (VS.elt -> bool) ref
+        val considerVariableAddrOfAsUse : (VS.elt -> bool) ref
+        val considerVariableAddrOfAsDef : (VS.elt -> bool) ref
         val extraUsesOfExpr : (Cil.exp -> VS.t) ref
         val onlyNoOffsetsAreDefs : bool ref
         val ignoreSizeof : bool ref
@@ -280,20 +279,20 @@ module RD :
       sig
         module DF :
           sig
-            type 't action =
-              't Dataflow.action =
+            type 'a action =
+              'a Dataflow.action =
                 Default
-              | Done of 't
-              | Post of ('t -> 't)
-            type 't stmtaction =
-              't Dataflow.stmtaction =
+              | Done of 'a
+              | Post of ('a -> 'a)
+            type 'a stmtaction =
+              'a Dataflow.stmtaction =
                 SDefault
               | SDone
-              | SUse of 't
-            type 't guardaction =
-              't Dataflow.guardaction =
+              | SUse of 'a
+            type 'a guardaction =
+              'a Dataflow.guardaction =
                 GDefault
-              | GUse of 't
+              | GUse of 'a
               | GUnreachable
             module type ForwardsTransfer =
               sig
@@ -420,14 +419,13 @@ module RD :
                 val max_elt : t -> elt
                 val choose : t -> elt
                 val split : elt -> t -> t * bool * t
-                val find : elt -> t -> elt
               end
             val getUseDefFunctionRef :
               (Cil.exp -> Cil.exp list -> VS.t * VS.t * Cil.exp list) ref
-            val considerVariableUse : (Cil.varinfo -> bool) ref
-            val considerVariableDef : (Cil.varinfo -> bool) ref
-            val considerVariableAddrOfAsUse : (Cil.varinfo -> bool) ref
-            val considerVariableAddrOfAsDef : (Cil.varinfo -> bool) ref
+            val considerVariableUse : (VS.elt -> bool) ref
+            val considerVariableDef : (VS.elt -> bool) ref
+            val considerVariableAddrOfAsUse : (VS.elt -> bool) ref
+            val considerVariableAddrOfAsDef : (VS.elt -> bool) ref
             val extraUsesOfExpr : (Cil.exp -> VS.t) ref
             val onlyNoOffsetsAreDefs : bool ref
             val ignoreSizeof : bool ref
@@ -556,7 +554,6 @@ module RD :
             val max_elt : t -> elt
             val choose : t -> elt
             val split : elt -> t -> t * bool * t
-            val find : elt -> t -> elt
           end
         val debug_print : unit -> VS.t -> Pretty.doc
         val min_print : unit -> VS.t -> Pretty.doc
@@ -763,7 +760,6 @@ module RD :
         val max_elt : t -> elt
         val choose : t -> elt
         val split : elt -> t -> t * bool * t
-        val find : elt -> t -> elt
       end
     val debug : bool ref
     val ih_inter : 'a IH.t -> 'b IH.t -> 'a IH.t
@@ -936,14 +932,13 @@ module UD :
         val max_elt : t -> elt
         val choose : t -> elt
         val split : elt -> t -> t * bool * t
-        val find : elt -> t -> elt
       end
     val getUseDefFunctionRef :
       (Cil.exp -> Cil.exp list -> VS.t * VS.t * Cil.exp list) ref
-    val considerVariableUse : (Cil.varinfo -> bool) ref
-    val considerVariableDef : (Cil.varinfo -> bool) ref
-    val considerVariableAddrOfAsUse : (Cil.varinfo -> bool) ref
-    val considerVariableAddrOfAsDef : (Cil.varinfo -> bool) ref
+    val considerVariableUse : (VS.elt -> bool) ref
+    val considerVariableDef : (VS.elt -> bool) ref
+    val considerVariableAddrOfAsUse : (VS.elt -> bool) ref
+    val considerVariableAddrOfAsDef : (VS.elt -> bool) ref
     val extraUsesOfExpr : (Cil.exp -> VS.t) ref
     val onlyNoOffsetsAreDefs : bool ref
     val ignoreSizeof : bool ref
@@ -1021,7 +1016,6 @@ module IS :
     val max_elt : t -> elt
     val choose : t -> elt
     val split : elt -> t -> t * bool * t
-    val find : elt -> t -> elt
   end
 val debug : bool ref
 val doTime : bool ref

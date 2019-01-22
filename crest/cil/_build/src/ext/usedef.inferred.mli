@@ -82,14 +82,13 @@ module VS :
     val max_elt : t -> elt
     val choose : t -> elt
     val split : elt -> t -> t * bool * t
-    val find : elt -> t -> elt
   end
 val getUseDefFunctionRef :
   (Cil.exp -> Cil.exp list -> VS.t * VS.t * Cil.exp list) ref
-val considerVariableUse : (Cil.varinfo -> bool) ref
-val considerVariableDef : (Cil.varinfo -> bool) ref
-val considerVariableAddrOfAsUse : (Cil.varinfo -> bool) ref
-val considerVariableAddrOfAsDef : (Cil.varinfo -> bool) ref
+val considerVariableUse : (VS.elt -> bool) ref
+val considerVariableDef : (VS.elt -> bool) ref
+val considerVariableAddrOfAsUse : (VS.elt -> bool) ref
+val considerVariableAddrOfAsDef : (VS.elt -> bool) ref
 val extraUsesOfExpr : (Cil.exp -> VS.t) ref
 val onlyNoOffsetsAreDefs : bool ref
 val ignoreSizeof : bool ref

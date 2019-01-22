@@ -149,7 +149,7 @@ module NeculaFolding :
       val setMemory : reg IntMap.t -> reg IntMap.t
       val setRegister :
         reg IntMap.t -> Cil.varinfo -> Cil.exp * bool -> reg IntMap.t
-      val resetRegister : 'a IntMap.t -> int -> 'a IntMap.t
+      val resetRegister : 'a IntMap.t -> IntMap.key -> 'a IntMap.t
       class findLval :
         Cil.lval ->
         bool ref ->
@@ -267,7 +267,6 @@ module MakePartial :
               val max_elt : t -> elt
               val choose : t -> elt
               val split : elt -> t -> t * bool * t
-              val find : elt -> t -> elt
             end
           type sinfo = {
             incoming_state : (int, S.t) Hashtbl.t;

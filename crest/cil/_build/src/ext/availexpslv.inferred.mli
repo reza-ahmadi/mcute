@@ -56,20 +56,20 @@ module E :
   end
 module DF :
   sig
-    type 't action =
-      't Dataflow.action =
+    type 'a action =
+      'a Dataflow.action =
         Default
-      | Done of 't
-      | Post of ('t -> 't)
-    type 't stmtaction =
-      't Dataflow.stmtaction =
+      | Done of 'a
+      | Post of ('a -> 'a)
+    type 'a stmtaction =
+      'a Dataflow.stmtaction =
         SDefault
       | SDone
-      | SUse of 't
-    type 't guardaction =
-      't Dataflow.guardaction =
+      | SUse of 'a
+    type 'a guardaction =
+      'a Dataflow.guardaction =
         GDefault
-      | GUse of 't
+      | GUse of 'a
       | GUnreachable
     module type ForwardsTransfer =
       sig
@@ -194,14 +194,13 @@ module UD :
         val max_elt : t -> elt
         val choose : t -> elt
         val split : elt -> t -> t * bool * t
-        val find : elt -> t -> elt
       end
     val getUseDefFunctionRef :
       (Cil.exp -> Cil.exp list -> VS.t * VS.t * Cil.exp list) ref
-    val considerVariableUse : (Cil.varinfo -> bool) ref
-    val considerVariableDef : (Cil.varinfo -> bool) ref
-    val considerVariableAddrOfAsUse : (Cil.varinfo -> bool) ref
-    val considerVariableAddrOfAsDef : (Cil.varinfo -> bool) ref
+    val considerVariableUse : (VS.elt -> bool) ref
+    val considerVariableDef : (VS.elt -> bool) ref
+    val considerVariableAddrOfAsUse : (VS.elt -> bool) ref
+    val considerVariableAddrOfAsDef : (VS.elt -> bool) ref
     val extraUsesOfExpr : (Cil.exp -> VS.t) ref
     val onlyNoOffsetsAreDefs : bool ref
     val ignoreSizeof : bool ref
@@ -242,11 +241,10 @@ module IH :
 module H :
   sig
     type ('a, 'b) t = ('a, 'b) Hashtbl.t
-    val create : ?random:bool -> int -> ('a, 'b) t
+    val create : int -> ('a, 'b) t
     val clear : ('a, 'b) t -> unit
-    val reset : ('a, 'b) t -> unit
-    val copy : ('a, 'b) t -> ('a, 'b) t
     val add : ('a, 'b) t -> 'a -> 'b -> unit
+    val copy : ('a, 'b) t -> ('a, 'b) t
     val find : ('a, 'b) t -> 'a -> 'b
     val find_all : ('a, 'b) t -> 'a -> 'b list
     val mem : ('a, 'b) t -> 'a -> bool
@@ -255,15 +253,6 @@ module H :
     val iter : ('a -> 'b -> unit) -> ('a, 'b) t -> unit
     val fold : ('a -> 'b -> 'c -> 'c) -> ('a, 'b) t -> 'c -> 'c
     val length : ('a, 'b) t -> int
-    val randomize : unit -> unit
-    type statistics =
-      Hashtbl.statistics = {
-      num_bindings : int;
-      num_buckets : int;
-      max_bucket_length : int;
-      bucket_histogram : int array;
-    }
-    val stats : ('a, 'b) t -> statistics
     module type HashedType =
       sig type t val equal : t -> t -> bool val hash : t -> int end
     module type S =
@@ -272,7 +261,6 @@ module H :
         type 'a t
         val create : int -> 'a t
         val clear : 'a t -> unit
-        val reset : 'a t -> unit
         val copy : 'a t -> 'a t
         val add : 'a t -> key -> 'a -> unit
         val remove : 'a t -> key -> unit
@@ -283,7 +271,6 @@ module H :
         val iter : (key -> 'a -> unit) -> 'a t -> unit
         val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
         val length : 'a t -> int
-        val stats : 'a t -> statistics
       end
     module Make :
       functor (H : HashedType) ->
@@ -292,7 +279,6 @@ module H :
           type 'a t = 'a Hashtbl.Make(H).t
           val create : int -> 'a t
           val clear : 'a t -> unit
-          val reset : 'a t -> unit
           val copy : 'a t -> 'a t
           val add : 'a t -> key -> 'a -> unit
           val remove : 'a t -> key -> unit
@@ -303,53 +289,10 @@ module H :
           val iter : (key -> 'a -> unit) -> 'a t -> unit
           val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
           val length : 'a t -> int
-          val stats : 'a t -> statistics
-        end
-    module type SeededHashedType =
-      sig type t val equal : t -> t -> bool val hash : int -> t -> int end
-    module type SeededS =
-      sig
-        type key
-        type 'a t
-        val create : ?random:bool -> int -> 'a t
-        val clear : 'a t -> unit
-        val reset : 'a t -> unit
-        val copy : 'a t -> 'a t
-        val add : 'a t -> key -> 'a -> unit
-        val remove : 'a t -> key -> unit
-        val find : 'a t -> key -> 'a
-        val find_all : 'a t -> key -> 'a list
-        val replace : 'a t -> key -> 'a -> unit
-        val mem : 'a t -> key -> bool
-        val iter : (key -> 'a -> unit) -> 'a t -> unit
-        val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
-        val length : 'a t -> int
-        val stats : 'a t -> statistics
-      end
-    module MakeSeeded :
-      functor (H : SeededHashedType) ->
-        sig
-          type key = H.t
-          type 'a t = 'a Hashtbl.MakeSeeded(H).t
-          val create : ?random:bool -> int -> 'a t
-          val clear : 'a t -> unit
-          val reset : 'a t -> unit
-          val copy : 'a t -> 'a t
-          val add : 'a t -> key -> 'a -> unit
-          val remove : 'a t -> key -> unit
-          val find : 'a t -> key -> 'a
-          val find_all : 'a t -> key -> 'a list
-          val replace : 'a t -> key -> 'a -> unit
-          val mem : 'a t -> key -> bool
-          val iter : (key -> 'a -> unit) -> 'a t -> unit
-          val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
-          val length : 'a t -> int
-          val stats : 'a t -> statistics
         end
     val hash : 'a -> int
-    val seeded_hash : int -> 'a -> int
-    val hash_param : int -> int -> 'a -> int
-    val seeded_hash_param : int -> int -> int -> 'a -> int
+    external hash_param : int -> int -> 'a -> int = "caml_hash_univ_param"
+      "noalloc"
   end
 module U :
   sig
@@ -381,7 +324,6 @@ module LvExpHash :
     type 'a t
     val create : int -> 'a t
     val clear : 'a t -> unit
-    val reset : 'a t -> unit
     val copy : 'a t -> 'a t
     val add : 'a t -> key -> 'a -> unit
     val remove : 'a t -> key -> unit
@@ -392,7 +334,6 @@ module LvExpHash :
     val iter : (key -> 'a -> unit) -> 'a t -> unit
     val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
     val length : 'a t -> int
-    val stats : 'a t -> H.statistics
   end
 val lvh_equals : Cil.exp LvExpHash.t -> Cil.exp LvExpHash.t -> bool
 val lvh_pretty : unit -> Cil.exp LvExpHash.t -> Pretty.doc

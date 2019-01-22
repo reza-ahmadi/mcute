@@ -86,7 +86,8 @@ void __CrestWriteSE() {
 
   // Write the execution out to file 'szd_execution'.
   string buff;
-  buff.reserve(1<<26);
+  //todo:this raises an exception in my 32 bit ubuntu
+  //buff.reserve(1<<26);
   ex.Serialize(&buff);
   std::cout<<"writing the symbolic execution object into the file: szd_execution" << std::endl;
   std::ofstream out("szd_execution", std::ios::out | std::ios::binary);
@@ -113,7 +114,8 @@ void __CrestAtExit() {
 
   // Write the execution out to file 'szd_execution'.
   string buff;
-  buff.reserve(1<<26);
+  //todo:this raises an exception in my 32 bit ubuntu
+//  buff.reserve(1<<26);
   ex.Serialize(&buff);
   std::ofstream out("szd_execution", std::ios::out | std::ios::binary);
   out.write(buff.data(), buff.size());

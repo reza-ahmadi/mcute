@@ -3,7 +3,7 @@
 strategy 1
 heuristic 0
 time 50
-totalIterations 10000
-iterationLength 20
-transitionIterations 1
+totalIterations 1000000
+iterationLength 19
+transitionIterations 100000
 debug 0

@@ -46,11 +46,8 @@ int argc = UMLRTMain::getArgCount();
 log.log(&quot;params count: %d&quot;, argc);
 if (argc==1) {
   const char * arg = UMLRTMain::getArg(0);
-  if (!strcmp(arg, &quot;-h&quot;)) {
-    log.log(&quot;mcute [program] [test-conf]&quot;);
-    log.log(&quot;[program] : the executable program to be tested&quot;);
-    log.log(&quot;[test-conf] : a config file that describes various parameters&quot;);
-    log.log(&quot;for instance, to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1&quot;);
+  if (!strcmp(arg, &quot;-s&quot;)) {
+      settings.start(0, &quot;conc&quot;, 20, 5, 100000, 10, 0).send(); //default 5 seconds
   }else{
     string name;
     int value;
@@ -104,10 +101,12 @@ else if (argc==5) {
 
   settings.start(heuristic, strategy, time, iterationLength, totalIterations, transitionIterations, debug).send(); //default 5 seconds
 }else{
-  log.log(&quot;mcute [program] [test-conf]&quot;);
-  log.log(&quot;[program] : the executable program to be tested&quot;);
-  log.log(&quot;[test-conf] : a config file that describes various parameters&quot;);
-  log.log(&quot;for instance, to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1&quot;);
+  log.log(&quot;mcute [program] [config-file | config-params]\n&quot;);
+  log.log(&quot;[program] : the executable program to be tested\n&quot;);
+  log.log(&quot;[config-file] : a config file that describes various parameters\n&quot;);
+  log.log(&quot;[config-params] : the set of parameters\n&quot;);
+  log.log(&quot;example: to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1\n&quot;);
+  log.log(&quot;example: mcute sample1 -u conc 10 5 100 10 0 runs mcute for 10 seconds, the longest iteration is 5 transitions, total iterations are 100, each transition executes for at most 10 times in a row, and debug is disabled\n&quot;);
 }
 </body>
             </entry>
@@ -182,7 +181,10 @@ else if (argc==5) {
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
         <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_DXKxkd7ZEeiBkYD2qJeUwg" value="0"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_Fp9s4OFFEeiBkYD2qJeUwg" name="Curr_State" visibility="public"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Fp9s4OFFEeiBkYD2qJeUwg" name="Curr_State" visibility="public">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_7wiHUB1VEemqm5ALxX3dkg" value="1"/>
+      </ownedAttribute>
       <ownedAttribute xmi:type="uml:Port" xmi:id="_SkthcOIIEeitsrWbfpHoZQ" name="timingReport" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
         <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
       </ownedAttribute>
@@ -416,12 +418,16 @@ for (it=CoverageUtilTable.begin();it!=CoverageUtilTable.end();it++){
 	totalBranches+=it->second->branches_.size();
 	totalCovered+=it->second->total_num_covered_;
 }
+
+int allVisitedTransitions=VisitedTransitions.size()+1;
+int allVisitedStates= VisitedStates.size()+1;
+
 log.log(&quot;\n=============== Test execution report ===============&quot;);
 log.log(&quot;\n     Total test execution time: %d (seconds)   &quot;, time(NULL) - TestStartTime);
 log.log(&quot;\n     Total executed test iterations: %d   &quot;, TotalIterationsExecuted);
 log.log(&quot;\n     Total Branch coverage: %d out of %d = %%%.1f   &quot;, totalCovered, totalBranches, (float)totalCovered/totalBranches*100);
-log.log(&quot;\n     Transition coverage: %d out of %d = %%%.1f   &quot;, VisitedTransitions.size(), Transitions, (float)VisitedTransitions.size()/Transitions * 100);
-log.log(&quot;\n     State coverage: %d out of %d = %%%.1f   &quot;, VisitedStates.size(), States, (float)VisitedStates.size()/States * 100);
+log.log(&quot;\n     Transition coverage: %d out of %d = %%%.1f   &quot;, allVisitedTransitions, Transitions, (float)allVisitedTransitions/Transitions * 100);
+log.log(&quot;\n     State coverage: %d out of %d = %%%.1f   &quot;, allVisitedStates, States, (float)allVisitedStates/States * 100);
 log.log(&quot;\n=====================================================&quot;);
 </body>
             </entry>
@@ -537,7 +543,8 @@ SendNextMessage();
                   <language>C++</language>
                   <body>//keep track of visited states
 if (rtdata){
-	Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	//Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	Curr_State = *((int*) rtdata);
 	if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
 	  VisitedStates.push_back(Curr_State);
 	}
@@ -689,8 +696,14 @@ Depth=0;</body>
               <transition xmi:type="uml:Transition" xmi:id="_u0yRkPC-EeiBrOAOs4BT-g" name="Transition_Executed" source="_bXr50O94EeiBrOAOs4BT-g" target="_sO50cPC-EeiBrOAOs4BT-g">
                 <effect xmi:type="uml:OpaqueBehavior" xmi:id="_d8mcYPDSEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
                   <language>C++</language>
-                  <body>//keep track of visited states
-Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+                  <body>//cancelling the timer set for sending a new message (due to an unexpected message generated by the harness)
+//timingNewMsg.cancelTimer(timingNewMsgId);
+
+//keep track of visited states
+int s=*((int*) rtdata);
+printf (&quot;state recived by harness:%d&quot;, s);
+//Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	Curr_State = *((int*) rtdata);
 if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
 	VisitedStates.push_back(Curr_State);
 }
@@ -731,7 +744,8 @@ ConsecutiveTransitionsExecuted++;
                 <effect xmi:type="uml:OpaqueBehavior" xmi:id="_uko1kPDmEeiBrOAOs4BT-g" name="Effect" isReentrant="false">
                   <language>C++</language>
                   <body>//keep track of visited states
-Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+//Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	Curr_State = *((int*) rtdata);
 if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
 	VisitedStates.push_back(Curr_State);
 }
@@ -762,9 +776,14 @@ if (Heuristic==0){ //random branch selection
                   <language>C++</language>
                   <body>SendNextMessage();
 
+//it is possible that the model under test cannot consume a particular message
+//so the harness waits for a short while before sending a new possibly different message
+//timingNewMsgId = timingNewMsg.informIn(UMLRTTimespec(0,100000));
+
 cout &lt;&lt;endl&lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl;
 cout &lt;&lt; &quot;\t\t\tExecuting the transition: &quot; &lt;&lt; next_t.c_str() &lt;&lt; endl;
 cout &lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl&lt;&lt;endl;
+
 
 </body>
                 </entry>
@@ -865,13 +884,12 @@ Depth=0;</body>
               <transition xmi:type="uml:Transition" xmi:id="_WXskh_f5EeiHH8-AdwKg1Q" name="Transition_Executed" source="_WXskl_f5EeiHH8-AdwKg1Q" target="_WXskmff5EeiHH8-AdwKg1Q">
                 <effect xmi:type="uml:OpaqueBehavior" xmi:id="_WXskiPf5EeiHH8-AdwKg1Q" name="Effect" isReentrant="false">
                   <language>C++</language>
-                  <body>//cancelling the timer set (in blackbox testing) for sending a new message (due to an unexpected message generated by the harness)
-if (Strategy==&quot;black-box&quot;){
-	timingNewMsg.cancelTimer(timingNewMsgId);
-}
+                  <body>//cancelling the timer set for sending a new message (due to an unexpected message generated by the harness)
+timingNewMsg.cancelTimer(timingNewMsgId);
 
 //keep track of visited states
-Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+//Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	Curr_State = *((int*) rtdata);
 if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
 	VisitedStates.push_back(Curr_State);
 }
@@ -905,7 +923,8 @@ ConsecutiveTransitionsExecuted++;
                 <effect xmi:type="uml:OpaqueBehavior" xmi:id="_WXskkvf5EeiHH8-AdwKg1Q" name="Effect" isReentrant="false">
                   <language>C++</language>
                   <body>//keep track of visited states
-Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+//Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
+	Curr_State = *((int*) rtdata);
 if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
 	VisitedStates.push_back(Curr_State);
 }
@@ -947,16 +966,16 @@ fileutil::writeInputs(&quot;input&quot;, inputs);
 
 SendNextMessage();
 
+//it is possible that the model under test cannot consume a particular message
+//so the harness waits for a short while before sending a new possibly different message
+timingNewMsgId = timingNewMsg.informIn(UMLRTTimespec(0,100000));
+
 cout &lt;&lt;endl&lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl;
 cout &lt;&lt; &quot;\t\t\tExecuting the transition: &quot; &lt;&lt; next_t.c_str() &lt;&lt; endl;
 cout &lt;&lt; &quot;================================================================================&quot; &lt;&lt;endl&lt;&lt;endl;
 
-//in blackbox testing:
-//it is possible that the model under test cannot consume a particular message
-//so the harness waits for a short while before sending a new possibly different message
-if (Strategy==&quot;black-box&quot;){
-	timingNewMsgId = timingNewMsg.informIn(UMLRTTimespec(0,100000));
-}</body>
+
+</body>
                 </entry>
               </subvertex>
               <subvertex xmi:type="uml:State" xmi:id="_WXskmff5EeiHH8-AdwKg1Q" name="MsgRecieved">
@@ -1271,7 +1290,6 @@ return allCoverred;</body>
   <UMLRTStateMachines:RTPseudostate xmi:id="_-5t2gPD6EeiEK7ZB4QGZMA" base_Pseudostate="_-5mhwPD6EeiEK7ZB4QGZMA"/>
   <UMLRTStateMachines:RTState xmi:id="_HppMUPEBEeiEK7ZB4QGZMA" base_State="_HpmwEPEBEeiEK7ZB4QGZMA"/>
   <RTCppProperties:AttributeProperties xmi:id="_FkpfIPS5Eei0JrDYvmKv7w" type="SymbolicExecution" base_Property="_CLGwcPS5Eei0JrDYvmKv7w"/>
-  <RTCppProperties:AttributeProperties xmi:id="_uorfcPZ1EeiHH8-AdwKg1Q" type="STATES" base_Property="_Fp9s4OFFEeiBkYD2qJeUwg"/>
   <UMLRTStateMachines:RTState xmi:id="_WX8cIPf5EeiHH8-AdwKg1Q" base_State="_WXskmff5EeiHH8-AdwKg1Q"/>
   <UMLRTStateMachines:RTPseudostate xmi:id="_WX9DMPf5EeiHH8-AdwKg1Q" base_Pseudostate="_WXskgff5EeiHH8-AdwKg1Q"/>
   <UMLRTStateMachines:RTRegion xmi:id="_WX-RUPf5EeiHH8-AdwKg1Q" base_Region="_WXskhPf5EeiHH8-AdwKg1Q"/>

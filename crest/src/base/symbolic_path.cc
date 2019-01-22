@@ -22,9 +22,9 @@ SymbolicPath::SymbolicPath() { }
 SymbolicPath::SymbolicPath(bool pre_allocate) {
   if (pre_allocate) {
     // To cut down on re-allocation.
-    branches_.reserve(4000000);
-    constraints_idx_.reserve(50000);
-    constraints_.reserve(50000);
+    //branches_.reserve(4000000);
+    //constraints_idx_.reserve(50000);
+    //constraints_.reserve(50000);
   }
 }
 

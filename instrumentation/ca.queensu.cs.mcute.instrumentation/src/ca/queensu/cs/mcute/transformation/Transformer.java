@@ -44,9 +44,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.util.TransactionUtil;
+//import org.eclipse.emf.transaction.RecordingCommand;
+//import org.eclipse.emf.transaction.TransactionalEditingDomain;
+//import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.papyrusrt.codegen.cpp.profile.RTCppProperties.RTCppPropertiesPackage;
 import org.eclipse.papyrusrt.umlrt.uml.util.UMLRTResourcesUtil;
 import org.eclipse.uml2.common.util.UML2Util;
@@ -55,12 +55,14 @@ import org.eclipse.uml2.uml.CallEvent;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Collaboration;
 import org.eclipse.uml2.uml.Connector;
+import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
+import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Parameter;
@@ -418,73 +420,6 @@ public class Transformer {
 		resourceSet.getPackageRegistry().put(RTCppPropertiesPackage.eNS_URI, RTCppPropertiesPackage.eINSTANCE);
 	}
 
-	private int generatableTransitions;
-
-	/**
-	 * Initialise the instrumentation
-	 * 
-	 * @param args
-	 *            the list of args passed to the Java program
-	 * @return whether the initialization succeeded or failed
-	 * @throws Exception
-	 */
-	private boolean initialize(String[] args) throws Exception {
-
-		harnessPath = "/home/reza/Dropbox/Qlab/code/MCUTE/Harness_UMLRT/mcute_package3.uml";
-		// private final String harnessPackageName = "MCUTE";
-		harnessCapsuleName = "mCUTE_Harness";
-		topCapsuleName = "mCUTE__TOP";
-		commandsPort = "commands";
-
-		if (args.length < 6) {
-			// throw new Exception("Not enough argument. Usage: java Instrumentation -i "
-			// + "<input file> -o <output file> -c <capsule name>");
-			System.out.println("NOTE: missing input parameters, using defaults...");
-			args = new String[10];
-			args[0] = "-i";
-			args[1] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/emptyModel.uml";
-			args[2] = "-o";
-			args[3] = "/home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen3.uml";
-			args[4] = "-c";
-			args[5] = "Capsule1";
-			args[6] = "-g";
-			args[7] = "20";
-
-			// -os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}
-			// -consoleLog
-			// -i
-			// /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3.uml
-			// -o
-			// /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3__gen.uml
-			// -c CA_Main
-			// -g 50
-		}
-
-		List<String> arguments = Arrays.asList(args);
-
-		int i = arguments.indexOf("-i");
-		int o = arguments.indexOf("-o");
-		int c = arguments.indexOf("-c");
-		if (i == -1 || o == -1 || c == -1) {
-			throw new Exception("Missing argument. Usage: java Instrumentation -i "
-					+ "<input file> -o <output file> -c <capsule name>");
-		}
-
-		int g = arguments.indexOf("-g");
-		if (g != -1) {
-			generatableTransitions = Integer.parseInt(arguments.get(++g));
-		}
-
-		inputPath = arguments.get(++i);
-		outputPath = arguments.get(++o);
-
-		initResourceSet();
-
-		boolean result = duplicateModelUnderTest() & initCutCapsule(arguments.get(++c));
-
-		return result;
-	}
-
 	public boolean instrumentActionCode() throws IOException, InterruptedException {
 		String bidFileName = "/tmp/mcute/bidSeed";
 		String strSeed = "";
@@ -506,7 +441,7 @@ public class Transformer {
 
 			// preparing action code for instrumentation
 			String actionCode = "";
-			if (t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
+			if (t.getName() != null && t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
 				actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
 
 				// comment out message sending commands
@@ -521,13 +456,15 @@ public class Transformer {
 				String actionCodeParams = "";
 				for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
 						.getOwnedParameters()) {
-					String parameterTypeName = "";
-					if (p.getType().getName().equals("Integer"))
-						parameterTypeName = "int";
-					actionCodeParams += String.format("%s %s;", parameterTypeName, p.getName());
-					// for now just integer
-					if (parameterTypeName.equals("int"))
-						actionCodeParams += String.format("CREST_int(%s);", p.getName());
+					if (p != null && p.getType() != null && p.getType().getName() != null) {
+						String parameterTypeName = "";
+						if (p.getType().getName().equals("Integer"))
+							parameterTypeName = "int";
+						actionCodeParams += String.format("%s %s;", parameterTypeName, p.getName());
+						// for now just integer
+						if (parameterTypeName.equals("int"))
+							actionCodeParams += String.format("CREST_int(%s);", p.getName());
+					}
 				}
 				actionCode = String.format("#include <crest.h> \n #include <stdio.h>\n void main(){\n%s%s\n}",
 						actionCodeParams, actionCode);
@@ -541,7 +478,7 @@ public class Transformer {
 				fw.close();
 
 				// instrument it
-				final String instrumentScriptPath = "/home/reza/Dropbox/Qlab/code/MCUTE/bin/mcute_instrument";
+				final String instrumentScriptPath = "/home/vagrant/mcute/bin/mcute_instrument";
 				Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile, t.getName())
 						.start();
 				int res = instrumentCommand.waitFor();
@@ -577,8 +514,8 @@ public class Transformer {
 						actionCodeInstrumented += line + "\n";
 				}
 				scanner.close();
-				actionCodeInstrumented += "__CrestClearStack(0); \n __CrestWriteSE(); \n";
-
+				 actionCodeInstrumented += "__CrestClearStack(0); \n __CrestWriteSE(); \n";
+//				actionCodeInstrumented += "__CrestClearStack(0); \n";
 				// updating the transition
 				OpaqueBehavior obNew = UMLFactory.eINSTANCE.createOpaqueBehavior();
 				obNew.getLanguages().add("C++");
@@ -901,23 +838,25 @@ public class Transformer {
 			sendNextMessageBody += "vector<value_t> inputs;"; // for random inputs to be written to a file
 			sendNextMessageBody += "if (Strategy!=\"black-box\"){ ";
 			for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
-				String port = "", msg = "", params = "";
-				if (t.getTriggers() != null && t.getTriggers().size() > 0) {
-					port = t.getTriggers().get(0).getPorts().get(0).getName();
-					CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
-					msg = ce.getOperation().getName();
-					String writeInputsScript = "";
-					for (Parameter p : ce.getOperation().inputParameters()) {
-						int randomParam = new Random().nextInt();
-						params += String.format("%d,", randomParam);
-						// writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
+				if (t.getName() != null && t.getSource() instanceof State) {
+					String port = "", msg = "", params = "";
+					if (t.getTriggers() != null && t.getTriggers().size() > 0) {
+						port = t.getTriggers().get(0).getPorts().get(0).getName();
+						CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
+						msg = ce.getOperation().getName();
+						String writeInputsScript = "";
+						for (Parameter p : ce.getOperation().inputParameters()) {
+							int randomParam = new Random().nextInt();
+							params += String.format("%d,", randomParam);
+							// writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
+						}
+						params = params.substring(0, params.length() - 1);
+						String messageCall = String.format("%s.%s(%s).send()", port, msg, params);
+						messagesCallInfo.put(String.format("%s.%s", port, msg), messageCall);
+						sendNextMessageBody += String.format(
+								"if (next_t==\"%s\"){%s \n %s;\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
+								t.getName(), writeInputsScript, messageCall, port, msg);
 					}
-					params = params.substring(0, params.length() - 1);
-					String messageCall = String.format("%s.%s(%s).send()", port, msg, params);
-					messagesCallInfo.put(String.format("%s.%s", port, msg), messageCall);
-					sendNextMessageBody += String.format(
-							"if (next_t==\"%s\"){%s \n %s;\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
-							t.getName(), writeInputsScript, messageCall, port, msg);
 				}
 			}
 			sendNextMessageBody += "}else{"; // if strategy is black-box
@@ -959,6 +898,7 @@ public class Transformer {
 			// ToDo: only for Integers for now
 			List<Transition> allTransitions = new ArrayList<Transition>();
 			// selectNextTransitionBody += "if (Strategy!=\"black-box\"){";
+			int id = 1;
 			for (Vertex v : statemachine.getRegions().get(0).getSubvertices()) {
 				if (v instanceof State) {
 					State s = (State) v;
@@ -969,9 +909,13 @@ public class Transformer {
 					if (outgoings != null && outgoings.size() > 0) {
 						int randomTransitionIdx = new Random().nextInt(outgoings.size());
 						String candidateTransition = outgoings.get(randomTransitionIdx).getName();
-						selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t = \"%s\";\n }",
-								s.getName(), candidateTransition);
+						// selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t =
+						// \"%s\";\n }",
+						// s.getName(), candidateTransition);
+						selectNextTransitionBody += String.format("if (Curr_State == %d){ next_t = \"%s\";\n }", id,
+								candidateTransition);
 					}
+					id++;
 				}
 			} // for
 				// selectNextTransitionBody += "}else{";
@@ -1012,14 +956,17 @@ public class Transformer {
 			 */
 			/////////////////////////////////////////
 			// ToDo: only for Integers for now
+			// only for transitions from a stable state
 			for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
-				if (t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
-					createCoverageUtilTableBody += String.format(
-							"coverage_util* cu1_%s = new coverage_util(string(\"%s\")); \n cu1_%s->initCoverageInfo();",
-							t.getName(), t.getName(), t.getName());
-					createCoverageUtilTableBody += String.format(
-							"CoverageUtilTable.insert(pair<string, coverage_util*>(\"%s\",cu1_%s));", t.getName(),
-							t.getName());
+				if (t.getSource() instanceof State) {
+					if (t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
+						createCoverageUtilTableBody += String.format(
+								"coverage_util* cu1_%s = new coverage_util(string(\"%s\")); \n cu1_%s->initCoverageInfo();",
+								t.getName(), t.getName(), t.getName());
+						createCoverageUtilTableBody += String.format(
+								"CoverageUtilTable.insert(pair<string, coverage_util*>(\"%s\",cu1_%s));", t.getName(),
+								t.getName());
+					}
 				}
 			} // for
 			if (createCoverageUtilTableBody != "") {
@@ -1033,7 +980,8 @@ public class Transformer {
 			String currState = "", next_t = "";
 			Vertex initialState = UmlrtUtil.getInitialState(statemachine);
 			Vertex firstStateState = initialState.getOutgoings().get(0).getTarget();
-			currState = firstStateState.getName();
+			// currState = firstStateState.getName();
+			currState = "1";
 			next_t = firstStateState.getOutgoings().get(0).getName();
 			int totalStates = UmlrtUtil.getAllVertexes(statemachine).size();
 			int totalTransitions = UmlrtUtil.getAllTransitions(statemachine).size();
@@ -1186,7 +1134,7 @@ public class Transformer {
 	 * @param state
 	 *            the state to which an entry action code must be created
 	 */
-	public void createEntryActionIfAny(State state) {
+	public void createEntryActionIfAny(State state, int id) {
 		OpaqueBehavior entry;
 		int languageIndex = -1;
 		String body = "";
@@ -1207,7 +1155,8 @@ public class Transformer {
 			languageIndex = 0;
 			state.setEntry(entry);
 		}
-		body += "commands.newState(" + state.getName() + ").send();";
+		// body += "commands.newState(" + state.getName() + ").send();";
+		body += "commands.newState(" + id + ").send();";
 		entry.getBodies().set(languageIndex, body);
 	}
 
@@ -1256,9 +1205,11 @@ public class Transformer {
 		List<Vertex> vertices = region.getSubvertices();
 		Stream<Vertex> states = vertices.stream().filter(v -> v instanceof State);
 
+		int id = 1;
 		for (Iterator<Vertex> it = states.iterator(); it.hasNext();) {
 			State state = (State) it.next();
-			createEntryActionIfAny(state);
+			createEntryActionIfAny(state, id);
+			id++;
 		}
 	}
 
@@ -1407,6 +1358,81 @@ public class Transformer {
 
 	}
 
+	private int generatableTransitions;
+
+	/**
+	 * Initialise the instrumentation
+	 * 
+	 * @param args
+	 *            the list of args passed to the Java program
+	 * @return whether the initialization succeeded or failed
+	 * @throws Exception
+	 */
+	private boolean initialize(String[] args) throws Exception {
+
+		harnessPath = "/home/vagrant/mcute/Harness_UMLRT/mcute_package3.uml";
+		// harnessPath = "/Users/rezaahmadi/mcute/Harness_UMLRT/mcute_package3.uml";
+
+		// private final String harnessPackageName = "MCUTE";
+		harnessCapsuleName = "mCUTE_Harness";
+		topCapsuleName = "mCUTE__TOP";
+		commandsPort = "commands";
+
+		if (args.length < 6) {
+			// throw new Exception("Not enough argument. Usage: java Instrumentation -i "
+			// + "<input file> -o <output file> -c <capsule name>");
+			System.out.println("NOTE: missing input parameters, using defaults...");
+			args = new String[10];
+			args[0] = "-i";
+			args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
+			// args[1] =
+			// "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen.uml";
+
+			args[2] = "-o";
+			args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
+			// args[3] =
+			// "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen2.uml";
+
+			args[4] = "-c";
+			args[5] = "Capsule2";
+			args[6] = "-g";
+			args[7] = "20";
+
+			// -os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}
+			// -consoleLog
+			// -i
+			// /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3.uml
+			// -o
+			// /home/reza/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/Harness_CA_System3__gen.uml
+			// -c CA_Main
+			// -g 50
+		}
+
+		List<String> arguments = Arrays.asList(args);
+
+		int i = arguments.indexOf("-i");
+		int o = arguments.indexOf("-o");
+		int c = arguments.indexOf("-c");
+		if (i == -1 || o == -1 || c == -1) {
+			throw new Exception("Missing argument. Usage: java Instrumentation -i "
+					+ "<input file> -o <output file> -c <capsule name>");
+		}
+
+		int g = arguments.indexOf("-g");
+		if (g != -1) {
+			generatableTransitions = Integer.parseInt(arguments.get(++g));
+		}
+
+		inputPath = arguments.get(++i);
+		outputPath = arguments.get(++o);
+
+		initResourceSet();
+
+		boolean result = duplicateModelUnderTest() & initCutCapsule(arguments.get(++c));
+
+		return result;
+	}
+
 	/**
 	 * @param args
 	 */
@@ -1461,6 +1487,13 @@ public class Transformer {
 		// transformer.createCuteCommandsForTransitions();
 		// System.out.println("done.");
 
+		// Reza-new-start
+		System.out.println("creating new branch points for guards.");
+		res = transformer.transformGuards();
+		printRes(res, c);
+		c++;
+		// Reza-new-end
+
 		System.out.println("instrumenting the state machine.");
 		res = transformer.instrumentActionCode();
 		printRes(res, c);
@@ -1493,6 +1526,85 @@ public class Transformer {
 				(System.currentTimeMillis() - timeMain) / 1000));
 
 	}
+
+	// Reza-new-start
+
+	private boolean transformGuards() {
+		List<Transition> newTransitions = new ArrayList<Transition>();
+		int c = -1;
+		for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
+			c++;
+			if (t.getGuard() != null && t.getGuard().getSpecification() != null) {
+				String actionCodeStr = "";
+				// Constraint constraint = t.getGuard();
+				if (t.getEffect() != null) {
+					actionCodeStr = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
+				}
+				String guardStr = ((OpaqueExpression) (t.getGuard().getSpecification())).getBodies().get(0);
+				String newActionCode = String.format("if (%s){%s}", guardStr.replace("return ", "").replace(";", ""),
+						actionCodeStr);
+				updateTransitionEffect(t, newActionCode);
+				t.setGuard(null);
+
+				// choice point
+				Vertex choicePoint = region.createSubvertex("", UMLPackage.eINSTANCE.getPseudostate());
+				choicePoint.setName("choice" + c);
+				((Pseudostate) choicePoint).setKind(PseudostateKind.CHOICE_LITERAL);
+				EObject rtPseodostate = (EObject) choicePoint.getApplicableStereotypes().get(0);
+				if (rtPseodostate instanceof Stereotype) {
+					choicePoint.applyStereotype((Stereotype) rtPseodostate);
+				}
+				region.getSubvertices().add(choicePoint);
+				// modelUnderTest.eResource().getContents().add(choicePoint);
+
+				// new transition from choice point to target state
+				Transition newTransition = UMLFactory.eINSTANCE.createTransition();
+				newTransition.setSource(choicePoint);
+				newTransition.setTarget(t.getTarget());
+
+				// update the new transition
+				Constraint newConstraint = newTransition.createGuard("");
+				OpaqueExpression guardExpr = UMLFactory.eINSTANCE.createOpaqueExpression();
+				guardExpr.getLanguages().add("C++");
+				guardExpr.getBodies().add(guardStr);
+				newConstraint.setSpecification(guardExpr);
+				newTransition.setGuard(newConstraint);
+				// modelUnderTest.getPackagedElements().add(newConstraint);
+				updateTransitionEffect(newTransition, actionCodeStr);
+				// newTransition.setName("choicePoint_" + t.getTarget().getName());
+				newTransitions.add(newTransition);
+
+				// from the choice point to the target state
+				t.setTarget(choicePoint);
+
+				// second transition from the choice point to the source of t
+				Transition secondOptionTransition = UMLFactory.eINSTANCE.createTransition();
+				secondOptionTransition.setSource(choicePoint);
+				secondOptionTransition.setTarget(t.getSource());
+				// region.getTransitions().add(secondOptionTransition);
+				newTransitions.add(secondOptionTransition);
+
+				// adding choice point to resources
+				// modelUnderTest.getPackagedElements().add((Package) choicePoint);
+				// modelUnderTest.eResource().getContents().add(choicePoint);
+			}
+		}
+
+		// adding the new transitions in the state machine
+		for (int i = 0; i < newTransitions.size(); i++) {
+			region.getTransitions().add(newTransitions.get(i));
+		}
+		return true;
+	}
+
+	public static void updateTransitionEffect(Transition trans, String actionCode) {
+		OpaqueBehavior ob = UMLFactory.eINSTANCE.createOpaqueBehavior();
+		ob.getLanguages().add("C++");
+		ob.getBodies().add(actionCode);
+		trans.setEffect(ob);
+	}
+
+	// Reza-new-end
 
 	static void printRes(boolean res, int n) {
 		if (res)
