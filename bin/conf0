@@ -1,9 +1,0 @@
-//strategy: 0 = simple exploration0, 1 = black-box testing, 2 = simple exploration1, 3 = concolic]
-//heuristic (branch selection technique): 0 = random, 1 = systematic
-strategy 0
-heuristic 0
-time 10
-totalIterations 50000
-iterationLength 20
-transitionIterations 1
-debug 0

@@ -429,107 +429,116 @@ public class Transformer {
 		String firstStableState = UmlrtUtil.getInitialState(statemachine).getOutgoings().get(0).getTarget().getName();
 		for (Transition t : UmlrtUtil.getAllTransitions(statemachine)) {
 
-			System.out.print(".");
-			// reading seed
-			Scanner scanner1 = new Scanner(new File(bidFileName));
-			if (scanner1.hasNext()) {
-				strSeed = scanner1.nextLine();
-				if (strSeed != "")
-					seed = Integer.parseInt(strSeed);
+			try {
+
+				System.out.print(".");
+				// reading seed
+				Scanner scanner1 = new Scanner(new File(bidFileName));
+				if (scanner1.hasNext()) {
+					strSeed = scanner1.nextLine();
+					if (strSeed != "")
+						seed = Integer.parseInt(strSeed);
+				}
+				scanner1.close();
+
+				// preparing action code for instrumentation
+				String actionCode = "";
+				if (t.getName() != null && t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
+					actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
+
+					// comment out message sending commands
+					String[] actionCodeLines = actionCode.split(";");
+					actionCode = "";
+					for (String line : actionCodeLines) {
+						if (line.contains(".log") || line.contains(".send()") || line.contains(".informIn"))
+							line = String.format("printf (\"MCUTESTART %s MCUTEEND\")", line.replace("\"", "\\\"$"));
+						actionCode += line + ";\n";
+					}
+
+					String actionCodeParams = "";
+					for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
+							.getOwnedParameters()) {
+						if (p != null && p.getType() != null && p.getType().getName() != null) {
+							String parameterTypeName = "";
+							if (p.getType().getName().equals("Integer"))
+								parameterTypeName = "int";
+							actionCodeParams += String.format("%s %s;", parameterTypeName, p.getName());
+							// for now just integer
+							if (parameterTypeName.equals("int"))
+								actionCodeParams += String.format("CREST_int(%s);", p.getName());
+						}
+					}
+					actionCode = String.format("#include <crest.h> \n #include <stdio.h>\n void main(){\n%s%s\n}",
+							actionCodeParams, actionCode);
+
+					// copy the action code in a file
+					// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
+					final String actionCodeFile = "/tmp/mcute/actioncode.c";
+					FileWriter fw = new FileWriter(actionCodeFile);
+					fw.write(actionCode);
+					fw.flush();
+					fw.close();
+
+					// instrument it
+					final String instrumentScriptPath = "/home/vagrant/mcute/bin/mcute_instrument";
+					Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile, t.getName())
+							.start();
+					int res = instrumentCommand.waitFor();
+					if (res != 0) {
+						System.out.println(String.format("failed to instrument:\n%s", actionCode));
+						return false;
+					}
+
+					// reading and customizing the instrumented action code
+					String actionCodeInstrumented = "";
+					final String instrumentedActioncodeFile = "/tmp/mcute/actioncode.cil.c";
+					Scanner scanner = new Scanner(new File(instrumentedActioncodeFile));
+					int c;
+					boolean read = false;
+					while (scanner.hasNextLine()) {
+						String line = scanner.nextLine();
+						if (line.contains("globinit_actioncode();")) {
+							read = true;
+							// only first transition initializes the symbolic execution object
+							if (t.getSource().getName().equals(firstStableState))
+								line = "__CrestInit();";
+							else
+								line = "";
+						}
+						if (line.contains("return;"))
+							break;
+						if (line.contains("MCUTESTART")) {
+							int i = line.indexOf("MCUTESTART");
+							int j = line.indexOf("MCUTEEND");
+							line = line.substring(i + 10, j - 1).replace("\\\"$", "\"") + ";";
+						}
+						if (read == true)
+							actionCodeInstrumented += line + "\n";
+					}
+					scanner.close();
+					actionCodeInstrumented += "__CrestClearStack(0); \n __CrestWriteSE(); \n";
+					// actionCodeInstrumented += "__CrestClearStack(0); \n";
+					// updating the transition
+					OpaqueBehavior obNew = UMLFactory.eINSTANCE.createOpaqueBehavior();
+					obNew.getLanguages().add("C++");
+					obNew.getBodies().add(actionCodeInstrumented);
+					t.setEffect(obNew);
+				} // if
+
+				// update the branch seed
+				seed += 100; // todo this must be based on the largest branch id
+				writeSeed(bidFileName, seed);
+				// FileWriter writer = new FileWriter(new File(bidFileName));
+				// writer.write(String.valueOf(seed));
+				// writer.flush();
+				// writer.close();
+
+			} catch (Exception e) {
+				String line = "---------------------";
+				System.out.print(
+						String.format("%s\nError happend, could not instrument the transition: %s. more info: %s%s\n",
+								line, t.getName(), e.getMessage(), line));
 			}
-			scanner1.close();
-
-			// preparing action code for instrumentation
-			String actionCode = "";
-			if (t.getName() != null && t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
-				actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
-
-				// comment out message sending commands
-				String[] actionCodeLines = actionCode.split(";");
-				actionCode = "";
-				for (String line : actionCodeLines) {
-					if (line.contains(".log") || line.contains("send()") || line.contains("informsIn"))
-						line = String.format("printf (\"MCUTESTART %s MCUTEEND\")", line.replace("\"", "\\\"$"));
-					actionCode += line + ";\n";
-				}
-
-				String actionCodeParams = "";
-				for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
-						.getOwnedParameters()) {
-					if (p != null && p.getType() != null && p.getType().getName() != null) {
-						String parameterTypeName = "";
-						if (p.getType().getName().equals("Integer"))
-							parameterTypeName = "int";
-						actionCodeParams += String.format("%s %s;", parameterTypeName, p.getName());
-						// for now just integer
-						if (parameterTypeName.equals("int"))
-							actionCodeParams += String.format("CREST_int(%s);", p.getName());
-					}
-				}
-				actionCode = String.format("#include <crest.h> \n #include <stdio.h>\n void main(){\n%s%s\n}",
-						actionCodeParams, actionCode);
-
-				// copy the action code in a file
-				// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
-				final String actionCodeFile = "/tmp/mcute/actioncode.c";
-				FileWriter fw = new FileWriter(actionCodeFile);
-				fw.write(actionCode);
-				fw.flush();
-				fw.close();
-
-				// instrument it
-				final String instrumentScriptPath = "/home/vagrant/mcute/bin/mcute_instrument";
-				Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile, t.getName())
-						.start();
-				int res = instrumentCommand.waitFor();
-				if (res != 0) {
-					System.out.println(String.format("failed to instrument:\n%s", actionCode));
-					return false;
-				}
-
-				// reading and customizing the instrumented action code
-				String actionCodeInstrumented = "";
-				final String instrumentedActioncodeFile = "/tmp/mcute/actioncode.cil.c";
-				Scanner scanner = new Scanner(new File(instrumentedActioncodeFile));
-				int c;
-				boolean read = false;
-				while (scanner.hasNextLine()) {
-					String line = scanner.nextLine();
-					if (line.contains("globinit_actioncode();")) {
-						read = true;
-						// only first transition initializes the symbolic execution object
-						if (t.getSource().getName().equals(firstStableState))
-							line = "__CrestInit();";
-						else
-							line = "";
-					}
-					if (line.contains("return;"))
-						break;
-					if (line.contains("MCUTESTART")) {
-						int i = line.indexOf("MCUTESTART");
-						int j = line.indexOf("MCUTEEND");
-						line = line.substring(i + 10, j - 1).replace("\\\"$", "\"") + ";";
-					}
-					if (read == true)
-						actionCodeInstrumented += line + "\n";
-				}
-				scanner.close();
-				 actionCodeInstrumented += "__CrestClearStack(0); \n __CrestWriteSE(); \n";
-//				actionCodeInstrumented += "__CrestClearStack(0); \n";
-				// updating the transition
-				OpaqueBehavior obNew = UMLFactory.eINSTANCE.createOpaqueBehavior();
-				obNew.getLanguages().add("C++");
-				obNew.getBodies().add(actionCodeInstrumented);
-				t.setEffect(obNew);
-			} // if
-
-			// update the branch seed
-			seed += 100; // todo this must be based on the largest branch id
-			writeSeed(bidFileName, seed);
-			// FileWriter writer = new FileWriter(new File(bidFileName));
-			// writer.write(String.valueOf(seed));
-			// writer.flush();
-			// writer.close();
 
 		} // for
 		return true;
@@ -838,25 +847,32 @@ public class Transformer {
 			sendNextMessageBody += "vector<value_t> inputs;"; // for random inputs to be written to a file
 			sendNextMessageBody += "if (Strategy!=\"black-box\"){ ";
 			for (Transition t : statemachine.getRegions().get(0).getTransitions()) {
-				if (t.getName() != null && t.getSource() instanceof State) {
-					String port = "", msg = "", params = "";
-					if (t.getTriggers() != null && t.getTriggers().size() > 0) {
-						port = t.getTriggers().get(0).getPorts().get(0).getName();
-						CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
-						msg = ce.getOperation().getName();
-						String writeInputsScript = "";
-						for (Parameter p : ce.getOperation().inputParameters()) {
-							int randomParam = new Random().nextInt();
-							params += String.format("%d,", randomParam);
-							// writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
+				try {
+					if (t.getName() != null && t.getSource() instanceof State) {
+						String port = "", msg = "", params = "";
+						if (t.getTriggers() != null && t.getTriggers().size() > 0) {
+							port = t.getTriggers().get(0).getPorts().get(0).getName();
+							CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
+							msg = ce.getOperation().getName();
+							String writeInputsScript = "";
+							for (Parameter p : ce.getOperation().inputParameters()) {
+								int randomParam = new Random().nextInt();
+								params += String.format("%d,", randomParam);
+								// writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
+							}
+							params = params.substring(0, params.length() - 1);
+							String messageCall = String.format("%s.%s(%s).send()", port, msg, params);
+							messagesCallInfo.put(String.format("%s.%s", port, msg), messageCall);
+							sendNextMessageBody += String.format(
+									"if (next_t==\"%s\"){%s \n %s;\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
+									t.getName(), writeInputsScript, messageCall, port, msg);
 						}
-						params = params.substring(0, params.length() - 1);
-						String messageCall = String.format("%s.%s(%s).send()", port, msg, params);
-						messagesCallInfo.put(String.format("%s.%s", port, msg), messageCall);
-						sendNextMessageBody += String.format(
-								"if (next_t==\"%s\"){%s \n %s;\n log.log(\"Harness: msg '%s.%s' sent\"); \n}\n",
-								t.getName(), writeInputsScript, messageCall, port, msg);
 					}
+				} catch (Exception e) {
+					String line = "---------------------";
+					System.out.print(
+							String.format("%s\nError happend, during processing the transition: %s. more info: %s%s\n",
+									line, t.getName(), e.getMessage(), line));
 				}
 			}
 			sendNextMessageBody += "}else{"; // if strategy is black-box
@@ -1384,14 +1400,12 @@ public class Transformer {
 			System.out.println("NOTE: missing input parameters, using defaults...");
 			args = new String[10];
 			args[0] = "-i";
-			args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
-			// args[1] =
-			// "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen.uml";
+			// args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
+			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/test2/buggyModel.uml";
 
 			args[2] = "-o";
-			args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
-			// args[3] =
-			// "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/SoSyM2/modelGen2.uml";
+			// args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
+			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/test2/buggyModelTestable.uml";
 
 			args[4] = "-c";
 			args[5] = "Capsule2";

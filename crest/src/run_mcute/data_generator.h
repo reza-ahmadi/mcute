@@ -53,8 +53,8 @@ namespace mcute {
 	class data_generator {
 
 	private:
-		const static value_t _max = 1000000;
-		const static value_t _min = -1000000;
+		const static value_t _max = std::numeric_limits<int>::max();
+		const static value_t _min = std::numeric_limits<int>::min();
 
 	public:
 		static void generateInteger(int size, vector<value_t>& input);

@@ -904,23 +904,10 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 3 "/tmp/mcute/actioncode.c" 2
  void main(){
-int p1;__CrestInt(&p1);int p2;__CrestInt(&p2);if ((p2>0 || p2<-1 || p2>=2000)){
- printf("\n(p2>0 || p2<-1 || p2>=2000)");
+int p1;__CrestInt(&p1);int p3;__CrestInt(&p3);printf ("\n???setting timer with: %d, %d?????\n", p1,p3);
+printf ("MCUTESTART 
+timing.informIn(UMLRTTimespec(p1,p3)) MCUTEEND");
 
-    if (p2*2>1000 && p1>0 && p1==p2){
-            if (p1<50000){
-      printf("\ndevision by zero here!\n");
-
-      printf ("p1=%d, p2=%d");
-
-      printf ("some basic math: p2 = 200 / (p1-p2)");
-
-      p2 = 200 / (p1-p2);
-
-      printf("basic math done!\n");
-
-            }
-    }
-};
+;
 
 }
