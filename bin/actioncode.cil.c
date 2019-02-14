@@ -20,26 +20,90 @@ extern int printf(char const   * __restrict  __format  , ...) ;
 #line 3 "/tmp/mcute/actioncode.c"
 void main(void) 
 { 
-  int p1 ;
-  int p3 ;
+  int p5 ;
+  int p6 ;
 
   {
   __globinit_actioncode();
   __CrestCall(1, 1);
 #line 4
-  __CrestInt(& p1);
+  __CrestInt(& p5);
 #line 4
-  __CrestInt(& p3);
-  __CrestLoad(2, (unsigned long )(& p1), (long long )p1);
-  __CrestLoad(3, (unsigned long )(& p3), (long long )p3);
+  __CrestInt(& p6);
 #line 4
-  printf((char const   * __restrict  )"\n???setting timer with: %d, %d?????\n", p1,
-         p3);
-  __CrestClearStack(4);
+  printf((char const   * __restrict  )"MCUTESTART log.log(\"$transition t9 action code\"$) MCUTEEND");
+  __CrestClearStack(2);
+  __CrestLoad(5, (unsigned long )(& p5), (long long )p5);
+  __CrestLoad(4, (unsigned long )0, (long long )623840763);
+  __CrestApply2(3, 14, (long long )(p5 > 623840763));
 #line 5
-  printf((char const   * __restrict  )"MCUTESTART \ntiming.informIn(UMLRTTimespec(p1,p3)) MCUTEEND");
-  __CrestClearStack(5);
-  __CrestReturn(6);
+  if (p5 > 623840763) {
+    __CrestBranch(6, 1003, 1);
+    {
+    __CrestLoad(10, (unsigned long )(& p5), (long long )p5);
+    __CrestLoad(9, (unsigned long )0, (long long )1605364139);
+    __CrestApply2(8, 15, (long long )(p5 <= 1605364139));
+#line 5
+    if (p5 <= 1605364139) {
+      __CrestBranch(11, 1004, 1);
+      __CrestLoad(15, (unsigned long )(& p5), (long long )p5);
+      __CrestLoad(14, (unsigned long )0, (long long )623840763);
+      __CrestApply2(13, 0, (long long )(p5 + 623840763));
+      __CrestStore(16, (unsigned long )(& p5));
+#line 5
+      p5 += 623840763;
+      __CrestLoad(19, (unsigned long )(& p5), (long long )p5);
+      __CrestLoad(18, (unsigned long )0, (long long )1605364139);
+      __CrestApply2(17, 2, (long long )(p5 * 1605364139));
+      __CrestStore(20, (unsigned long )(& p5));
+#line 6
+      p5 *= 1605364139;
+      {
+      __CrestLoad(23, (unsigned long )(& p6), (long long )p6);
+      __CrestLoad(22, (unsigned long )0, (long long )1492389488);
+      __CrestApply2(21, 14, (long long )(p6 > 1492389488));
+#line 7
+      if (p6 > 1492389488) {
+        __CrestBranch(24, 1006, 1);
+        {
+        __CrestLoad(28, (unsigned long )(& p6), (long long )p6);
+        __CrestLoad(27, (unsigned long )0, (long long )2118246845);
+        __CrestApply2(26, 15, (long long )(p6 <= 2118246845));
+#line 7
+        if (p6 <= 2118246845) {
+          __CrestBranch(29, 1007, 1);
+          __CrestLoad(33, (unsigned long )(& p6), (long long )p6);
+          __CrestLoad(32, (unsigned long )0, (long long )1492389488);
+          __CrestApply2(31, 0, (long long )(p6 + 1492389488));
+          __CrestStore(34, (unsigned long )(& p6));
+#line 7
+          p6 += 1492389488;
+          __CrestLoad(37, (unsigned long )(& p6), (long long )p6);
+          __CrestLoad(36, (unsigned long )0, (long long )2118246845);
+          __CrestApply2(35, 2, (long long )(p6 * 2118246845));
+          __CrestStore(38, (unsigned long )(& p6));
+#line 8
+          p6 *= 2118246845;
+        } else {
+          __CrestBranch(30, 1008, 0);
+
+        }
+        }
+      } else {
+        __CrestBranch(25, 1009, 0);
+
+      }
+      }
+    } else {
+      __CrestBranch(12, 1010, 0);
+
+    }
+    }
+  } else {
+    __CrestBranch(7, 1011, 0);
+
+  }
+  __CrestReturn(39);
 #line 3
   return;
 }

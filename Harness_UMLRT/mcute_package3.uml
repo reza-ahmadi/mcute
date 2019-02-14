@@ -47,7 +47,16 @@ log.log(&quot;params count: %d&quot;, argc);
 if (argc==1) {
   const char * arg = UMLRTMain::getArg(0);
   if (!strcmp(arg, &quot;-s&quot;)) {
-      settings.start(0, &quot;conc&quot;, 20, 5, 100000, 10, 0).send(); //default 5 seconds
+      settings.start(1, &quot;conc&quot;, 30, 200, 100000, 10, 0).send(); //default 5 seconds
+  }else if (!strcmp(arg, &quot;-h&quot;)){
+    log.log(&quot;\n--------------------------- mcute help start ------------------------------------------\n&quot;);
+    log.log(&quot;mcute [program] [config-file | config-params]\n&quot;);
+    log.log(&quot;[program] : the executable program to be tested\n&quot;);
+    log.log(&quot;[config-file] : a config file that describes various parameters\n&quot;);
+    log.log(&quot;[config-params] : the set of parameters\n&quot;);
+    log.log(&quot;example1: to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1\n&quot;);
+    log.log(&quot;example2: mcute sample1 -u conc 1 10 100 5 10 \nuses concolic execution,\nbranch negation is systematic,\n10 seconds is total execution time,\ntotal iterations are 100,\nthe longest iteration is 5 transitions,\neach transition executes for at most 10 times.\n&quot;);
+    log.log(&quot;\n--------------------------- mcute help end ---------------------------------------------\n&quot;);
   }else{
     string name;
     int value;
@@ -75,7 +84,7 @@ if (argc==1) {
     settings.start(params[&quot;heuristic&quot;], strategy, params[&quot;time&quot;], params[&quot;iterationLength&quot;] , params[&quot;totalIterations&quot;], params[&quot;transitionIterations&quot;], params[&quot;debug&quot;]).send(); //default 5 seconds
   }
 }
-else if (argc==5) {
+else if (argc==6) {
   //const char * arg = UMLRTMain::getArg(0);
   //const char * arg1 = UMLRTMain::getArg(1);
   //const char * arg2 = UMLRTMain::getArg(2);
@@ -94,19 +103,15 @@ else if (argc==5) {
   const char * totalIterationsStr = UMLRTMain::getArg(3);
   totalIterations = atoi(totalIterationsStr);
 
-  const char * transitionIterationsStr = UMLRTMain::getArg(4);
+  const char * iterationLengthStr = UMLRTMain::getArg(4);
+  iterationLength = atoi(iterationLengthStr);
+
+  const char * transitionIterationsStr = UMLRTMain::getArg(5);
   if (atoi(transitionIterationsStr)>0) {
     transitionIterations = atoi(transitionIterationsStr);
   }
 
   settings.start(heuristic, strategy, time, iterationLength, totalIterations, transitionIterations, debug).send(); //default 5 seconds
-}else{
-  log.log(&quot;mcute [program] [config-file | config-params]\n&quot;);
-  log.log(&quot;[program] : the executable program to be tested\n&quot;);
-  log.log(&quot;[config-file] : a config file that describes various parameters\n&quot;);
-  log.log(&quot;[config-params] : the set of parameters\n&quot;);
-  log.log(&quot;example: to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1\n&quot;);
-  log.log(&quot;example: mcute sample1 -u conc 10 5 100 10 0 runs mcute for 10 seconds, the longest iteration is 5 transitions, total iterations are 100, each transition executes for at most 10 times in a row, and debug is disabled\n&quot;);
 }
 </body>
             </entry>

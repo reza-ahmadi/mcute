@@ -93,6 +93,16 @@ branch_idx=0;
 
 */
 
+
+int getElementIndex (vector<branch_id_t> branches, branch_id_t branch){
+  for (int i=0;i<branches.size();i++){
+    if (branches.at(i) == branch){
+      return i;
+    }
+  }
+  return -1;
+}
+
 ////////////////////////////////////////////////////////////////////////
 // this method negates a random constraint from the existing ones in the PCs,
 // solves the resulting constraints, and stores
@@ -114,18 +124,19 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
     branches_ids.push_back(ex.path().branches().at(i));
   }
 
+  int constraint_id_to_negate = -1;
   int new_branch_selected = false;
   cout << "\nsize of the coverage_util_table table is:" << coverage_util_table.size() <<endl;
-  for (map<string,coverage_util*>::iterator it=coverage_util_table.begin();it!=coverage_util_table.end();it++){
+  for (map<string,coverage_util*>::iterator it=coverage_util_table.begin();it!=coverage_util_table.end() && !new_branch_selected;it++){
 
-    if (new_branch_selected){
-      break;
-    }
+    // if (new_branch_selected){
+    //   break;
+    // }
 
     cout << "coverage_util object for the transition:" << it->first <<endl;
     coverage_util* cu = it->second;
     // int bid = constraints_size;
-    for (int i=branches_ids.size()-1;i>=0;i--){
+    for (int i=branches_ids.size()-1;i>=0 && !new_branch_selected;i--){
 
       // for some reason the first element in branches vector is -1
 
@@ -151,42 +162,44 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
       }
 
       //selecting a branch for negation
-      branch_idx=i;
-      int pair_branch_idx = cu->paired_branch_[branches_ids.at(i)];
+      int branch_not_covered = -1;
+      branch_idx = branches_ids.at(i);
+      int pair_branch_idx = cu->paired_branch_[branch_idx];
       int ubound = max(branch_idx,pair_branch_idx);
       int lbound = min(branch_idx,pair_branch_idx);
+      cout<<"[branch_util::negate_sys]: lbound branch: " << lbound << ", ubound branch: " << ubound << ", " << cu->branches_.size() << ", " << cu->covered_.size()<<endl;
       for (int b=lbound;b<=ubound;b++){
         //pair was not covered
-        if (cu->branches_.at(b)>=0){
-          if (!(cu->covered_[cu->paired_branch_[branches_ids.at(b)]])){
-            // if (b>=0 && b<constraints_size){
-              branch_idx=b;
-              new_branch_selected = true;
-              cout<<"[branch_util::negate_sys]: pair of the branch not covered before, selecting branch: " << cu->paired_branch_[branches_ids.at(i)] <<endl;
-              break;
-            // }//if
-          }//if
+        if (!(cu->covered_[b])){
+          branch_not_covered = b;
+
+          //is the constraint to negate now available in the current PCs?
+          if (find(branches_ids.begin(), branches_ids.end(), cu->paired_branch_[branch_not_covered]) == branches_ids.end())
+          {
+            //constraint to negate does not exist in the current PC
+            for (int k=b;k>=lbound;k--){
+              if(find(branches_ids.begin(), branches_ids.end(), k) != branches_ids.end()){
+                  constraint_id_to_negate = getElementIndex(branches_ids, k);
+                  break;
+              }
+            }
+
+          }else{
+            constraint_id_to_negate = i;
+            branch_idx = cu->paired_branch_[branch_not_covered];
+          }
+          new_branch_selected = true;
+          cout<<"[branch_util::negate_sys]: branch not covered before, selecting branch: " << branch_idx <<endl;
+          break;
         }//if
       }//for bound
-
-      //now branch_idx is b;
-      //selected branch is the pair of the currently executed branch
-      if (branches_ids.at(branch_idx)==cu->paired_branch_[branches_ids.at(i)]) {
-        branch_idx = i;
-      }
-
-      //if the constraint of the selected branch is not available,
-      //then run the pair of the current branch again
-      if (branches_ids.size()<=branch_idx){
-        branch_idx = i;
-      }
 
     }//for
   }//for
 
   if (!new_branch_selected){
     // if (constraints_size>0){
-    branch_util::negate_rand(ex,branch_idx);
+    branch_util::negate_rand(ex,constraint_id_to_negate);
     // branch_idx =constraints_size-1;
     cout<<"[branch_util::negate_sys]: cannot continue systematic branch coverage, selecting randomly: " << branch_idx <<endl;
     // }
@@ -202,7 +215,7 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
   //1. negate and solve the PCs
   vector<value_t> input;
   printf("\n---Call SolveAtBranch, branch_idx: %d", branch_idx);
-  solveAtBranch(ex, branch_idx, input);
+  solveAtBranch(ex, constraint_id_to_negate, input);
 
   if (debug){
     //print the generated inputs

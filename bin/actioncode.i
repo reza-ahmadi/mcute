@@ -904,10 +904,12 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 3 "/tmp/mcute/actioncode.c" 2
  void main(){
-int p1;__CrestInt(&p1);int p3;__CrestInt(&p3);printf ("\n???setting timer with: %d, %d?????\n", p1,p3);
-printf ("MCUTESTART 
-timing.informIn(UMLRTTimespec(p1,p3)) MCUTEEND");
-
+int p5;__CrestInt(&p5);int p6;__CrestInt(&p6);printf ("MCUTESTART log.log(\"$transition t9 action code\"$) MCUTEEND");
+if(p5 > 623840763 && p5 <=1605364139){p5+= 623840763;
+p5*= 1605364139;
+if(p6 > 1492389488 && p6 <=2118246845){p6+= 1492389488;
+p6*= 2118246845;
+}else{}}else{}
 ;
 
 }
