@@ -904,11 +904,11 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 3 "/tmp/mcute/actioncode.c" 2
  void main(){
-int p5;__CrestInt(&p5);int p6;__CrestInt(&p6);printf ("MCUTESTART log.log(\"$transition t9 action code\"$) MCUTEEND");
-if(p5 > 623840763 && p5 <=1605364139){p5+= 623840763;
-p5*= 1605364139;
-if(p6 > 1492389488 && p6 <=2118246845){p6+= 1492389488;
-p6*= 2118246845;
+int p5;__CrestInt(&p5);int p6;__CrestInt(&p6);printf ("MCUTESTART log.log(\"$transition t149 action code\"$) MCUTEEND");
+if(p5 > 126329276 && p5 <=751694258){p5+= 126329276;
+p5*= 751694258;
+if(p6 > 322971714 && p6 <=1502966218){p6+= 322971714;
+p6*= 1502966218;
 }else{}}else{}
 ;
 

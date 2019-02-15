@@ -1,3 +1,7 @@
 2. mcuteTransform -i /home/vagrant/MyTests/Present22Jan/test2/buggyModel.uml -o /home/vagrant/MyTests/Present22Jan/test2/buggyModelTestable.uml -c Capsule2
 
 2. mcuteTransform -i /home/vagrant/MyTests/Present22Jan/test3/buggyModel2.uml -o /home/vagrant/MyTests/Present22Jan/test3/buggyModelTestable2.uml -c Capsule2
+
+
+
+mcuteTransform -i /home/vagrant/MyTests/Present22Jan/test1/emptymodel.uml -o /home/vagrant/MyTests/Present22Jan/test5/testSys.uml -c Capsule2 -g 10

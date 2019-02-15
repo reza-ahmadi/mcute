@@ -19,4 +19,5 @@ cp actioncode.cil.c /tmp/mcute/actioncode.cil.c
 
 TRANSITION_NAME=$2
 
+echo "creating branch: branches_${TRANSITION_NAME}"
 cp ./branches /tmp/mcute/branches_${TRANSITION_NAME}

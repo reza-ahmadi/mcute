@@ -54,7 +54,7 @@ if (argc==1) {
     log.log(&quot;[program] : the executable program to be tested\n&quot;);
     log.log(&quot;[config-file] : a config file that describes various parameters\n&quot;);
     log.log(&quot;[config-params] : the set of parameters\n&quot;);
-    log.log(&quot;example1: to execute a program called sample1 using the config file conf1, run: mcute sample1 conf1\n&quot;);
+    log.log(&quot;example1: to execute a program called sample1 using the config file conf1, run:\nmcute sample1 conf1\n&quot;);
     log.log(&quot;example2: mcute sample1 -u conc 1 10 100 5 10 \nuses concolic execution,\nbranch negation is systematic,\n10 seconds is total execution time,\ntotal iterations are 100,\nthe longest iteration is 5 transitions,\neach transition executes for at most 10 times.\n&quot;);
     log.log(&quot;\n--------------------------- mcute help end ---------------------------------------------\n&quot;);
   }else{
