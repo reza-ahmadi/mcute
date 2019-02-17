@@ -20,90 +20,107 @@ extern int printf(char const   * __restrict  __format  , ...) ;
 #line 3 "/tmp/mcute/actioncode.c"
 void main(void) 
 { 
-  int p5 ;
-  int p6 ;
+  int p1 ;
+  int p3 ;
 
   {
   __globinit_actioncode();
   __CrestCall(1, 1);
 #line 4
-  __CrestInt(& p5);
+  __CrestInt(& p1);
 #line 4
-  __CrestInt(& p6);
+  __CrestInt(& p3);
+  __CrestLoad(4, (unsigned long )(& p1), (long long )p1);
+  __CrestLoad(3, (unsigned long )0, (long long )100);
+  __CrestApply2(2, 14, (long long )(p1 > 100));
 #line 4
-  printf((char const   * __restrict  )"MCUTESTART log.log(\"$transition t149 action code\"$) MCUTEEND");
-  __CrestClearStack(2);
-  __CrestLoad(5, (unsigned long )(& p5), (long long )p5);
-  __CrestLoad(4, (unsigned long )0, (long long )126329276);
-  __CrestApply2(3, 14, (long long )(p5 > 126329276));
-#line 5
-  if (p5 > 126329276) {
-    __CrestBranch(6, 15003, 1);
+  if (p1 > 100) {
+    __CrestBranch(5, 503, 1);
     {
-    __CrestLoad(10, (unsigned long )(& p5), (long long )p5);
-    __CrestLoad(9, (unsigned long )0, (long long )751694258);
-    __CrestApply2(8, 15, (long long )(p5 <= 751694258));
-#line 5
-    if (p5 <= 751694258) {
-      __CrestBranch(11, 15004, 1);
-      __CrestLoad(15, (unsigned long )(& p5), (long long )p5);
-      __CrestLoad(14, (unsigned long )0, (long long )126329276);
-      __CrestApply2(13, 0, (long long )(p5 + 126329276));
-      __CrestStore(16, (unsigned long )(& p5));
-#line 5
-      p5 += 126329276;
-      __CrestLoad(19, (unsigned long )(& p5), (long long )p5);
-      __CrestLoad(18, (unsigned long )0, (long long )751694258);
-      __CrestApply2(17, 2, (long long )(p5 * 751694258));
-      __CrestStore(20, (unsigned long )(& p5));
-#line 6
-      p5 *= 751694258;
+    __CrestLoad(9, (unsigned long )(& p1), (long long )p1);
+    __CrestLoad(8, (unsigned long )0, (long long )104);
+    __CrestApply2(7, 16, (long long )(p1 < 104));
+#line 4
+    if (p1 < 104) {
+      __CrestBranch(10, 504, 1);
       {
-      __CrestLoad(23, (unsigned long )(& p6), (long long )p6);
-      __CrestLoad(22, (unsigned long )0, (long long )322971714);
-      __CrestApply2(21, 14, (long long )(p6 > 322971714));
-#line 7
-      if (p6 > 322971714) {
-        __CrestBranch(24, 15006, 1);
+      __CrestLoad(14, (unsigned long )(& p3), (long long )p3);
+      __CrestLoad(13, (unsigned long )0, (long long )0);
+      __CrestApply2(12, 14, (long long )(p3 > 0));
+#line 4
+      if (p3 > 0) {
+        __CrestBranch(15, 505, 1);
         {
-        __CrestLoad(28, (unsigned long )(& p6), (long long )p6);
-        __CrestLoad(27, (unsigned long )0, (long long )1502966218);
-        __CrestApply2(26, 15, (long long )(p6 <= 1502966218));
-#line 7
-        if (p6 <= 1502966218) {
-          __CrestBranch(29, 15007, 1);
-          __CrestLoad(33, (unsigned long )(& p6), (long long )p6);
-          __CrestLoad(32, (unsigned long )0, (long long )322971714);
-          __CrestApply2(31, 0, (long long )(p6 + 322971714));
-          __CrestStore(34, (unsigned long )(& p6));
-#line 7
-          p6 += 322971714;
-          __CrestLoad(37, (unsigned long )(& p6), (long long )p6);
-          __CrestLoad(36, (unsigned long )0, (long long )1502966218);
-          __CrestApply2(35, 2, (long long )(p6 * 1502966218));
-          __CrestStore(38, (unsigned long )(& p6));
+        __CrestLoad(19, (unsigned long )(& p3), (long long )p3);
+        __CrestLoad(18, (unsigned long )0, (long long )13);
+        __CrestApply2(17, 16, (long long )(p3 < 13));
+#line 4
+        if (p3 < 13) {
+          __CrestBranch(20, 506, 1);
+#line 5
+          printf((char const   * __restrict  )"\n(p1>100 && p1<104 && p3>0 && p3<13)\n");
+          __CrestClearStack(22);
+          {
+          __CrestLoad(27, (unsigned long )(& p1), (long long )p1);
+          __CrestLoad(26, (unsigned long )(& p3), (long long )p3);
+          __CrestApply2(25, 0, (long long )(p1 + p3));
+          __CrestLoad(24, (unsigned long )0, (long long )111);
+          __CrestApply2(23, 12, (long long )(p1 + p3 == 111));
 #line 8
-          p6 *= 1502966218;
-        } else {
-          __CrestBranch(30, 15008, 0);
+          if (p1 + p3 == 111) {
+            __CrestBranch(28, 508, 1);
+#line 9
+            printf((char const   * __restrict  )"\np1+p3==111!\n");
+            __CrestClearStack(30);
+          } else {
+            __CrestBranch(29, 509, 0);
+            {
+            __CrestLoad(35, (unsigned long )(& p1), (long long )p1);
+            __CrestLoad(34, (unsigned long )(& p3), (long long )p3);
+            __CrestApply2(33, 0, (long long )(p1 + p3));
+            __CrestLoad(32, (unsigned long )0, (long long )112);
+            __CrestApply2(31, 12, (long long )(p1 + p3 == 112));
+#line 12
+            if (p1 + p3 == 112) {
+              __CrestBranch(36, 510, 1);
+#line 13
+              printf((char const   * __restrict  )"\np1+p3==112!\n");
+              __CrestClearStack(38);
+            } else {
+              __CrestBranch(37, 511, 0);
 
+            }
+            }
+          }
+          }
+        } else {
+          __CrestBranch(21, 512, 0);
+#line 17
+          printf((char const   * __restrict  )"\n!(p1>100 && p1<104 && p3>0 && p3<13)\n");
+          __CrestClearStack(39);
         }
         }
       } else {
-        __CrestBranch(25, 15009, 0);
-
+        __CrestBranch(16, 513, 0);
+#line 17
+        printf((char const   * __restrict  )"\n!(p1>100 && p1<104 && p3>0 && p3<13)\n");
+        __CrestClearStack(40);
       }
       }
     } else {
-      __CrestBranch(12, 15010, 0);
-
+      __CrestBranch(11, 514, 0);
+#line 17
+      printf((char const   * __restrict  )"\n!(p1>100 && p1<104 && p3>0 && p3<13)\n");
+      __CrestClearStack(41);
     }
     }
   } else {
-    __CrestBranch(7, 15011, 0);
-
+    __CrestBranch(6, 515, 0);
+#line 17
+    printf((char const   * __restrict  )"\n!(p1>100 && p1<104 && p3>0 && p3<13)\n");
+    __CrestClearStack(42);
   }
-  __CrestReturn(39);
+  __CrestReturn(43);
 #line 3
   return;
 }

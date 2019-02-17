@@ -898,7 +898,7 @@ public class Transformer {
 			OpaqueBehavior selectNextTransitionOpaqueBehavior = UMLFactory.eINSTANCE.createOpaqueBehavior();
 			selectNextTransitionOpaqueBehavior.setName("SelectNextTransitionOpaqueBehavior");
 			selectNextTransitionOpaqueBehavior.getLanguages().add("C++");
-			String selectNextTransitionBody = "";
+			String selectNextTransitionBody = "vector<string> allTransitions;";
 			/////////////////////////////////////////
 			// to generate something like this:
 			/////////////////////////////////////////
@@ -916,20 +916,24 @@ public class Transformer {
 			// selectNextTransitionBody += "if (Strategy!=\"black-box\"){";
 			int id = 1;
 			for (Vertex v : statemachine.getRegions().get(0).getSubvertices()) {
+				String allTransitionsStr = "";
 				if (v instanceof State) {
 					State s = (State) v;
 					List<Transition> outgoings = s.getOutgoings();
-					for (Transition t : outgoings)
+					for (Transition t : outgoings) {
 						allTransitions.add(t);
+						allTransitionsStr+= String.format("allTransitions.push_back(\"%s\");\n", t.getName());
+					}
 					System.out.print(".");
 					if (outgoings != null && outgoings.size() > 0) {
 						int randomTransitionIdx = new Random().nextInt(outgoings.size());
-						String candidateTransition = outgoings.get(randomTransitionIdx).getName();
+//						String candidateTransition = outgoings.get(randomTransitionIdx).getName();
 						// selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t =
 						// \"%s\";\n }",
 						// s.getName(), candidateTransition);
-						selectNextTransitionBody += String.format("if (Curr_State == %d){ next_t = \"%s\";\n }", id,
-								candidateTransition);
+						System.out.println("\ngenerating transition selection for the state:"+s.getName());
+						selectNextTransitionBody += String.format(
+								"if (Curr_State == %d){  %s\n int idx = rand()%%allTransitions.size(); next_t = allTransitions.at(idx);\n }", id, allTransitionsStr);
 					}
 					id++;
 				}
