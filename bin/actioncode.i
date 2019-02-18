@@ -904,23 +904,7 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 3 "/tmp/mcute/actioncode.c" 2
  void main(){
-int p1;__CrestInt(&p1);int p3;__CrestInt(&p3);if (p1>100 && p1<104 && p3>0 && p3<13){
-   printf("\n(p1>100 && p1<104 && p3>0 && p3<13)\n");
-
-
- if (p1+p3==111){
-        printf("\np1+p3==111!\n");
-
-
- }else if (p1+p3==112){
-   printf("\np1+p3==112!\n");
-
- }
-}else{
-   printf("\n!(p1>100 && p1<104 && p3>0 && p3<13)\n");
-
-
-}
+int p1;__CrestInt(&p1);int p3;__CrestInt(&p3);printf ("\n???setting timer with: %d, %d?????\n", p1,p3);
 
 ;
 

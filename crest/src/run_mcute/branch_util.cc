@@ -1,12 +1,7 @@
+/**
+ * @author reza
+ */
 // Copyright (c) 2018, Reza Ahmadi (ahmadi@cs.queensu.ca)
-//
-// This file is part of mCUTE, which is distributed under the revised
-// BSD license.  A copy of this license can be found in the file LICENSE.
-//
-// This program is distributed in the hope that it will be useful, but
-// WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See LICENSE
-// for details.
 
 #include <algorithm>
 #include <assert.h>
@@ -83,10 +78,12 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
       for (map<string,coverage_util*>::iterator it=coverage_util_table.begin();it!=coverage_util_table.end() && !new_branch_selected;it++){
 
         coverage_util* cu = it->second;
+        // cout << "negate from the transition:" << it->first <<endl;
         // cout << "coverage_util object for the transition:" << it->first <<endl;
 
       //if this branch does not contain the current transition
       if (!cu->branchBelongsToTransition(branches_ids.at(i))){
+        // cout<<"branch:" <<branches_ids.at(i) <<"does not belong to transition"<<it->first<<endl;
         continue;
       }
 
@@ -112,8 +109,9 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
       // cout<<"[branch_util::negate_sys]: lbound branch: " << lbound << ", ubound branch: " << ubound << ", " << cu->branches_.size() << ", " << cu->covered_.size()<<endl;
       for (int b=lbound;b<=ubound;b++){
         //pair was not covered and b is indeed a branchid
-        if (getElementIndex(branches_ids, b)>=0 && !(cu->covered_[b])){
+        if (getElementIndex(branches_ids, cu->paired_branch_[b])>=0 && !(cu->covered_[b])){
           branch_not_covered = b;
+          // printf("\n---Call SolveAtBranch, branch_id: %d", branch_not_covered);
 
           //is the constraint to negate now available in the current PCs?
           if (find(branches_ids.begin(), branches_ids.end(), cu->paired_branch_[branch_not_covered]) == branches_ids.end())
@@ -155,7 +153,6 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
 
   //1. negate and solve the PCs
   vector<value_t> input;
-  // printf("\n---Call SolveAtBranch, branch_idx: %d", constraint_id_to_negate);
   solveAtBranch(ex, constraint_id_to_negate, input);
 
   if (debug){
