@@ -536,7 +536,7 @@ public class Transformer {
 			} catch (Exception e) {
 				String line = "---------------------";
 				System.out.print(
-						String.format("%s\nError happend, could not instrument the transition: %s. more info: %s%s\n",
+						String.format("%s\nWarning: could not instrument the transition: %s. more info: %s%s\n",
 								line, t.getName(), e.getMessage(), line));
 			}
 
@@ -931,7 +931,7 @@ public class Transformer {
 						// selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t =
 						// \"%s\";\n }",
 						// s.getName(), candidateTransition);
-						System.out.println("\ngenerating transition selection for the state:"+s.getName());
+//						System.out.println("\ngenerating transition selection for the state:"+s.getName());
 						selectNextTransitionBody += String.format(
 								"if (Curr_State == %d){  %s\n int idx = rand()%%allTransitions.size(); next_t = allTransitions.at(idx);\n }", id, allTransitionsStr);
 					}

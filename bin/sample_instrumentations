@@ -4,4 +4,4 @@
 
 
 
-mcuteTransform -i /home/vagrant/MyTests/Present22Jan/test1/emptymodel.uml -o /home/vagrant/MyTests/Present22Jan/test5/testSys.uml -c Capsule2 -g 10
+mcuteTransform -i /home/vagrant/MyTests/Present22Jan/test1/emptymodel.uml -o /home/vagrant/MyTests/Present22Jan/test2/filledModel.uml -c Capsule2 -g 24

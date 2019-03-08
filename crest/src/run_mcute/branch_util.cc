@@ -135,8 +135,8 @@ void branch_util::negate_sys(const SymbolicExecution& ex, int& branch_idx, map<s
         }//if
       }//for bound
 
-    }//for constraint
-  }//for coverage
+    }//for coverage
+  }//for constraint
 
   if (!new_branch_selected){
     // if (constraints_size>0){
