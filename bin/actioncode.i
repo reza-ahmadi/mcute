@@ -57,6 +57,8 @@ extern void __CrestChar(char* x) __attribute__((crest_skip));
 extern void __CrestShort(short* x) __attribute__((crest_skip));
 extern void __CrestInt(int* x) __attribute__((crest_skip));
 # 2 "/tmp/mcute/actioncode.c" 2
+# 1 "/usr/lib/gcc/i686-linux-gnu/4.6/include/stdbool.h" 1 3 4
+# 3 "/tmp/mcute/actioncode.c" 2
 # 1 "/usr/include/stdio.h" 1 3 4
 # 28 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -902,10 +904,70 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 940 "/usr/include/stdio.h" 3 4
 
-# 3 "/tmp/mcute/actioncode.c" 2
+# 4 "/tmp/mcute/actioncode.c" 2
  void main(){
-int p1;__CrestInt(&p1);int p3;__CrestInt(&p3);printf ("\n???setting timer with: %d, %d?????\n", p1,p3);
+int Score_Player_1;
+int Score_Player_2;
+int Round;
+char Response_Player_1;
+char Response_Player_2;
+_Bool Read;
+int ReadV;
+int Player_Id;
+__CrestInt(&Player_Id);char Hit;
+__CrestChar(&Hit);printf("#0#");
+    if(Player_Id==1)
+    {
+    Response_Player_1=Hit;
+    }
+    else
+    {
+    Response_Player_2=Hit;
+    }
+    if(Hit=='R')
+    {
+printf("#1#");
+    }
+    else if(Hit=='P')
+    {
+printf("#2#");
+    }
+    else
+    {
+printf("#3#");
+    }
 
-;
+if(Response_Player_1==Response_Player_2)
+{
+printf("#4#");
+printf("#5#");
+
+}
+else if ((Response_Player_1=='R' && Response_Player_2=='S')||(Response_Player_1=='S' && Response_Player_2=='P')||(Response_Player_1=='P' && Response_Player_2=='R'))
+{
+Score_Player_1++;
+printf("#6#");
+printf("#7#");
+if (((Score_Player_1 >= ((ReadV/2)+1))))
+{
+Read=1;
+}
+
+}
+else
+{
+printf("#8#");
+printf("#9#");
+Score_Player_2++;
+if (((Score_Player_2 >= ((ReadV/2)+1))))
+{
+Read=1;
+}
+
+}
+
+
+
+printf("#10#");
 
 }

@@ -33,21 +33,28 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.resource.impl.URIMappingRegistryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException;
 //import org.eclipse.emf.transaction.RecordingCommand;
 //import org.eclipse.emf.transaction.TransactionalEditingDomain;
 //import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.papyrusrt.codegen.cpp.profile.RTCppProperties.RTCppPropertiesPackage;
+import org.eclipse.papyrusrt.codegen.cpp.profile.RTCppProperties.util.RTCppPropertiesAdapterFactory;
+import org.eclipse.papyrusrt.umlrt.profile.UMLRealTime.UMLRealTimePackage;
+import org.eclipse.papyrusrt.umlrt.profile.statemachine.UMLRTStateMachines.UMLRTStateMachinesPackage;
 import org.eclipse.papyrusrt.umlrt.uml.util.UMLRTResourcesUtil;
 import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.common.util.UML2Util.EObjectMatcher;
@@ -81,7 +88,12 @@ import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Vertex;
+import org.eclipse.uml2.uml.internal.resource.UML212UMLLoadImpl;
+import org.eclipse.uml2.uml.internal.resource.UMLResourceFactoryImpl;
+import org.eclipse.uml2.uml.profile.standard.StandardPackage;
+import org.eclipse.uml2.uml.resource.UML212UMLResource;
 import org.eclipse.uml2.uml.resource.UMLResource;
+import org.eclipse.uml2.uml.util.UMLUtil.StereotypeApplicationHelper;
 
 public class Transformer {
 
@@ -96,6 +108,8 @@ public class Transformer {
 	 * The resource set containing the instrumented model
 	 */
 	private ResourceSet resourceSet;
+
+	private String CurrState;
 
 	/**
 	 * Input path of the model to instrument
@@ -128,6 +142,8 @@ public class Transformer {
 	 * Capsule to instrument (CUT)
 	 */
 	private Class cutCapsule;
+
+	private Class harnessCapsule;
 
 	/**
 	 * The state machine of the CUT
@@ -418,127 +434,214 @@ public class Transformer {
 		resourceSet = new ResourceSetImpl();
 		UMLRTResourcesUtil.init(resourceSet);
 		resourceSet.getPackageRegistry().put(RTCppPropertiesPackage.eNS_URI, RTCppPropertiesPackage.eINSTANCE);
+
+		// resourceSet.getPackageRegistry().put("pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml",
+		// null);
+
+		// added to support AnsiC library model
+		// URI primitiveTypesURI =
+		// URI.createURI("pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml");
+		// Resource primitiveTypes = resourceSet.createResource(primitiveTypesURI);
+		// resourceSet.getPackageRegistry().put("pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml",
+		// primitiveTypes);
+
+		// added to support AnsiC library model
+		loadUMLMetaModels();
+		// added to support AnsiC library model
+	}
+
+	private void loadUMLMetaModels() {
+		Map<URI, URI> uriMap = new HashMap<URI, URI>();
+		uriMap = org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.initURIConverterURIMap(uriMap);
+		// load profile from papyrus-rt jar file, the jar file should be set in
+		// classpath
+		String UMLRealTimeSMProfilePath = this.getClass().getClassLoader()
+				.getResource("umlProfile/UMLRealTimeSM-addendum.profile.uml").toString();
+		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml"),
+				URI.createURI(UMLRealTimeSMProfilePath));
+		String RTCppPropertiesProfilePath = this.getClass().getClassLoader()
+				.getResource("profiles/RTCppProperties.profile.uml").toString();
+		uriMap.put(URI.createURI("pathmap://UMLRT_CPP/RTCppProperties.profile.uml"),
+				URI.createURI(RTCppPropertiesProfilePath));
+		String UMLRTProfilePath = this.getClass().getClassLoader().getResource("umlProfile/uml-rt.profile.uml")
+				.toString();
+		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/uml-rt.profile.uml"), URI.createURI(UMLRTProfilePath));
+		/// register packages for UMLRT packages
+		URIMappingRegistryImpl.INSTANCE.putAll(uriMap);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", new UMLResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION,
+				UMLResource.Factory.INSTANCE);
+		resourceSet.getPackageRegistry().put(UMLRealTimePackage.eNS_URI, UMLRealTimePackage.eINSTANCE);
+		// EPackage.Registry.INSTANCE.put(RTCppPropertiesPackage.eNS_URI,
+		// RTCppPropertiesPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(UMLRTStateMachinesPackage.eNS_URI, UMLRTStateMachinesPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(StandardPackage.eNS_URI, StandardPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
+		System.out.println("Metamodels and profiles loaded successfully for UMLRT models");
 	}
 
 	public boolean instrumentActionCode() throws IOException, InterruptedException {
 		String bidFileName = "/tmp/mcute/bidSeed";
 		String strSeed = "";
 		int seed = 0;
+		// pattern to find lines that represent UML-RT commands
+		Pattern commandPattern = Pattern.compile(".*printf.*[#]\\d+[#].*",
+				Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 		// init seed with 0
 		writeSeed(bidFileName, seed);
 		String firstStableState = UmlrtUtil.getInitialState(statemachine).getOutgoings().get(0).getTarget().getName();
 		for (Transition t : UmlrtUtil.getAllTransitions(statemachine)) {
+			if (t.getTriggers() != null && t.getTriggers().size() > 0) {
 
-			try {
+				try {
 
-				System.out.print(".");
-				// reading seed
-				Scanner scanner1 = new Scanner(new File(bidFileName));
-				if (scanner1.hasNext()) {
-					strSeed = scanner1.nextLine();
-					if (strSeed != "")
-						seed = Integer.parseInt(strSeed);
-				}
-				scanner1.close();
-
-				// preparing action code for instrumentation
-				String actionCode = "";
-				if (t.getName() != null && t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
-					actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
-
-					// comment out message sending commands
-					String[] actionCodeLines = actionCode.split(";");
-					actionCode = "";
-					for (String line : actionCodeLines) {
-						if (line.contains(".log") || line.contains(".send()") || line.contains(".informIn"))
-							line = String.format("printf (\"MCUTESTART %s MCUTEEND\")", line.replace("\"", "\\\"$"));
-						actionCode += line + ";\n";
+					System.out.print(".");
+					// reading seed
+					Scanner scanner1 = new Scanner(new File(bidFileName));
+					if (scanner1.hasNext()) {
+						strSeed = scanner1.nextLine();
+						if (strSeed != "")
+							seed = Integer.parseInt(strSeed);
 					}
+					scanner1.close();
 
-					String actionCodeParams = "";
-					for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
-							.getOwnedParameters()) {
-						if (p != null && p.getType() != null && p.getType().getName() != null) {
+					// preparing action code for instrumentation
+					String actionCode = "";
+					if (t.getName() != null && t.getEffect() != null && t.getEffect() instanceof OpaqueBehavior) {
+						actionCode = ((OpaqueBehavior) t.getEffect()).getBodies().get(0);
+
+						// replace log.log with printf
+						// actionCode = actionCode.replace("log.log", "printf");
+
+						// comment out message sending commands
+						String[] actionCodeLines = actionCode.split("\\r?\\n");
+						actionCode = "";
+						Map<String, String> umlrtCommands = new HashMap<String, String>();
+						int key = 0;
+						for (String line : actionCodeLines) {
+							if (line.contains(".log") || line.contains(".send()") || line.contains(".informIn")) {
+								// line = String.format("printf (\"MCUTESTART %s MCUTEEND\");",
+								// line.replace("\"", "\\\"$"));
+								umlrtCommands.put(String.valueOf(key), line);
+								line = String.format("printf(\"#%d#\");", key);
+								key++;
+							}
+							actionCode += line + "\n";
+						}
+
+						String actionCodeParams = "";
+						String capsuleAttributes = "";
+
+						for (Property att : getCapsuleAttributes()) {
+							if (att.getType() instanceof PrimitiveType) {
+								String type = ((PrimitiveType) att.getType()).getName();
+								if (type != null) {
+									if (type.equals("Integer"))
+										type = "int";
+									else if (type.equals("Boolean"))
+										type = "bool";
+								} else
+									type = "char"; //
+								capsuleAttributes += String.format("%s %s;\n", type, att.getName());
+							}
+						}
+						for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
+								.getOwnedParameters()) {
 							String parameterTypeName = "";
-							if (p.getType().getName().equals("Integer"))
-								parameterTypeName = "int";
-							actionCodeParams += String.format("%s %s;", parameterTypeName, p.getName());
-							// for now just integer
+							if (p.getType() != null && p.getType().getName() != null) {
+
+								if (p.getType().getName().equals("Integer"))
+									parameterTypeName = "int";
+								if (p.getType().getName().equals("Boolean"))
+									parameterTypeName = "bool";
+							} else
+								parameterTypeName = "char"; // ToDo: fix this
+							actionCodeParams += String.format("%s %s;\n", parameterTypeName, p.getName());
+							// for now just integer and char
 							if (parameterTypeName.equals("int"))
 								actionCodeParams += String.format("CREST_int(%s);", p.getName());
+							if (parameterTypeName.equals("char"))
+								actionCodeParams += String.format("CREST_char(%s);", p.getName());
+							if (parameterTypeName.equals("bool"))
+								actionCodeParams += String.format("CREST_unsigned_char(%s);", p.getName());
+						} // for
+						actionCode = String.format(
+								"#include <crest.h> \n #include <stdbool.h> \n #include <stdio.h>\n void main(){\n%s%s%s\n}",
+								capsuleAttributes, actionCodeParams, actionCode);
+
+						// copy the action code in a file
+						// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
+						final String actionCodeFile = "/tmp/mcute/actioncode.c";
+						FileWriter fw = new FileWriter(actionCodeFile);
+						fw.write(actionCode);
+						fw.flush();
+						fw.close();
+
+						// instrument it
+						final String instrumentScriptPath = "/home/vagrant/mcute/bin/mcute_instrument";
+						Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile,
+								t.getName()).start();
+						int res = instrumentCommand.waitFor();
+						if (res != 0) {
+							System.out.println(String.format("failed to instrument the transition:%s. Action code:\n%s",
+									t.getName(), actionCode));
+							return false;
 						}
-					}
-					actionCode = String.format("#include <crest.h> \n #include <stdio.h>\n void main(){\n%s%s\n}",
-							actionCodeParams, actionCode);
 
-					// copy the action code in a file
-					// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
-					final String actionCodeFile = "/tmp/mcute/actioncode.c";
-					FileWriter fw = new FileWriter(actionCodeFile);
-					fw.write(actionCode);
-					fw.flush();
-					fw.close();
-
-					// instrument it
-					final String instrumentScriptPath = "/home/vagrant/mcute/bin/mcute_instrument";
-					Process instrumentCommand = new ProcessBuilder(instrumentScriptPath, actionCodeFile, t.getName())
-							.start();
-					int res = instrumentCommand.waitFor();
-					if (res != 0) {
-						System.out.println(String.format("failed to instrument:\n%s", actionCode));
-						return false;
-					}
-
-					// reading and customizing the instrumented action code
-					String actionCodeInstrumented = "";
-					final String instrumentedActioncodeFile = "/tmp/mcute/actioncode.cil.c";
-					Scanner scanner = new Scanner(new File(instrumentedActioncodeFile));
-					int c;
-					boolean read = false;
-					while (scanner.hasNextLine()) {
-						String line = scanner.nextLine();
-						if (line.contains("globinit_actioncode();")) {
-							read = true;
-							// only first transition initializes the symbolic execution object
-							if (t.getSource().getName().equals(firstStableState))
-								line = "__CrestInit();";
-							else
-								line = "";
+						// reading and customizing the instrumented action code
+						String actionCodeInstrumented = "";
+						final String instrumentedActioncodeFile = "/tmp/mcute/actioncode.cil.c";
+						Scanner scanner = new Scanner(new File(instrumentedActioncodeFile));
+						int c;
+						boolean read = false;
+						while (scanner.hasNextLine()) {
+							String line = scanner.nextLine();
+							if (line.contains("globinit_actioncode();")) {
+								read = true;
+								// only first transition initializes the symbolic execution object
+								if (t.getSource().getName().equals(firstStableState))
+									line = "__CrestInit();";
+								else
+									line = "";
+							}
+							if (line.contains("return;"))
+								break;
+							Matcher matcher = commandPattern.matcher(line);
+							if (matcher.find()) {
+								String match = matcher.group(0);
+								int i = match.indexOf("#");
+								int j = match.lastIndexOf("#");
+								String digit = match.substring(i + 1, j);
+								line = umlrtCommands.get(digit);
+							}
+							if (read == true)
+								actionCodeInstrumented += line + "\n";
 						}
-						if (line.contains("return;"))
-							break;
-						if (line.contains("MCUTESTART")) {
-							int i = line.indexOf("MCUTESTART");
-							int j = line.indexOf("MCUTEEND");
-							line = line.substring(i + 10, j - 1).replace("\\\"$", "\"") + ";";
-						}
-						if (read == true)
-							actionCodeInstrumented += line + "\n";
-					}
-					scanner.close();
-					actionCodeInstrumented += "__CrestClearStack(0); \n __CrestWriteSE(); \n";
-					// actionCodeInstrumented += "__CrestClearStack(0); \n";
-					// updating the transition
-					OpaqueBehavior obNew = UMLFactory.eINSTANCE.createOpaqueBehavior();
-					obNew.getLanguages().add("C++");
-					obNew.getBodies().add(actionCodeInstrumented);
-					t.setEffect(obNew);
-				} // if
+						scanner.close();
+						actionCodeInstrumented += "__CrestClearStack(0); \n __CrestWriteSE(); \n";
+						// actionCodeInstrumented += "__CrestClearStack(0); \n";
+						// updating the transition
+						OpaqueBehavior obNew = UMLFactory.eINSTANCE.createOpaqueBehavior();
+						obNew.getLanguages().add("C++");
+						obNew.getBodies().add(actionCodeInstrumented);
+						t.setEffect(obNew);
+					} // if
 
-				// update the branch seed
-				seed += 100; // todo this must be based on the largest branch id
-				writeSeed(bidFileName, seed);
-				// FileWriter writer = new FileWriter(new File(bidFileName));
-				// writer.write(String.valueOf(seed));
-				// writer.flush();
-				// writer.close();
+					// update the branch seed
+					seed += 100; // todo this must be based on the largest branch id
+					writeSeed(bidFileName, seed);
+					// FileWriter writer = new FileWriter(new File(bidFileName));
+					// writer.write(String.valueOf(seed));
+					// writer.flush();
+					// writer.close();
 
-			} catch (Exception e) {
-				String line = "---------------------";
-				System.out.print(
-						String.format("%s\nWarning: could not instrument the transition: %s. more info: %s%s\n",
-								line, t.getName(), e.getMessage(), line));
-			}
+				} catch (Exception e) {
+					String line = "---------------------";
+					System.out.print(
+							String.format("%s\nWarning: could not instrument the transition: %s. more info: %s%s\n",
+									line, t.getName(), e.getMessage(), line));
+				}
+			} // if
 
 		} // for
 		return true;
@@ -806,22 +909,22 @@ public class Transformer {
 		}
 
 		if (harnessObj != null && harnessObj instanceof Class) {
-			Class harness = (Class) harnessObj;
+			harnessCapsule = (Class) harnessObj;
 
 			// finding the operations inside the harness
 			List<Operation> list = null;
-			list = harness.getAllOperations().stream().filter(prop -> prop.getName().equals("SelectNextTransition"))
-					.collect(Collectors.toList());
+			list = harnessCapsule.getAllOperations().stream()
+					.filter(prop -> prop.getName().equals("SelectNextTransition")).collect(Collectors.toList());
 			if (list == null || list.size() < 1)
 				return false;
 			Operation selectNextTransitionOperation = list.get(0);
-			list = harness.getAllOperations().stream().filter(prop -> prop.getName().equals("SendNextMessage"))
+			list = harnessCapsule.getAllOperations().stream().filter(prop -> prop.getName().equals("SendNextMessage"))
 					.collect(Collectors.toList());
 			if (list == null || list.size() < 1)
 				return false;
 			Operation sendNextMessageOperation = list.get(0);
-			list = harness.getAllOperations().stream().filter(prop -> prop.getName().equals("CreateCoverageUtilTable"))
-					.collect(Collectors.toList());
+			list = harnessCapsule.getAllOperations().stream()
+					.filter(prop -> prop.getName().equals("CreateCoverageUtilTable")).collect(Collectors.toList());
 			if (list == null || list.size() < 1)
 				return false;
 			Operation createCoverageUtilTableOperation = list.get(0);
@@ -854,13 +957,16 @@ public class Transformer {
 							port = t.getTriggers().get(0).getPorts().get(0).getName();
 							CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
 							msg = ce.getOperation().getName();
+							if (msg.equals("timeout")) // transitions with timeouts do not trigger from outside
+								continue;
 							String writeInputsScript = "";
 							for (Parameter p : ce.getOperation().inputParameters()) {
 								int randomParam = new Random().nextInt();
 								params += String.format("%d,", randomParam);
 								// writeInputsScript += String.format("inputs.push_back(%d);", randomParam);
 							}
-							params = params.substring(0, params.length() - 1);
+							if (params != "")
+								params = params.substring(0, params.length() - 1);
 							String messageCall = String.format("%s.%s(%s).send()", port, msg, params);
 							messagesCallInfo.put(String.format("%s.%s", port, msg), messageCall);
 							sendNextMessageBody += String.format(
@@ -870,9 +976,9 @@ public class Transformer {
 					}
 				} catch (Exception e) {
 					String line = "---------------------";
-					System.out.print(
-							String.format("%s\nError happend, during processing the transition: %s. more info: %s%s\n",
-									line, t.getName(), e.getMessage(), line));
+					System.out.print(String.format(
+							"%s\nError happend, during processing the transition: %s. If that transition triggers by a timeout, just ignore this message. more info: %s%s\n",
+							line, t.getName(), e.getMessage(), line));
 				}
 			}
 			sendNextMessageBody += "}else{"; // if strategy is black-box
@@ -922,18 +1028,20 @@ public class Transformer {
 					List<Transition> outgoings = s.getOutgoings();
 					for (Transition t : outgoings) {
 						allTransitions.add(t);
-						allTransitionsStr+= String.format("allTransitions.push_back(\"%s\");\n", t.getName());
+						allTransitionsStr += String.format("allTransitions.push_back(\"%s\");\n", t.getName());
 					}
 					System.out.print(".");
 					if (outgoings != null && outgoings.size() > 0) {
 						int randomTransitionIdx = new Random().nextInt(outgoings.size());
-//						String candidateTransition = outgoings.get(randomTransitionIdx).getName();
+						// String candidateTransition = outgoings.get(randomTransitionIdx).getName();
 						// selectNextTransitionBody += String.format("if (Curr_State == %s){ next_t =
 						// \"%s\";\n }",
 						// s.getName(), candidateTransition);
-//						System.out.println("\ngenerating transition selection for the state:"+s.getName());
+						// System.out.println("\ngenerating transition selection for the
+						// state:"+s.getName());
 						selectNextTransitionBody += String.format(
-								"if (Curr_State == %d){  %s\n int idx = rand()%%allTransitions.size(); next_t = allTransitions.at(idx);\n }", id, allTransitionsStr);
+								"if (Curr_State == %d){  %s\n int idx = rand()%%allTransitions.size(); next_t = allTransitions.at(idx);\n }",
+								id, allTransitionsStr);
 					}
 					id++;
 				}
@@ -997,19 +1105,20 @@ public class Transformer {
 
 			// initializing the next_t, Curr_State, States, and Transitions
 			// finding some information about the model to write in the hanress
-			String currState = "", next_t = "";
+			String next_t = "";
 			Vertex initialState = UmlrtUtil.getInitialState(statemachine);
 			Vertex firstStateState = initialState.getOutgoings().get(0).getTarget();
 			// currState = firstStateState.getName();
-			currState = "1";
+			// CurrState = "1";
 			next_t = firstStateState.getOutgoings().get(0).getName();
 			int totalStates = UmlrtUtil.getAllVertexes(statemachine).size();
 			int totalTransitions = UmlrtUtil.getAllTransitions(statemachine).size();
 
-			Vertex harnessInitState = UmlrtUtil.getStateMachine(harness).getRegions().get(0).getSubvertex("Init");
+			Vertex harnessInitState = UmlrtUtil.getStateMachine(harnessCapsule).getRegions().get(0)
+					.getSubvertex("Init");
 			if (harnessInitState != null) {
 				String actionCode = String.format(
-						"\n next_t=\"%s\";\n Curr_State = %s;\n States=%d;\n Transitions=%d;\n  ", next_t, currState,
+						"\n next_t=\"%s\";\n Curr_State = %s;\n States=%d;\n Transitions=%d;\n  ", next_t, CurrState,
 						totalStates, totalTransitions);
 				UmlrtUtil.addOpaqueBehaviourToState(harnessInitState, actionCode, OpaqueBehaviourPoint.OnEntry);
 			} else {
@@ -1226,9 +1335,13 @@ public class Transformer {
 		Stream<Vertex> states = vertices.stream().filter(v -> v instanceof State);
 
 		int id = 1;
+		Pseudostate initialState = UmlrtUtil.getInitialState(statemachine);
 		for (Iterator<Vertex> it = states.iterator(); it.hasNext();) {
 			State state = (State) it.next();
 			createEntryActionIfAny(state, id);
+			if (initialState.getOutgoings().get(0).getTarget().getName().equals(state.getName())) {
+				CurrState = String.valueOf(id);
+			}
 			id++;
 		}
 	}
@@ -1405,16 +1518,16 @@ public class Transformer {
 			args = new String[10];
 			args[0] = "-i";
 			// args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
-			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/test2/buggyModel.uml";
+			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS.uml";
 
 			args[2] = "-o";
 			// args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
-			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/test2/buggyModelTestable.uml";
+			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS_transformed2.uml";
 
 			args[4] = "-c";
-			args[5] = "Capsule2";
-			args[6] = "-g";
-			args[7] = "20";
+			args[5] = "Referee";
+			// args[6] = "-g";
+			// args[7] = "20";
 
 			// -os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}
 			// -consoleLog
@@ -1465,6 +1578,11 @@ public class Transformer {
 		if (!transformer.initialize(args)) {
 			throw new Exception("Error during initialization. Check the argments");
 		}
+
+		// System.out.print("Adding the required references to the capsule... ");
+		// res = transformer.addReferencesToCUT();
+		// printRes(res, c);
+		// c++;
 
 		if (transformer.generatableTransitions > 0) {
 			res = transformer.generateRandomStateMachine();
@@ -1543,6 +1661,34 @@ public class Transformer {
 		System.out.println(String.format("end! model preparation took %s seconds",
 				(System.currentTimeMillis() - timeMain) / 1000));
 
+	}
+
+	private boolean addReferencesToCUT() {
+		// TODO Auto-generated method stub
+
+		EList<Stereotype> allStereotypes = cutCapsule.getApplicableStereotypes();
+
+		for (Stereotype ss : allStereotypes) {
+			System.out.println(ss.getName() + " ,  " + ss.getQualifiedName());
+
+		}
+
+		Stereotype stereoCapsuleProperties = cutCapsule.getApplicableStereotype("RTCppProperties::CapsuleProperties");
+		if (stereoCapsuleProperties != null) {
+			cutCapsule.applyStereotype(stereoCapsuleProperties);
+			Object preface = cutCapsule.hasValue(stereoCapsuleProperties, "headerPreface");
+			allStereotypes = cutCapsule.getAppliedStereotypes();
+			// cutCapsule.setValue(stereoCapsuleProperties, "headerPreface",
+			// String.format("%s %s %s %s %s %s %s %s", "#include <map>", "#include
+			// <assert.h>",
+			// "#include <vector>", "#include <iostream>", "#include <fstream>", "#include
+			// <string>",
+			// "#include \"libcrest/crest.h\"", "#include <stdbool.h>"));
+			return true;
+		}
+		// }
+
+		return false;
 	}
 
 	// Reza-new-start
