@@ -811,9 +811,16 @@ if (Debug){
 }
 
 //updating the coverage information
-coverage_util* it = CoverageUtilTable[next_t];
-it->incIterations();
-it->updateCoverageInfo(ex);
+//coverage_util* it = CoverageUtilTable[next_t];
+//it->incIterations();
+//it->updateCoverageInfo(ex);
+map&lt;string, coverage_util*>::iterator it = CoverageUtilTable.find(next_t);
+coverage_util* coverageUtil;
+if (it!=CoverageUtilTable.end()){
+   coverageUtil = it->second;
+   coverageUtil->incIterations();
+   coverageUtil->updateCoverageInfo(ex);
+}
 
 
 //new iteration
@@ -994,9 +1001,18 @@ in.close();
 
 
 //updating the coverage information
-coverage_util* it = CoverageUtilTable[next_t];
-it->incIterations();
-it->updateCoverageInfo(ex);
+//coverage_util* it = CoverageUtilTable[next_t];
+//it->incIterations();
+//it->updateCoverageInfo(ex);
+map&lt;string, coverage_util*>::iterator it = CoverageUtilTable.find(next_t);
+coverage_util* coverageUtil;
+if (it!=CoverageUtilTable.end()){
+   coverageUtil = it->second;
+   coverageUtil->incIterations();
+   coverageUtil->updateCoverageInfo(ex);
+}
+
+
 
 
 //new iteration

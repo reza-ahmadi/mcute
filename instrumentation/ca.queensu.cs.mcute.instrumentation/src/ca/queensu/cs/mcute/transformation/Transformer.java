@@ -956,9 +956,12 @@ public class Transformer {
 						if (t.getTriggers() != null && t.getTriggers().size() > 0) {
 							port = t.getTriggers().get(0).getPorts().get(0).getName();
 							CallEvent ce = (CallEvent) t.getTriggers().get(0).getEvent();
-							msg = ce.getOperation().getName();
-							if (msg.equals("timeout")) // transitions with timeouts do not trigger from outside
+							if (ce.getOperation() == null || msg.equals("timeout")) { // transitions with timeouts do
+																						// not
+																						// trigger from outside
 								continue;
+							}
+							msg = ce.getOperation().getName();
 							String writeInputsScript = "";
 							for (Parameter p : ce.getOperation().inputParameters()) {
 								int randomParam = new Random().nextInt();
@@ -1515,6 +1518,9 @@ public class Transformer {
 			// throw new Exception("Not enough argument. Usage: java Instrumentation -i "
 			// + "<input file> -o <output file> -c <capsule name>");
 			System.out.println("NOTE: missing input parameters, using defaults...");
+			
+		    harnessPath = "/Users/rezaahmadi/mcute/Harness_UMLRT/mcute_package3.uml";
+
 			args = new String[10];
 			args[0] = "-i";
 			// args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
