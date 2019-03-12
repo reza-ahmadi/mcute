@@ -906,68 +906,49 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 4 "/tmp/mcute/actioncode.c" 2
  void main(){
-int Score_Player_1;
-int Score_Player_2;
-int Round;
-char Response_Player_1;
-char Response_Player_2;
-_Bool Read;
-int ReadV;
-int Player_Id;
-__CrestInt(&Player_Id);char Hit;
-__CrestChar(&Hit);printf("#0#");
-    if(Player_Id==1)
-    {
-    Response_Player_1=Hit;
-    }
-    else
-    {
-    Response_Player_2=Hit;
-    }
-    if(Hit=='R')
-    {
+char i;
+char players;
+char k;
+char roundC;
+char r;
+char counter;
+char deck;
+char used;
+char temp;
+char hands;
+char flop;
+char seven;
+char hasPair;
+char hasDubs;
+char hasTrips;
+char hasFull;
+char hasStraight;
+char hasFlush;
+char hasQuads;
+char hasStraightFlush;
+char hasRoyalFlush;
+char rank;
+char highCount;
+char highestRank;
+char playersInTie;
+char tieCounter;
+char tempArr;
+char higherNumber;
+char secondHighestNumber;
+int randomCard = random();
+
+
+randomCard = deal(randomCard);
+
+
+used[k] = randomCard;
+k++;
+
+printf("#0#");
+
+
+playPort.deal(deck[randomCard], temp).sendAt(temp-1);
+
 printf("#1#");
-    }
-    else if(Hit=='P')
-    {
-printf("#2#");
-    }
-    else
-    {
-printf("#3#");
-    }
-
-if(Response_Player_1==Response_Player_2)
-{
-printf("#4#");
-printf("#5#");
-
-}
-else if ((Response_Player_1=='R' && Response_Player_2=='S')||(Response_Player_1=='S' && Response_Player_2=='P')||(Response_Player_1=='P' && Response_Player_2=='R'))
-{
-Score_Player_1++;
-printf("#6#");
-printf("#7#");
-if (((Score_Player_1 >= ((ReadV/2)+1))))
-{
-Read=1;
-}
-
-}
-else
-{
-printf("#8#");
-printf("#9#");
-Score_Player_2++;
-if (((Score_Player_2 >= ((ReadV/2)+1))))
-{
-Read=1;
-}
-
-}
-
-
-
-printf("#10#");
 
 }

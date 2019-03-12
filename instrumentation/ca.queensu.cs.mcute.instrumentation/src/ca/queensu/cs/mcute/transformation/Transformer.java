@@ -1589,6 +1589,11 @@ public class Transformer {
 		// res = transformer.addReferencesToCUT();
 		// printRes(res, c);
 		// c++;
+		
+		System.out.print("Making sure all the transitions have names");
+		res = transformer.checkTransitionsNames();
+		printRes(res, c);
+		c++;
 
 		if (transformer.generatableTransitions > 0) {
 			res = transformer.generateRandomStateMachine();
@@ -1669,32 +1674,57 @@ public class Transformer {
 
 	}
 
+	private boolean checkTransitionsNames() {
+		List<Transition> transitions = UmlrtUtil.getAllTransitions(statemachine);
+		int c = 0;
+		int i = 0;
+		int size = transitions.size() - 1;
+		while (i < size) {
+			System.out.print(".");
+			Transition t = transitions.get(i);
+			String newName = "t" + String.valueOf(c);
+			if (transitions.stream().anyMatch(item -> item.getName() != null && item.getName().equals(newName))) {
+				c++;
+				continue;
+			}
+			if (t.getName()==null || t.getName().equals("")) {
+				t.setName(newName);
+				c++;
+			}
+			i++;
+		}
+
+		return true;
+	}
+
 	private boolean addReferencesToCUT() {
-		// TODO Auto-generated method stub
 
-		EList<Stereotype> allStereotypes = cutCapsule.getApplicableStereotypes();
-
-		for (Stereotype ss : allStereotypes) {
-			System.out.println(ss.getName() + " ,  " + ss.getQualifiedName());
-
-		}
-
-		Stereotype stereoCapsuleProperties = cutCapsule.getApplicableStereotype("RTCppProperties::CapsuleProperties");
-		if (stereoCapsuleProperties != null) {
-			cutCapsule.applyStereotype(stereoCapsuleProperties);
-			Object preface = cutCapsule.hasValue(stereoCapsuleProperties, "headerPreface");
-			allStereotypes = cutCapsule.getAppliedStereotypes();
-			// cutCapsule.setValue(stereoCapsuleProperties, "headerPreface",
-			// String.format("%s %s %s %s %s %s %s %s", "#include <map>", "#include
-			// <assert.h>",
-			// "#include <vector>", "#include <iostream>", "#include <fstream>", "#include
-			// <string>",
-			// "#include \"libcrest/crest.h\"", "#include <stdbool.h>"));
-			return true;
-		}
+		// EList<Stereotype> allStereotypes = cutCapsule.getApplicableStereotypes();
+		// for (Stereotype ss : allStereotypes) {
+		// System.out.println(ss.getName() + " , " + ss.getQualifiedName());
+		//
 		// }
 
-		return false;
+		try {
+			Stereotype stereoCapsuleProperties = cutCapsule.getAppliedStereotype("RTCppProperties::CapsuleProperties");
+			if (stereoCapsuleProperties == null) {
+				stereoCapsuleProperties = cutCapsule.getApplicableStereotype("RTCppProperties::CapsuleProperties");
+				cutCapsule.applyStereotype(stereoCapsuleProperties);
+			}
+			// Object preface = cutCapsule.hasValue(stereoCapsuleProperties,
+			// "headerPreface");
+			// allStereotypes = cutCapsule.getAppliedStereotypes();
+			cutCapsule.setValue(stereoCapsuleProperties, "headerPreface",
+					String.format("%s %s %s %s %s %s %s %s", "#include <map>", "#include <assert.h>",
+							"#include <vector>", "#include <iostream>", "#include <fstream>", "#include <string>",
+							"#include \"libcrest/crest.h\"", "#include <stdbool.h>"));
+		} catch (Exception e) {
+			return false;
+		}
+
+		// }
+
+		return true;
 	}
 
 	// Reza-new-start

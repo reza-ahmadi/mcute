@@ -89,7 +89,7 @@ void __CrestWriteSE() {
   //todo:this raises an exception in my 32 bit ubuntu
   //buff.reserve(1<<26);
   ex.Serialize(&buff);
-  std::cout<<"writing the symbolic execution object into the file: szd_execution" << std::endl;
+  // std::cout<<"writing the symbolic execution object into the file: szd_execution" << std::endl;
   std::ofstream out("szd_execution", std::ios::out | std::ios::binary);
   out.write(buff.data(), buff.size());
   //reza start

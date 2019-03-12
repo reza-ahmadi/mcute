@@ -705,10 +705,10 @@ Depth=0;</body>
 //timingNewMsg.cancelTimer(timingNewMsgId);
 
 //keep track of visited states
-int s=*((int*) rtdata);
-printf (&quot;state recived by harness:%d&quot;, s);
+//int s=*((int*) rtdata);
+//printf (&quot;state recived by harness:%d&quot;, s);
 //Curr_State = static_cast&lt;STATES>(*((int*) rtdata));
-	Curr_State = *((int*) rtdata);
+Curr_State = *((int*) rtdata);
 if(std::find(VisitedStates.begin(), VisitedStates.end(), Curr_State) == VisitedStates.end()){
 	VisitedStates.push_back(Curr_State);
 }
@@ -825,7 +825,7 @@ if (it!=CoverageUtilTable.end()){
 
 //new iteration
 if (ConsecutiveTransitionsExecuted>=ConsecutiveTransitionsPromised){
-  log.log(&quot;\nnew iteration,restarting\n&quot;);
+  log.log(&quot;\nHarness: new iteration, restarting\n&quot;);
   commands.iterate().send();
   ConsecutiveTransitionsExecuted=0;
   // TExecutions=0;
