@@ -454,11 +454,13 @@ public class Transformer {
 	}
 
 	private void loadExtraUMLResources() {
-		/*
-		Map<URI, URI> uriMap = new HashMap<URI, URI>();
-		uriMap = org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.initURIConverterURIMap(uriMap);
+		
+		Map<URI, URI> uriMap = org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.initURIConverterURIMap(new HashMap<URI, URI>());
 		// load profile from papyrus-rt jar file, the jar file should be set in
 		// classpath
+		
+		/*
+		
 		String UMLRealTimeSMProfilePath = this.getClass().getClassLoader()
 				.getResource("umlProfile/UMLRealTimeSM-addendum.profile.uml").toString();
 		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml"),
@@ -473,8 +475,6 @@ public class Transformer {
 				.toString();
 		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/uml-rt.profile.uml"), URI.createURI(UMLRTProfilePath));
 		
-		/// register packages for UMLRT packages
-		URIMappingRegistryImpl.INSTANCE.putAll(uriMap);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", new UMLResourceFactoryImpl());
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION,
 				UMLResource.Factory.INSTANCE);
@@ -485,7 +485,14 @@ public class Transformer {
 		resourceSet.getPackageRegistry().put(StandardPackage.eNS_URI, StandardPackage.eINSTANCE);
 		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
 		
+		
 		*/
+		File ansiCLibFile = new File(System.getProperty("user.dir") + "/libs2/AnsiCLibrary.uml");
+//		String ansiCLibraryAbsPath= "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
+		uriMap.put(URI.createURI("pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml"), URI.createURI(ansiCLibFile.getAbsolutePath()));
+		/// register packages for UMLRT packages
+		URIMappingRegistryImpl.INSTANCE.putAll(uriMap);
+		
 
 		//for AnsiCLibrary resource
 		String ansiCLibrary= "pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml";
