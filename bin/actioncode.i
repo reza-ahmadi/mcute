@@ -906,49 +906,12 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 4 "/tmp/mcute/actioncode.c" 2
  void main(){
-char i;
-char players;
-char k;
-char roundC;
-char r;
-char counter;
-char deck;
-char used;
-char temp;
-char hands;
-char flop;
-char seven;
-char hasPair;
-char hasDubs;
-char hasTrips;
-char hasFull;
-char hasStraight;
-char hasFlush;
-char hasQuads;
-char hasStraightFlush;
-char hasRoyalFlush;
-char rank;
-char highCount;
-char highestRank;
-char playersInTie;
-char tieCounter;
-char tempArr;
-char higherNumber;
-char secondHighestNumber;
-int randomCard = random();
-
-
-randomCard = deal(randomCard);
-
-
-used[k] = randomCard;
-k++;
-
-printf("#0#");
-
-
-playPort.deal(deck[randomCard], temp).sendAt(temp-1);
-
-printf("#1#");
+unsigned int Cars_Gen_Number;
+unsigned int Cars_Gen_Freq;
+unsigned int Cars_Left;
+unsigned int Entrance_Free;
+unsigned int Int_Temp;
+unsigned int Status;
+__CrestUInt(&Status);Entrance_Free=1;
 
 }

@@ -19,12 +19,10 @@
 	<classpathentry kind="lib" path="libraries/org.eclipse.uml2.uml.resources_5.3.0.v20170605-1616.jar"/>
 	<classpathentry kind="lib" path="libraries/org.eclipse.uml2.uml_5.3.0.v20170605-1616.jar"/>
 	<classpathentry kind="lib" path="libraries/org.eclipse.xsd_2.13.0.v20170609-0928.jar"/>
-	<classpathentry kind="lib" path="/home/reza/Papyrus-RT 1.0/plugins/org.eclipse.emf.transaction_1.9.0.201706061339.jar" sourcepath="/home/reza/Papyrus-RT 1.0/plugins/org.eclipse.emf.transaction_1.9.0.201706061339.jar">
-		<accessrules>
-			<accessrule kind="accessible" pattern="org/eclipse/emf/transaction/*"/>
-			<accessrule kind="accessible" pattern="org/eclipse/emf/transaction/util/*"/>
-			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
-		</accessrules>
-	</classpathentry>
+	<classpathentry kind="lib" path="libs2/org.eclipse.papyrusrt.codegen.cpp_1.0.0.201707181457.jar"/>
+	<classpathentry kind="lib" path="libs2/org.eclipse.papyrusrt.codegen.cpp.rts_1.0.0.201707181457.jar"/>
+	<classpathentry kind="lib" path="libs2/org.eclipse.papyrusrt.codegen.cpp.statemachines.flat_1.0.0.201707181457.jar"/>
+	<classpathentry kind="lib" path="libs2/org.eclipse.papyrusrt.codegen.cpp.structure_1.0.0.201707181457.jar"/>
+	<classpathentry kind="lib" path="libs2/org.eclipse.papyrusrt.xtumlrt.external_1.0.0.201707181457.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

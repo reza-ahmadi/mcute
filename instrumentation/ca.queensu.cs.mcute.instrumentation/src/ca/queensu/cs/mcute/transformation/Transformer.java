@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.resource.impl.URIMappingRegistryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException;
+import org.eclipse.papyrusrt.codegen.cpp.AnsiCLibraryMetadata;
 //import org.eclipse.emf.transaction.RecordingCommand;
 //import org.eclipse.emf.transaction.TransactionalEditingDomain;
 //import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -58,6 +59,7 @@ import org.eclipse.papyrusrt.umlrt.profile.statemachine.UMLRTStateMachines.UMLRT
 import org.eclipse.papyrusrt.umlrt.uml.util.UMLRTResourcesUtil;
 import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.common.util.UML2Util.EObjectMatcher;
+import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.CallEvent;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Collaboration;
@@ -84,6 +86,7 @@ import org.eclipse.uml2.uml.StateMachine;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Trigger;
+import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.ValueSpecification;
@@ -446,11 +449,12 @@ public class Transformer {
 		// primitiveTypes);
 
 		// added to support AnsiC library model
-		loadUMLMetaModels();
+		loadExtraUMLResources();
 		// added to support AnsiC library model
 	}
 
-	private void loadUMLMetaModels() {
+	private void loadExtraUMLResources() {
+		/*
 		Map<URI, URI> uriMap = new HashMap<URI, URI>();
 		uriMap = org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.initURIConverterURIMap(uriMap);
 		// load profile from papyrus-rt jar file, the jar file should be set in
@@ -459,13 +463,16 @@ public class Transformer {
 				.getResource("umlProfile/UMLRealTimeSM-addendum.profile.uml").toString();
 		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml"),
 				URI.createURI(UMLRealTimeSMProfilePath));
+		
 		String RTCppPropertiesProfilePath = this.getClass().getClassLoader()
 				.getResource("profiles/RTCppProperties.profile.uml").toString();
 		uriMap.put(URI.createURI("pathmap://UMLRT_CPP/RTCppProperties.profile.uml"),
 				URI.createURI(RTCppPropertiesProfilePath));
+		
 		String UMLRTProfilePath = this.getClass().getClassLoader().getResource("umlProfile/uml-rt.profile.uml")
 				.toString();
 		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/uml-rt.profile.uml"), URI.createURI(UMLRTProfilePath));
+		
 		/// register packages for UMLRT packages
 		URIMappingRegistryImpl.INSTANCE.putAll(uriMap);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", new UMLResourceFactoryImpl());
@@ -477,7 +484,21 @@ public class Transformer {
 		resourceSet.getPackageRegistry().put(UMLRTStateMachinesPackage.eNS_URI, UMLRTStateMachinesPackage.eINSTANCE);
 		resourceSet.getPackageRegistry().put(StandardPackage.eNS_URI, StandardPackage.eINSTANCE);
 		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
-		System.out.println("Metamodels and profiles loaded successfully for UMLRT models");
+		
+		*/
+
+		//for AnsiCLibrary resource
+		String ansiCLibrary= "pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml";
+//		String ansiCLibrary= "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
+		resourceSet.getPackageRegistry().put(ansiCLibrary , AnsiCLibraryMetadata.INSTANCE);
+//		AnsiCLibraryMetadata
+		
+//		org.eclipse.papyrusrt.umlrt.profile.UMLRealTime.
+//		RTCppPropertiesPackage
+		//for AnsiCLibrary resource
+		
+		System.out.println("UML resources and Metamodels loaded successfully!");
+		
 	}
 
 	public boolean instrumentActionCode() throws IOException, InterruptedException {
@@ -519,7 +540,7 @@ public class Transformer {
 						Map<String, String> umlrtCommands = new HashMap<String, String>();
 						int key = 0;
 						for (String line : actionCodeLines) {
-							if (line.contains(".log") || line.contains(".send()") || line.contains(".informIn")) {
+							if (line.contains(".log") || line.contains(".send()") || line.contains(".sendAt") || line.contains(".informIn")) {
 								// line = String.format("printf (\"MCUTESTART %s MCUTEEND\");",
 								// line.replace("\"", "\\\"$"));
 								umlrtCommands.put(String.valueOf(key), line);
@@ -534,34 +555,21 @@ public class Transformer {
 
 						for (Property att : getCapsuleAttributes()) {
 							if (att.getType() instanceof PrimitiveType) {
-								String type = ((PrimitiveType) att.getType()).getName();
-								if (type != null) {
-									if (type.equals("Integer"))
-										type = "int";
-									else if (type.equals("Boolean"))
-										type = "bool";
-								} else
-									type = "char"; //
-								capsuleAttributes += String.format("%s %s;\n", type, att.getName());
+								String parameterTypeName = getCompatibleTypeName(((PrimitiveType) att.getType()));
+								capsuleAttributes += String.format("%s %s;\n", parameterTypeName, att.getName());
 							}
 						}
 						for (Parameter p : ((CallEvent) t.getTriggers().get(0).getEvent()).getOperation()
 								.getOwnedParameters()) {
-							String parameterTypeName = "";
-							if (p.getType() != null && p.getType().getName() != null) {
-
-								if (p.getType().getName().equals("Integer"))
-									parameterTypeName = "int";
-								if (p.getType().getName().equals("Boolean"))
-									parameterTypeName = "bool";
-							} else
-								parameterTypeName = "char"; // ToDo: fix this
+							String parameterTypeName = getCompatibleTypeName(p.getType());
 							actionCodeParams += String.format("%s %s;\n", parameterTypeName, p.getName());
 							// for now just integer and char
 							if (parameterTypeName.equals("int"))
 								actionCodeParams += String.format("CREST_int(%s);", p.getName());
 							if (parameterTypeName.equals("char"))
 								actionCodeParams += String.format("CREST_char(%s);", p.getName());
+							if (parameterTypeName.equals("unsigned int"))
+								actionCodeParams += String.format("CREST_unsigned_int(%s);", p.getName());
 							if (parameterTypeName.equals("bool"))
 								actionCodeParams += String.format("CREST_unsigned_char(%s);", p.getName());
 						} // for
@@ -645,6 +653,22 @@ public class Transformer {
 
 		} // for
 		return true;
+	}
+
+	private String getCompatibleTypeName(Type type) {
+		String parameterTypeName = "unsigned int";
+		if (type instanceof PrimitiveType) {
+			if (type.getName() != null) {
+				parameterTypeName = type.getName();
+				if (parameterTypeName.equals("Integer"))
+					parameterTypeName = "int";
+				else if (parameterTypeName.equals("Boolean"))
+					parameterTypeName = "bool";
+				// if it is anything else, e.g., char, leave it as is
+			}
+		}
+
+		return parameterTypeName;
 	}
 
 	private void writeSeed(String bidFileName, int seed) throws IOException {
@@ -1524,14 +1548,17 @@ public class Transformer {
 			args = new String[10];
 			args[0] = "-i";
 			// args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
-			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS.uml";
+//			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS.uml";
+			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/TrafficSimulation.uml";
 
 			args[2] = "-o";
 			// args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
-			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS_transformed2.uml";
+//			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS_transformed2.uml";
+			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/TrafficSimulation_transformed2.uml";
 
 			args[4] = "-c";
-			args[5] = "Referee";
+//			args[5] = "Referee";
+			args[5] = "Cars_Generator";
 			// args[6] = "-g";
 			// args[7] = "20";
 
