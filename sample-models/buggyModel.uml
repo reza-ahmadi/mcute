@@ -39,27 +39,12 @@
 			   printf(&quot;\ndevision by zero here!\n&quot;);
 			   printf (&quot;p1=%d, p2=%d&quot;);
 			   printf (&quot;some basic math: p2 = 200 / (p1-p2)&quot;);
-			   //p2 = 200 / (p1-p2);
+			   p2 = 200 / (p1-p2);
 			   printf(&quot;basic math done!\n&quot;);	
             }
     }
 }
-
-
-if ((p2&lt;0 &amp;&amp; p2&lt;-1 &amp;&amp; p2!=-2000)){
- printf(&quot;\n(p2>0 || p2&lt;-1 || p2>=2000)&quot;);
-    if (p2*2&lt;1 &amp;&amp; p1+p2>0 &amp;&amp; p1!=p2){
-            if (p1&lt;50000){
-				if (p1*p2 !=1){
-			       printf(&quot;\ndevision by zero here!\n&quot;);
-			       printf (&quot;p1=%d, p2=%d&quot;);
-			       printf (&quot;some basic math: p2 = 200 / (p1-p2)&quot;);
-			       //p2 = 200 / (p1-p2);
-			       printf(&quot;basic math done!\n&quot;);	
-               }
-            }
-    }
-}</body>
+</body>
             </effect>
             <trigger xmi:type="uml:Trigger" xmi:id="_0Gzs8B1BEemqm5ALxX3dkg" event="_qq9LwBu7EemGs84svc1UIQ" port="_6YxWcA7sEem-ucXEfNJLZw"/>
           </transition>
@@ -75,11 +60,10 @@ if ((p2&lt;0 &amp;&amp; p2&lt;-1 &amp;&amp; p2!=-2000)){
           <transition xmi:type="uml:Transition" xmi:id="_pLdYMB6KEem03smGE4oJWg" name="t5" kind="external" source="_lDZkYCNxEemrUPrz7hly4g" target="_K_l4YA7lEem-ucXEfNJLZw">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_u0Gw0B6MEem03smGE4oJWg" name="Effect" isReentrant="false">
               <language>C++</language>
-              <body>printf(&quot;\nt4 &quot;);</body>
+              <body>printf (&quot;\n———setting timer with: %d, %d—————\n&quot;, p1,p3);
+</body>
             </effect>
-            <trigger xmi:type="uml:Trigger" xmi:id="_oq320B6OEem03smGE4oJWg" port="_G5uI8CNOEem03smGE4oJWg">
-              <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
-            </trigger>
+            <trigger xmi:type="uml:Trigger" xmi:id="_oq320B6OEem03smGE4oJWg" event="_lz3hABu7EemGs84svc1UIQ" port="_6YxWcA7sEem-ucXEfNJLZw"/>
           </transition>
           <transition xmi:type="uml:Transition" xmi:id="_nFZRUCNxEemrUPrz7hly4g" name="t4" kind="external" source="_L8BokBwkEemGs84svc1UIQ" target="_lDZkYCNxEemrUPrz7hly4g">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_wu_BwCNxEemrUPrz7hly4g" name="Effect" isReentrant="false">
@@ -118,7 +102,7 @@ if ((p2&lt;0 &amp;&amp; p2&lt;-1 &amp;&amp; p2!=-2000)){
           <subvertex xmi:type="uml:State" xmi:id="_lDZkYCNxEemrUPrz7hly4g" name="Wait4TimeOut">
             <entry xmi:type="uml:OpaqueBehavior" xmi:id="_VJrfcDPUEemkLr3nTm6bLA" name="Entry" isReentrant="false">
               <language>C++</language>
-              <body>timing.informIn(UMLRTTimespec(0,10000));
+              <body>//timing.informIn(UMLRTTimespec(0,10000));
 </body>
             </entry>
           </subvertex>

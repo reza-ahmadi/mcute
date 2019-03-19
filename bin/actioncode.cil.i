@@ -14,23 +14,23 @@ extern void __CrestApply1(int id , int op , long long val ) __attribute__((__cre
 extern void __CrestClearStack(int id ) __attribute__((__crest_skip__)) ;
 extern void __CrestStore(int id , unsigned long addr ) __attribute__((__crest_skip__)) ;
 extern void __CrestLoad(int id , unsigned long addr , long long val ) __attribute__((__crest_skip__)) ;
-# 203 "/home/vagrant/mcute/bin/../crest/include/crest.h"
-extern void __CrestUInt(unsigned int *x ) __attribute__((__crest_skip__)) ;
+# 206 "/home/vagrant/mcute/bin/../crest/include/crest.h"
+extern void __CrestInt(int *x ) __attribute__((__crest_skip__)) ;
 # 4 "/tmp/mcute/actioncode.c"
 void main(void)
 {
-  unsigned int Entrance_Free ;
-  unsigned int Status ;
+  int Entrance_Free ;
+  int Status ;
 
   {
   __globinit_actioncode();
   __CrestCall(1, 1);
 # 11 "/tmp/mcute/actioncode.c"
-  __CrestUInt(& Status);
-  __CrestLoad(2, (unsigned long )0, (long long )1U);
+  __CrestInt(& Status);
+  __CrestLoad(2, (unsigned long )0, (long long )1);
   __CrestStore(3, (unsigned long )(& Entrance_Free));
 # 11 "/tmp/mcute/actioncode.c"
-  Entrance_Free = 1U;
+  Entrance_Free = 1;
   __CrestReturn(4);
 # 4 "/tmp/mcute/actioncode.c"
   return;

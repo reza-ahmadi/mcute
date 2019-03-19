@@ -487,15 +487,15 @@ public class Transformer {
 		
 		
 		*/
+		String ansiCLibrary= "pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml";
 		File ansiCLibFile = new File(System.getProperty("user.dir") + "/libs2/AnsiCLibrary.uml");
 //		String ansiCLibraryAbsPath= "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
-		uriMap.put(URI.createURI("pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml"), URI.createURI(ansiCLibFile.getAbsolutePath()));
+		uriMap.put(URI.createURI(ansiCLibrary), URI.createURI(ansiCLibFile.getAbsolutePath()));
 		/// register packages for UMLRT packages
 		URIMappingRegistryImpl.INSTANCE.putAll(uriMap);
 		
 
 		//for AnsiCLibrary resource
-		String ansiCLibrary= "pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml";
 //		String ansiCLibrary= "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
 		resourceSet.getPackageRegistry().put(ansiCLibrary , AnsiCLibraryMetadata.INSTANCE);
 //		AnsiCLibraryMetadata
@@ -509,7 +509,7 @@ public class Transformer {
 	}
 
 	public boolean instrumentActionCode() throws IOException, InterruptedException {
-		String bidFileName = "/tmp/mcute/bidSeed";
+		String bidFileName = "/home/vagrant/mcute/tmp/bidSeed";
 		String strSeed = "";
 		int seed = 0;
 		// pattern to find lines that represent UML-RT commands
@@ -586,7 +586,7 @@ public class Transformer {
 
 						// copy the action code in a file
 						// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
-						final String actionCodeFile = "/tmp/mcute/actioncode.c";
+						final String actionCodeFile = "/home/vagrant/mcute/tmp/actioncode.c";
 						FileWriter fw = new FileWriter(actionCodeFile);
 						fw.write(actionCode);
 						fw.flush();
@@ -605,7 +605,7 @@ public class Transformer {
 
 						// reading and customizing the instrumented action code
 						String actionCodeInstrumented = "";
-						final String instrumentedActioncodeFile = "/tmp/mcute/actioncode.cil.c";
+						final String instrumentedActioncodeFile = "/home/vagrant/mcute/tmp/actioncode.cil.c";
 						Scanner scanner = new Scanner(new File(instrumentedActioncodeFile));
 						int c;
 						boolean read = false;
@@ -663,16 +663,14 @@ public class Transformer {
 	}
 
 	private String getCompatibleTypeName(Type type) {
-		String parameterTypeName = "unsigned int";
-		if (type instanceof PrimitiveType) {
-			if (type.getName() != null) {
-				parameterTypeName = type.getName();
-				if (parameterTypeName.equals("Integer"))
-					parameterTypeName = "int";
-				else if (parameterTypeName.equals("Boolean"))
-					parameterTypeName = "bool";
-				// if it is anything else, e.g., char, leave it as is
-			}
+		String parameterTypeName = "int";
+		if (type instanceof PrimitiveType && type.getName() != null) {
+			parameterTypeName = type.getName();
+			if (parameterTypeName.equals("Integer"))
+				parameterTypeName = "int";
+			else if (parameterTypeName.equals("Boolean"))
+				parameterTypeName = "bool";
+			// if it is anything else, e.g., char, leave it as is
 		}
 
 		return parameterTypeName;
@@ -1545,6 +1543,9 @@ public class Transformer {
 		topCapsuleName = "mCUTE__TOP";
 		commandsPort = "commands";
 
+		//this is for debuggin purposes only
+		//the transformer is typically called by mCUTE
+		//and the args parameters are sent over by a config file
 		if (args.length < 6) {
 			// throw new Exception("Not enough argument. Usage: java Instrumentation -i "
 			// + "<input file> -o <output file> -c <capsule name>");
@@ -1561,7 +1562,7 @@ public class Transformer {
 			args[2] = "-o";
 			// args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
 //			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS_transformed2.uml";
-			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/TrafficSimulation_transformed2.uml";
+			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/TrafficSimulation_transformed3.uml";
 
 			args[4] = "-c";
 //			args[5] = "Referee";

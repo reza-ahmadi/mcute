@@ -2,8 +2,8 @@
 //heuristic (branch selection technique): 0 = random, 1 = systematic
 strategy 3
 heuristic 0
-time 50
+time 150
 totalIterations 40000
-iterationLength 6
+iterationLength 5
 transitionIterations 1
 debug 0

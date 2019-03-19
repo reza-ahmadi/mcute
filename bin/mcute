@@ -13,8 +13,8 @@ fi
 #mcute.conf
 CONF=${DIR}/${CONF_FILE}
 
-echo "copying generated branch files from /tmp/mcute/branches_t* in the current directory"
-cp /tmp/mcute/branches_t* .
+echo "copying generated branch files from /home/vagrant/mcute/tmp/branches_t* in the current directory"
+cp /home/vagrant/mcute/tmp/branches_t* .
 
 echo "CONF is ${CONF} "
 

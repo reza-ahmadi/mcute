@@ -906,12 +906,12 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 4 "/tmp/mcute/actioncode.c" 2
  void main(){
-unsigned int Cars_Gen_Number;
-unsigned int Cars_Gen_Freq;
-unsigned int Cars_Left;
-unsigned int Entrance_Free;
-unsigned int Int_Temp;
-unsigned int Status;
-__CrestUInt(&Status);Entrance_Free=1;
+int Cars_Gen_Number;
+int Cars_Gen_Freq;
+int Cars_Left;
+int Entrance_Free;
+int Int_Temp;
+int Status;
+__CrestInt(&Status);Entrance_Free=1;
 
 }
