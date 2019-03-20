@@ -4,6 +4,6 @@ strategy 1
 heuristic 0
 time 15
 totalIterations 40000
-iterationLength 50
+iterationLength 5
 transitionIterations 1
 debug 0

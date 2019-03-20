@@ -1,3 +1,7 @@
-1. mcute mCUTE__TOPMain conf1
-2. mcute mCUTE__TOPMain conf2
-3. mcute mCUTE__TOPMain conf3
+1. Running the transformer:
+    example.1. mcuteTransform -i /home/vagrant/mcute/sample-models/m2/RPS.uml -o /home/vagrant/mcute/sample-models/m2/RPS-transformed.uml -c Referee
+
+    example.2. mcuteTransform -i /home/vagrant/mcute/sample-models/m1/buggyModel.uml -o /home/vagrant/mcute/sample-models/m1/buggyModel-transformed.uml -c Capsule2
+
+2. Running mcute:
+    example.1. mcute mCUTE__TOPMain conf3

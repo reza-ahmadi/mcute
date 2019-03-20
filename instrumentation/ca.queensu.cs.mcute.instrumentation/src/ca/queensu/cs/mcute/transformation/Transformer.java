@@ -105,7 +105,7 @@ public class Transformer {
 	private String harnessCapsuleName;
 	private String topCapsuleName;
 	private String commandsPort;
-	private final boolean debug = false;
+	private boolean debug = false;
 
 	/**
 	 * The resource set containing the instrumented model
@@ -454,62 +454,74 @@ public class Transformer {
 	}
 
 	private void loadExtraUMLResources() {
-		
-		Map<URI, URI> uriMap = org.eclipse.uml2.uml.resources.util.UMLResourcesUtil.initURIConverterURIMap(new HashMap<URI, URI>());
+
+		Map<URI, URI> uriMap = org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
+				.initURIConverterURIMap(new HashMap<URI, URI>());
 		// load profile from papyrus-rt jar file, the jar file should be set in
 		// classpath
-		
+
 		/*
-		
-		String UMLRealTimeSMProfilePath = this.getClass().getClassLoader()
-				.getResource("umlProfile/UMLRealTimeSM-addendum.profile.uml").toString();
-		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml"),
-				URI.createURI(UMLRealTimeSMProfilePath));
-		
-		String RTCppPropertiesProfilePath = this.getClass().getClassLoader()
-				.getResource("profiles/RTCppProperties.profile.uml").toString();
-		uriMap.put(URI.createURI("pathmap://UMLRT_CPP/RTCppProperties.profile.uml"),
-				URI.createURI(RTCppPropertiesProfilePath));
-		
-		String UMLRTProfilePath = this.getClass().getClassLoader().getResource("umlProfile/uml-rt.profile.uml")
-				.toString();
-		uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/uml-rt.profile.uml"), URI.createURI(UMLRTProfilePath));
-		
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", new UMLResourceFactoryImpl());
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION,
-				UMLResource.Factory.INSTANCE);
-		resourceSet.getPackageRegistry().put(UMLRealTimePackage.eNS_URI, UMLRealTimePackage.eINSTANCE);
-		// EPackage.Registry.INSTANCE.put(RTCppPropertiesPackage.eNS_URI,
-		// RTCppPropertiesPackage.eINSTANCE);
-		resourceSet.getPackageRegistry().put(UMLRTStateMachinesPackage.eNS_URI, UMLRTStateMachinesPackage.eINSTANCE);
-		resourceSet.getPackageRegistry().put(StandardPackage.eNS_URI, StandardPackage.eINSTANCE);
-		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
-		
-		
-		*/
-		String ansiCLibrary= "pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml";
-		File ansiCLibFile = new File(System.getProperty("user.dir") + "/libs2/AnsiCLibrary.uml");
-//		String ansiCLibraryAbsPath= "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
+		 * 
+		 * String UMLRealTimeSMProfilePath = this.getClass().getClassLoader()
+		 * .getResource("umlProfile/UMLRealTimeSM-addendum.profile.uml").toString();
+		 * uriMap.put(URI.createURI(
+		 * "pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml"),
+		 * URI.createURI(UMLRealTimeSMProfilePath));
+		 * 
+		 * String RTCppPropertiesProfilePath = this.getClass().getClassLoader()
+		 * .getResource("profiles/RTCppProperties.profile.uml").toString();
+		 * uriMap.put(URI.createURI("pathmap://UMLRT_CPP/RTCppProperties.profile.uml"),
+		 * URI.createURI(RTCppPropertiesProfilePath));
+		 * 
+		 * String UMLRTProfilePath =
+		 * this.getClass().getClassLoader().getResource("umlProfile/uml-rt.profile.uml")
+		 * .toString();
+		 * uriMap.put(URI.createURI("pathmap://UML_RT_PROFILE/uml-rt.profile.uml"),
+		 * URI.createURI(UMLRTProfilePath));
+		 * 
+		 * Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("uml", new
+		 * UMLResourceFactoryImpl());
+		 * Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(UMLResource
+		 * .FILE_EXTENSION, UMLResource.Factory.INSTANCE);
+		 * resourceSet.getPackageRegistry().put(UMLRealTimePackage.eNS_URI,
+		 * UMLRealTimePackage.eINSTANCE); //
+		 * EPackage.Registry.INSTANCE.put(RTCppPropertiesPackage.eNS_URI, //
+		 * RTCppPropertiesPackage.eINSTANCE);
+		 * resourceSet.getPackageRegistry().put(UMLRTStateMachinesPackage.eNS_URI,
+		 * UMLRTStateMachinesPackage.eINSTANCE);
+		 * resourceSet.getPackageRegistry().put(StandardPackage.eNS_URI,
+		 * StandardPackage.eINSTANCE);
+		 * resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI,
+		 * UMLPackage.eINSTANCE);
+		 * 
+		 * 
+		 */
+		String ansiCLibrary = "pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml";
+//		File ansiCLibFile = new File(System.getProperty("user.dir") + "/libs2/AnsiCLibrary.uml");
+		File ansiCLibFile = new File("/home/vagrant/mcute/lib/AnsiCLibrary.uml");
+		// String ansiCLibraryAbsPath=
+		// "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
 		uriMap.put(URI.createURI(ansiCLibrary), URI.createURI(ansiCLibFile.getAbsolutePath()));
 		/// register packages for UMLRT packages
 		URIMappingRegistryImpl.INSTANCE.putAll(uriMap);
-		
 
-		//for AnsiCLibrary resource
-//		String ansiCLibrary= "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
-		resourceSet.getPackageRegistry().put(ansiCLibrary , AnsiCLibraryMetadata.INSTANCE);
-//		AnsiCLibraryMetadata
-		
-//		org.eclipse.papyrusrt.umlrt.profile.UMLRealTime.
-//		RTCppPropertiesPackage
-		//for AnsiCLibrary resource
-		
+		// for AnsiCLibrary resource
+		// String ansiCLibrary=
+		// "/Users/rezaahmadi/mcute/instrumentation/ca.queensu.cs.mcute.instrumentation/libs2/AnsiCLibrary.uml";
+		resourceSet.getPackageRegistry().put(ansiCLibrary, AnsiCLibraryMetadata.INSTANCE);
+		// AnsiCLibraryMetadata
+
+		// org.eclipse.papyrusrt.umlrt.profile.UMLRealTime.
+		// RTCppPropertiesPackage
+		// for AnsiCLibrary resource
+
 		System.out.println("UML resources and Metamodels loaded successfully!");
-		
+
 	}
 
 	public boolean instrumentActionCode() throws IOException, InterruptedException {
 		String bidFileName = "/home/vagrant/mcute/tmp/bidSeed";
+//		String bidFileName = "/tmp/mcute/bidSeed";
 		String strSeed = "";
 		int seed = 0;
 		// pattern to find lines that represent UML-RT commands
@@ -547,7 +559,8 @@ public class Transformer {
 						Map<String, String> umlrtCommands = new HashMap<String, String>();
 						int key = 0;
 						for (String line : actionCodeLines) {
-							if (line.contains(".log") || line.contains(".send()") || line.contains(".sendAt") || line.contains(".informIn")) {
+							if (line.contains(".log") || line.contains(".send()") || line.contains(".sendAt")
+									|| line.contains(".informIn")) {
 								// line = String.format("printf (\"MCUTESTART %s MCUTEEND\");",
 								// line.replace("\"", "\\\"$"));
 								umlrtCommands.put(String.valueOf(key), line);
@@ -583,6 +596,8 @@ public class Transformer {
 						actionCode = String.format(
 								"#include <crest.h> \n #include <stdbool.h> \n #include <stdio.h>\n void main(){\n%s%s%s\n}",
 								capsuleAttributes, actionCodeParams, actionCode);
+
+//						 System.out.println(String.format( "^^^^^^^^^^^^^^\n%s\n^^^^^^^^^^^^^^^^", actionCode));
 
 						// copy the action code in a file
 						// FileInputStream acFile = new FileInputStream("/tmp/crest/actioncode.c");
@@ -1543,30 +1558,33 @@ public class Transformer {
 		topCapsuleName = "mCUTE__TOP";
 		commandsPort = "commands";
 
-		//this is for debuggin purposes only
-		//the transformer is typically called by mCUTE
-		//and the args parameters are sent over by a config file
-		if (args.length < 6) {
+		// this is for debuggin purposes only
+		// the transformer is typically called by mCUTE
+		// and the args parameters are sent over by a config file
+//		debug = true;
+		if (debug) {
 			// throw new Exception("Not enough argument. Usage: java Instrumentation -i "
 			// + "<input file> -o <output file> -c <capsule name>");
 			System.out.println("NOTE: missing input parameters, using defaults...");
-			
-		    harnessPath = "/Users/rezaahmadi/mcute/Harness_UMLRT/mcute_package3.uml";
+
+			harnessPath = "/Users/rezaahmadi/mcute/Harness_UMLRT/mcute_package3.uml";
 
 			args = new String[10];
 			args[0] = "-i";
 			// args[1] = "/home/vagrant/MyTests/SoSyM2/emptymodel.uml";
-//			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS.uml";
-			args[1] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/TrafficSimulation.uml";
+			// args[1] =
+			// "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS.uml";
+			args[1] = "/Users/rezaahmadi/mcute/sample-models/RPS.uml";
 
 			args[2] = "-o";
 			// args[3] = "/home/vagrant/MyTests/SoSyM2/modelGen2.uml";
-//			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS_transformed2.uml";
-			args[3] = "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/TrafficSimulation_transformed3.uml";
+			// args[3] =
+			// "/Users/rezaahmadi/Dropbox/Qlab/code/UMLrtModels/MyTests/Present22Jan/MODELS2019/RPS_transformed2.uml";
+			args[3] = "/Users/rezaahmadi/mcute/sample-models/RPS_transformed3.uml";
 
 			args[4] = "-c";
-//			args[5] = "Referee";
-			args[5] = "Cars_Generator";
+			args[5] = "Referee";
+			// args[5] = "Cars_Generator";
 			// args[6] = "-g";
 			// args[7] = "20";
 
@@ -1624,7 +1642,7 @@ public class Transformer {
 		// res = transformer.addReferencesToCUT();
 		// printRes(res, c);
 		// c++;
-		
+
 		System.out.print("Making sure all the transitions have names");
 		res = transformer.checkTransitionsNames();
 		printRes(res, c);
@@ -1722,7 +1740,7 @@ public class Transformer {
 				c++;
 				continue;
 			}
-			if (t.getName()==null || t.getName().equals("")) {
+			if (t.getName() == null || t.getName().equals("")) {
 				t.setName(newName);
 				c++;
 			}

@@ -1,0 +1,889 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:RTCppProperties="http://www.eclipse.org/papyrus/umlrt/cppproperties" xmlns:UMLRTStateMachines="http://www.eclipse.org/papyrus/umlrt/statemachine" xmlns:UMLRealTime="http://www.eclipse.org/papyrus/umlrt" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_CbwAgAxGEeiZjs_9AA28NA" name="RPS">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CbwnkAxGEeiZjs_9AA28NA" source="http://www.eclipse.org/papyrus-rt/language/1.0.0">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CbwnkQxGEeiZjs_9AA28NA" key="language" value="umlrt-cpp"/>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Package" xmi:id="_45KagAxGEeiZjs_9AA28NA" name="Instructions">
+      <packagedElement xmi:type="uml:Collaboration" xmi:id="_4sIrIAxGEeiZjs_9AA28NA" name="Instructions">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_46mk8AxGEeiZjs_9AA28NA" client="_4sIrIAxGEeiZjs_9AA28NA" supplier="_46CkQAxGEeiZjs_9AA28NA" contract="_46CkQAxGEeiZjs_9AA28NA"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_46_mgAxGEeiZjs_9AA28NA" client="_4sIrIAxGEeiZjs_9AA28NA" supplier="_462ckAxGEeiZjs_9AA28NA" contract="_462ckAxGEeiZjs_9AA28NA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_46CkQAxGEeiZjs_9AA28NA" name="Instructions">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_8wa9IAyMEeiI4MJQ71mFuw" name="Ready_Instruction"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="__ONOMAyMEeiI4MJQ71mFuw" name="Go_Instruction"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Az0hIAyNEeiI4MJQ71mFuw" name="Info_Instruction">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_tnSWoAyTEeiI4MJQ71mFuw" name="Id">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_46poQAxGEeiZjs_9AA28NA" name="Instructions~">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Pl5CwAyXEeiI4MJQ71mFuw" name="ReadyResp_Instruction"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_46zZQAxGEeiZjs_9AA28NA" client="_4sIrIAxGEeiZjs_9AA28NA" supplier="_46poQAxGEeiZjs_9AA28NA"/>
+      <packagedElement xmi:type="uml:AnyReceiveEvent" xmi:id="_461OcAxGEeiZjs_9AA28NA" name="*"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_462ckAxGEeiZjs_9AA28NA" name="InstructionsIO"/>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_47BbsAxGEeiZjs_9AA28NA" client="_4sIrIAxGEeiZjs_9AA28NA" supplier="_462ckAxGEeiZjs_9AA28NA"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="_8wcLQAyMEeiI4MJQ71mFuw" operation="_8wa9IAyMEeiI4MJQ71mFuw"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="__OOcUAyMEeiI4MJQ71mFuw" operation="__ONOMAyMEeiI4MJQ71mFuw"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="_Az1vQAyNEeiI4MJQ71mFuw" operation="_Az0hIAyNEeiI4MJQ71mFuw"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="_Pl6Q4AyXEeiI4MJQ71mFuw" operation="_Pl5CwAyXEeiI4MJQ71mFuw"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_lBKFsA1AEeiI4MJQ71mFuw" name="User">
+      <packagedElement xmi:type="uml:Collaboration" xmi:id="_lAqWcA1AEeiI4MJQ71mFuw" name="User">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_lCPDwA1AEeiI4MJQ71mFuw" client="_lAqWcA1AEeiI4MJQ71mFuw" supplier="_lB5skA1AEeiI4MJQ71mFuw" contract="_lB5skA1AEeiI4MJQ71mFuw"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_lDdLwA1AEeiI4MJQ71mFuw" client="_lAqWcA1AEeiI4MJQ71mFuw" supplier="_lDXFIA1AEeiI4MJQ71mFuw" contract="_lDXFIA1AEeiI4MJQ71mFuw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_lB5skA1AEeiI4MJQ71mFuw" name="User">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_syxn4A1AEeiI4MJQ71mFuw" name="Input">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_ymZMUA1AEeiI4MJQ71mFuw" name="N">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_lCydYA1AEeiI4MJQ71mFuw" name="User~"/>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_lC5LEA1AEeiI4MJQ71mFuw" client="_lAqWcA1AEeiI4MJQ71mFuw" supplier="_lCydYA1AEeiI4MJQ71mFuw"/>
+      <packagedElement xmi:type="uml:AnyReceiveEvent" xmi:id="_lDMGAA1AEeiI4MJQ71mFuw" name="*"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_lDXFIA1AEeiI4MJQ71mFuw" name="UserIO"/>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_lDeZ4A1AEeiI4MJQ71mFuw" client="_lAqWcA1AEeiI4MJQ71mFuw" supplier="_lDXFIA1AEeiI4MJQ71mFuw"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="_szCtoA1AEeiI4MJQ71mFuw" operation="_syxn4A1AEeiI4MJQ71mFuw"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Hk1kwAxHEeiZjs_9AA28NA" name="Resutls">
+      <packagedElement xmi:type="uml:Collaboration" xmi:id="_HkkfAAxHEeiZjs_9AA28NA" name="Resutls">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_HlXJMAxHEeiZjs_9AA28NA" client="_HkkfAAxHEeiZjs_9AA28NA" supplier="_HlRpoAxHEeiZjs_9AA28NA" contract="_HlRpoAxHEeiZjs_9AA28NA"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_HlqEIAxHEeiZjs_9AA28NA" client="_HkkfAAxHEeiZjs_9AA28NA" supplier="_HllLoAxHEeiZjs_9AA28NA" contract="_HllLoAxHEeiZjs_9AA28NA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_HlRpoAxHEeiZjs_9AA28NA" name="Resutls">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_QyiDYAxHEeiZjs_9AA28NA" name="Hand_In">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nZAhYAyREeiI4MJQ71mFuw" name="Player_Id">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          </ownedParameter>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_mznKwAyQEeiI4MJQ71mFuw" name="Hit">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_HlYXUAxHEeiZjs_9AA28NA" name="Resutls~"/>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_HlhhQAxHEeiZjs_9AA28NA" client="_HkkfAAxHEeiZjs_9AA28NA" supplier="_HlYXUAxHEeiZjs_9AA28NA"/>
+      <packagedElement xmi:type="uml:AnyReceiveEvent" xmi:id="_HljWcAxHEeiZjs_9AA28NA" name="*"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_HllLoAxHEeiZjs_9AA28NA" name="ResutlsIO"/>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_HlrSQAxHEeiZjs_9AA28NA" client="_HkkfAAxHEeiZjs_9AA28NA" supplier="_HllLoAxHEeiZjs_9AA28NA"/>
+      <packagedElement xmi:type="uml:CallEvent" xmi:id="_QyoKAAxHEeiZjs_9AA28NA" operation="_QyiDYAxHEeiZjs_9AA28NA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_sGMRIAywEeiI4MJQ71mFuw" name="Player_1" classifierBehavior="_sGMRJgywEeiI4MJQ71mFuw" isActive="true">
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_sGMRIQywEeiI4MJQ71mFuw" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6kIb0IeXEeSVyrlWP4nYew"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_sGMRIgywEeiI4MJQ71mFuw" name="InstructionsPort" visibility="public" type="_4sIrIAxGEeiZjs_9AA28NA" isOrdered="true" aggregation="composite" isBehavior="true"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_sGMRIwywEeiI4MJQ71mFuw" name="Choice_Index">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_sGMRJAywEeiI4MJQ71mFuw" name="HitPort" visibility="public" type="_HkkfAAxHEeiZjs_9AA28NA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true"/>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_sGMRJQywEeiI4MJQ71mFuw" name="timing" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
+      </ownedAttribute>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_sGMRJgywEeiI4MJQ71mFuw" name="Player_1_SM" isReentrant="false">
+        <region xmi:type="uml:Region" xmi:id="_sGMRJwywEeiI4MJQ71mFuw" name="Region">
+          <transition xmi:type="uml:Transition" xmi:id="_sGMRKAywEeiI4MJQ71mFuw" name="Initial" source="_sGMRNAywEeiI4MJQ71mFuw" target="_sGMRNQywEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_sGMRKQywEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+srand(time(0));&#xD;
+log.log(&quot;\t\t\t[Player 1] I am alive ...&quot;);&#xD;
+</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_sGMRKgywEeiI4MJQ71mFuw" name="" source="_sGMRNQywEeiI4MJQ71mFuw" target="_sGMROAywEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_sGMRKwywEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+InstructionsPort.ReadyResp_Instruction().send();&#xD;
+log.log(&quot;\t\t\t[Player 1] Ready! Waiting for instructions from the Referee ...&quot;);&#xD;
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_sGMRLAywEeiI4MJQ71mFuw" event="_8wcLQAyMEeiI4MJQ71mFuw" port="_sGMRIgywEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_sGMRLQywEeiI4MJQ71mFuw" name="" source="_sGMROAywEeiI4MJQ71mFuw" target="_sGMRNgywEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_sGMRLgywEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;\t\t\t[Player 1] Guessing ...&quot;);</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_sGMRLwywEeiI4MJQ71mFuw" event="__OOcUAyMEeiI4MJQ71mFuw" port="_sGMRIgywEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_sGMRMAywEeiI4MJQ71mFuw" name="" source="_sGMRNgywEeiI4MJQ71mFuw" target="_sGMRNQywEeiI4MJQ71mFuw">
+            <trigger xmi:type="uml:Trigger" xmi:id="_sGMRMQywEeiI4MJQ71mFuw" port="_sGMRJQywEeiI4MJQ71mFuw">
+              <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
+            </trigger>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_sGMRMgywEeiI4MJQ71mFuw" name="" source="_sGMRNQywEeiI4MJQ71mFuw" target="_sGMROQywEeiI4MJQ71mFuw">
+            <trigger xmi:type="uml:Trigger" xmi:id="_sGMRMwywEeiI4MJQ71mFuw" event="_Az1vQAyNEeiI4MJQ71mFuw" port="_sGMRIgywEeiI4MJQ71mFuw"/>
+          </transition>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_sGMRNAywEeiI4MJQ71mFuw"/>
+          <subvertex xmi:type="uml:State" xmi:id="_sGMRNQywEeiI4MJQ71mFuw" name="Alive"/>
+          <subvertex xmi:type="uml:State" xmi:id="_sGMRNgywEeiI4MJQ71mFuw" name="Firing">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_sGMRNwywEeiI4MJQ71mFuw" name="Entry" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+Choice_Index=Random();&#xD;
+&#xD;
+if (Choice_Decoding(Choice_Index)=='R')&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 1] ---> Rock&quot;);&#xD;
+}&#xD;
+else if (Choice_Decoding(Choice_Index)=='P')&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 1] ---> Paper&quot;);&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 1] ---> Scissors&quot;);&#xD;
+}&#xD;
+&#xD;
+HitPort.Hand_In(1,Choice_Decoding(Choice_Index)).send();&#xD;
+timing.informIn(UMLRTTimespec(0,0));&#xD;
+</body>
+            </entry>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_sGMROAywEeiI4MJQ71mFuw" name="WaitingAndGuessing"/>
+          <subvertex xmi:type="uml:State" xmi:id="_sGMROQywEeiI4MJQ71mFuw" name="End">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_sGMROgywEeiI4MJQ71mFuw" name="Entry" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+int winer=Id;&#xD;
+&#xD;
+if (Id==1) &#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 1] Great! I am the best !!!&quot;);&#xD;
+}&#xD;
+else if(Id == 2)&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 1] Too bad! Next time maybe.&quot;);&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 1] Ok! Next time maybe.&quot;);&#xD;
+}</body>
+            </entry>
+          </subvertex>
+        </region>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_sGMROwywEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>srand (time(NULL));&#xD;
+return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_sGMRPAywEeiI4MJQ71mFuw" specification="_sGMRPgywEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>    if (Choice_Index == 0)&#xD;
+    {&#xD;
+    return ('R');&#xD;
+    }&#xD;
+    else if (Choice_Index==1)&#xD;
+    {&#xD;
+    return ('P');&#xD;
+    }&#xD;
+    else&#xD;
+    {&#xD;
+    return ('S');&#xD;
+    } &#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_sGMRPQywEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>srand (time(NULL));&#xD;
+return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_vxWB4A0sEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>srand(time(0));&#xD;
+return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_74o0wA01EeiI4MJQ71mFuw" specification="_z54OcA01EeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>return((rand()*919*1)%3);</body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_sGMRPgywEeiI4MJQ71mFuw" name="Choice_Decoding" concurrency="guarded" method="_sGMRPAywEeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_sGMRPwywEeiI4MJQ71mFuw" name="Choice_Index">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_sGMRQAywEeiI4MJQ71mFuw" name="Random_Val" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_z54OcA01EeiI4MJQ71mFuw" name="Random" concurrency="guarded" method="_74o0wA01EeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_z54OcQ01EeiI4MJQ71mFuw" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_dnzv4AxLEeiZjs_9AA28NA" name="Player_2" classifierBehavior="_t4a3oAxLEeiZjs_9AA28NA" isActive="true">
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_4_WmoAyJEeiI4MJQ71mFuw" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6kIb0IeXEeSVyrlWP4nYew"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_5yukUAyJEeiI4MJQ71mFuw" name="InstructionsPort" visibility="public" type="_4sIrIAxGEeiZjs_9AA28NA" isOrdered="true" aggregation="composite" isBehavior="true"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_8zvsAAyOEeiI4MJQ71mFuw" name="Choice_Index">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_K_7BYAyQEeiI4MJQ71mFuw" name="HitPort" visibility="public" type="_HkkfAAxHEeiZjs_9AA28NA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true"/>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_NYeG8AytEeiI4MJQ71mFuw" name="timing" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
+      </ownedAttribute>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_t4a3oAxLEeiZjs_9AA28NA" name="Player_2_SM" isReentrant="false">
+        <region xmi:type="uml:Region" xmi:id="_t4nr8AxLEeiZjs_9AA28NA" name="Region">
+          <transition xmi:type="uml:Transition" xmi:id="_t5J3cAxLEeiZjs_9AA28NA" name="Initial" source="_t4vnwAxLEeiZjs_9AA28NA" target="_t46m4AxLEeiZjs_9AA28NA">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_lXKfEAyJEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;\t\t\t[Player 2] I am alive ...&quot;);&#xD;
+srand(time(0));&#xD;
+</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_rxlk0AyJEeiI4MJQ71mFuw" name="" source="_t46m4AxLEeiZjs_9AA28NA" target="_Mc8nwAyKEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_TiZngAyKEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+InstructionsPort.ReadyResp_Instruction().send();&#xD;
+log.log(&quot;\t\t\t[Player 2] Ready! Waiting for instructions from the Referee ...&quot;);&#xD;
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_GUeGQAyNEeiI4MJQ71mFuw" event="_8wcLQAyMEeiI4MJQ71mFuw" port="_5yukUAyJEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_PldQ0AyKEeiI4MJQ71mFuw" name="" source="_Mc8nwAyKEeiI4MJQ71mFuw" target="_pLaz0AyJEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_lJTz0AyKEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;\t\t\t[Player 2] Guessing ...&quot;);</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_KV9lwAyNEeiI4MJQ71mFuw" event="__OOcUAyMEeiI4MJQ71mFuw" port="_5yukUAyJEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_Ge0nAAyLEeiI4MJQ71mFuw" name="" source="_pLaz0AyJEeiI4MJQ71mFuw" target="_t46m4AxLEeiZjs_9AA28NA">
+            <trigger xmi:type="uml:Trigger" xmi:id="_UhbGoAytEeiI4MJQ71mFuw" port="_NYeG8AytEeiI4MJQ71mFuw">
+              <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
+            </trigger>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_QyaWsAyLEeiI4MJQ71mFuw" name="" source="_t46m4AxLEeiZjs_9AA28NA" target="_OSILQAyLEeiI4MJQ71mFuw">
+            <trigger xmi:type="uml:Trigger" xmi:id="_ip9GYAyTEeiI4MJQ71mFuw" event="_Az1vQAyNEeiI4MJQ71mFuw" port="_5yukUAyJEeiI4MJQ71mFuw"/>
+          </transition>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_t4vnwAxLEeiZjs_9AA28NA"/>
+          <subvertex xmi:type="uml:State" xmi:id="_t46m4AxLEeiZjs_9AA28NA" name="Alive"/>
+          <subvertex xmi:type="uml:State" xmi:id="_pLaz0AyJEeiI4MJQ71mFuw" name="Firing">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_T5-dMAyOEeiI4MJQ71mFuw" name="Entry" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+Choice_Index=Random();&#xD;
+&#xD;
+if (Choice_Decoding(Choice_Index)=='R')&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 2] ---> Rock&quot;);&#xD;
+}&#xD;
+else if (Choice_Decoding(Choice_Index)=='P')&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 2] ---> Paper&quot;);&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 2] ---> Scissors&quot;);&#xD;
+}&#xD;
+&#xD;
+HitPort.Hand_In(2,Choice_Decoding(Choice_Index)).send();&#xD;
+timing.informIn(UMLRTTimespec(0,0));&#xD;
+</body>
+            </entry>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_Mc8nwAyKEeiI4MJQ71mFuw" name="WaitingAndGuessing"/>
+          <subvertex xmi:type="uml:State" xmi:id="_OSILQAyLEeiI4MJQ71mFuw" name="End">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_sqB90AyLEeiI4MJQ71mFuw" name="Entry" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+int winer=Id;&#xD;
+&#xD;
+if (Id==2) &#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 2] Great! I am the best !!!&quot;);&#xD;
+}&#xD;
+else if(Id == 1)&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 2] Too bad! Next time maybe.&quot;);&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+log.log(&quot;\t\t\t[Player 2] Ok! Next time maybe.&quot;);&#xD;
+}</body>
+            </entry>
+          </subvertex>
+        </region>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_zACWQAyOEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>srand (time(NULL));&#xD;
+return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_RbyuEAyPEeiI4MJQ71mFuw" specification="_EhMf4AyPEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>    if (Choice_Index == 0)&#xD;
+    {&#xD;
+    return ('R');&#xD;
+    }&#xD;
+    else if (Choice_Index==1)&#xD;
+    {&#xD;
+    return ('P');&#xD;
+    }&#xD;
+    else&#xD;
+    {&#xD;
+    return ('S');&#xD;
+    } &#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Gitc8AyVEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>srand (time(NULL));&#xD;
+return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_t0ON4A0sEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>srand(time(0));&#xD;
+return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__t6dMA01EeiI4MJQ71mFuw" specification="_zOmc0A01EeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>return((rand()*919*2)%3);</body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_EhMf4AyPEeiI4MJQ71mFuw" name="Choice_Decoding" concurrency="guarded" method="_RbyuEAyPEeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_jfb5sAyPEeiI4MJQ71mFuw" name="Choice_Index">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_bAH8UAyVEeiI4MJQ71mFuw" name="Random_Val" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_zOmc0A01EeiI4MJQ71mFuw" name="Random" concurrency="guarded" method="__t6dMA01EeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_zO1GUA01EeiI4MJQ71mFuw" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_fsztgAxLEeiZjs_9AA28NA" name="Top" classifierBehavior="_Q5XDIAxSEeiZjs_9AA28NA" isActive="true">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_1S1TYAxOEeiZjs_9AA28NA" name="player_2" visibility="protected" type="_dnzv4AxLEeiZjs_9AA28NA" isOrdered="true" aggregation="composite"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_2Wz44AxOEeiZjs_9AA28NA" name="referee" visibility="protected" type="_hUnY0AxLEeiZjs_9AA28NA" isOrdered="true" aggregation="composite"/>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_trrwcAx9EeiI4MJQ71mFuw" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6kIb0IeXEeSVyrlWP4nYew"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_M6WHsAyFEeiI4MJQ71mFuw" name="Rounds_Number">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Ub0VEAyFEeiI4MJQ71mFuw" value="0"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_LH4AgAyxEeiI4MJQ71mFuw" name="player_1" visibility="protected" type="_sGMRIAywEeiI4MJQ71mFuw" isOrdered="true" aggregation="composite"/>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_C5CUYA1BEeiI4MJQ71mFuw" name="user" visibility="protected" type="_lAqWcA1AEeiI4MJQ71mFuw" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true" isService="false"/>
+      <ownedConnector xmi:type="uml:Connector" xmi:id="_m9EM0A0AEeiI4MJQ71mFuw" name="RTConnector5">
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_m9GpEA0AEeiI4MJQ71mFuw" partWithPort="_LH4AgAyxEeiI4MJQ71mFuw" role="_sGMRIgywEeiI4MJQ71mFuw"/>
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_m9TdYA0AEeiI4MJQ71mFuw" partWithPort="_2Wz44AxOEeiZjs_9AA28NA" role="_Nk-4wAyIEeiI4MJQ71mFuw"/>
+      </ownedConnector>
+      <ownedConnector xmi:type="uml:Connector" xmi:id="_ndNFcA0AEeiI4MJQ71mFuw" name="RTConnector6">
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_ndO6oA0AEeiI4MJQ71mFuw" partWithPort="_2Wz44AxOEeiZjs_9AA28NA" role="_6alKUAyQEeiI4MJQ71mFuw"/>
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_ndPhsA0AEeiI4MJQ71mFuw" partWithPort="_LH4AgAyxEeiI4MJQ71mFuw" role="_sGMRJAywEeiI4MJQ71mFuw"/>
+      </ownedConnector>
+      <ownedConnector xmi:type="uml:Connector" xmi:id="_0nqMMA0OEeiI4MJQ71mFuw" name="RTConnector7">
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_0nsocA0OEeiI4MJQ71mFuw" partWithPort="_2Wz44AxOEeiZjs_9AA28NA" role="_Nk-4wAyIEeiI4MJQ71mFuw"/>
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_0nsocQ0OEeiI4MJQ71mFuw" partWithPort="_1S1TYAxOEeiZjs_9AA28NA" role="_5yukUAyJEeiI4MJQ71mFuw"/>
+      </ownedConnector>
+      <ownedConnector xmi:type="uml:Connector" xmi:id="_1jrvkA0OEeiI4MJQ71mFuw" name="RTConnector8">
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_1jtkwA0OEeiI4MJQ71mFuw" partWithPort="_2Wz44AxOEeiZjs_9AA28NA" role="_6alKUAyQEeiI4MJQ71mFuw"/>
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_1jtkwQ0OEeiI4MJQ71mFuw" partWithPort="_1S1TYAxOEeiZjs_9AA28NA" role="_K_7BYAyQEeiI4MJQ71mFuw"/>
+      </ownedConnector>
+      <ownedConnector xmi:type="uml:Connector" xmi:id="_G9DjcA1BEeiI4MJQ71mFuw" name="RTConnector9">
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_G9HN0A1BEeiI4MJQ71mFuw" role="_C5CUYA1BEeiI4MJQ71mFuw"/>
+        <end xmi:type="uml:ConnectorEnd" xmi:id="_G9HN0Q1BEeiI4MJQ71mFuw" partWithPort="_2Wz44AxOEeiZjs_9AA28NA" role="_1ajWAA1AEeiI4MJQ71mFuw"/>
+      </ownedConnector>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_Q5XDIAxSEeiZjs_9AA28NA" name="Top_SM" isReentrant="false">
+        <region xmi:type="uml:Region" xmi:id="_Q5lsoAxSEeiZjs_9AA28NA" name="Region">
+          <transition xmi:type="uml:Transition" xmi:id="_Q585AAxSEeiZjs_9AA28NA" name="Initial" source="_Q5pXAAxSEeiZjs_9AA28NA" target="_Q55OoAxSEeiZjs_9AA28NA">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_lhif4AyFEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>    log.log(&quot;\n&quot;);&#xD;
+    &#xD;
+    log.log(&quot;[Top] ++++++++++++++++++++++++++++ Rock-Paper-Scissors +++++++++++++++++++++&quot;);&#xD;
+    int argc = UMLRTMain::getArgCount();&#xD;
+    if (argc==1) &#xD;
+	{&#xD;
+    		const char *R = UMLRTMain::getArg(0);&#xD;
+    		Rounds_Number=0;&#xD;
+		int j=0;&#xD;
+&#xD;
+		for(int i=strlen(R); i--; i>=0)&#xD;
+		{&#xD;
+				&#xD;
+				if(!(IsDigit(R[i])))&#xD;
+				{&#xD;
+    					log.log(&quot;[Top] You gave other inputs than numbers, Exit, see you next time&quot;);&#xD;
+       				exit(0);&#xD;
+				}&#xD;
+				Rounds_Number = Rounds_Number + (GetDigit(R[i])*(Pow(10,j)));&#xD;
+				j++;&#xD;
+		}&#xD;
+&#xD;
+&#xD;
+    if (Rounds_Number>0) &#xD;
+    {&#xD;
+&#xD;
+    	user.Input(Rounds_Number).send();&#xD;
+	log.log(&quot;[Top] Starting the game...&quot;);&#xD;
+&#xD;
+    }&#xD;
+    else &#xD;
+    {&#xD;
+    	log.log(&quot;[Top] Wrong value, Exit, see you next time&quot;);&#xD;
+	exit(0);&#xD;
+    }&#xD;
+    }&#xD;
+    else&#xD;
+    {&#xD;
+    log.log(&quot;[Top] Command line with too much/without arguments&quot;);&#xD;
+    log.log(&quot;[Top] Exit, see you next time!&quot;);&#xD;
+    exit(0);&#xD;
+    }&#xD;
+</body>
+            </effect>
+          </transition>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_Q5pXAAxSEeiZjs_9AA28NA"/>
+          <subvertex xmi:type="uml:State" xmi:id="_Q55OoAxSEeiZjs_9AA28NA" name="State1"/>
+        </region>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__vwzIA08EeiI4MJQ71mFuw" specification="_h674cA08EeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>&#xD;
+if (R=='0') return 0;&#xD;
+else&#xD;
+if (R=='1') return 1;&#xD;
+else&#xD;
+if (R=='2') return 2;&#xD;
+else&#xD;
+if (R=='3') return 3;&#xD;
+else&#xD;
+if (R=='4') return 4;&#xD;
+else&#xD;
+if (R=='5') return 5;&#xD;
+else&#xD;
+if (R=='6') return 6;&#xD;
+else&#xD;
+if (R=='7') return 7;&#xD;
+else&#xD;
+if (R=='8') return 8;&#xD;
+else return 9;&#xD;
+</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_5FfooA0-EeiI4MJQ71mFuw" specification="_arwDAA0-EeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>int y = e;&#xD;
+&#xD;
+if (x == 0)&#xD;
+{&#xD;
+y=1;&#xD;
+}&#xD;
+else if (x == 1)&#xD;
+{&#xD;
+y=e;&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+for(int i=1; i++; i&lt;x)&#xD;
+{&#xD;
+y = y * e;&#xD;
+}&#xD;
+}&#xD;
+return y;</body>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_QLrwAA1eEeih-o9kELPevg" specification="_2GTikA1dEeih-o9kELPevg">
+        <language>C++</language>
+        <body>if ((c=='0')||(c=='1')||(c=='2')||(c=='3')||(c=='4')||(c=='5')||(c=='6')||(c=='7')||(c=='8')||(c=='9'))&#xD;
+{&#xD;
+return true;&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+return false;&#xD;
+}</body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_h674cA08EeiI4MJQ71mFuw" name="GetDigit" concurrency="guarded" method="__vwzIA08EeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_lkn78A08EeiI4MJQ71mFuw" name="R">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_vKd00A08EeiI4MJQ71mFuw" name="D" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_arwDAA0-EeiI4MJQ71mFuw" name="Pow" concurrency="guarded" method="_5FfooA0-EeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_ei23cA0-EeiI4MJQ71mFuw" name="e">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_gfC3UA0-EeiI4MJQ71mFuw" name="x">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_iTFn0A0-EeiI4MJQ71mFuw" name="d" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_2GTikA1dEeih-o9kELPevg" name="IsDigit" concurrency="guarded" method="_QLrwAA1eEeih-o9kELPevg">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_7LwZcA1dEeih-o9kELPevg" name="c">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_D0eiwA1eEeih-o9kELPevg" name="g" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_hUnY0AxLEeiZjs_9AA28NA" name="Referee" classifierBehavior="_p28mQAxLEeiZjs_9AA28NA" isActive="true">
+      <ownedAttribute xmi:type="uml:Port" xmi:id="__oBrIAyGEeiI4MJQ71mFuw" name="log" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_6kIb0IeXEeSVyrlWP4nYew"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_Nk-4wAyIEeiI4MJQ71mFuw" name="InstructionsPort" visibility="public" type="_4sIrIAxGEeiZjs_9AA28NA" isOrdered="true" aggregation="composite" isBehavior="true" isConjugated="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wogPAA0OEeiI4MJQ71mFuw" value="2"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wwqsgA0OEeiI4MJQ71mFuw" value="2"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_6alKUAyQEeiI4MJQ71mFuw" name="resutlsPort" visibility="public" type="_HkkfAAxHEeiZjs_9AA28NA" isOrdered="true" aggregation="composite" isBehavior="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3uQwwA0OEeiI4MJQ71mFuw" value="2"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3urngA0OEeiI4MJQ71mFuw" value="2"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_tysAQAyREeiI4MJQ71mFuw" name="Score_Player_1">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_0G4iMAyREeiI4MJQ71mFuw" value="0"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_2z8lYAyREeiI4MJQ71mFuw" name="Score_Player_2">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_2z8lYQyREeiI4MJQ71mFuw" value="0"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ApzMAAyZEeiI4MJQ71mFuw" name="Round">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_FobpMAyZEeiI4MJQ71mFuw" value="0"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_cfdN0AylEeiI4MJQ71mFuw" name="Response_Player_1">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_icvEkAylEeiI4MJQ71mFuw" name="Response_Player_2">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_5lVhgBydEduyofBvg4RL2w"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_EecnsAysEeiI4MJQ71mFuw" name="timing" visibility="protected" isOrdered="true" aggregation="composite" isBehavior="true" isService="false">
+        <type xmi:type="uml:Collaboration" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_MxQZgGXsEeS_4daqvwyFrg"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Port" xmi:id="_1ajWAA1AEeiI4MJQ71mFuw" name="user" visibility="public" type="_lAqWcA1AEeiI4MJQ71mFuw" isOrdered="true" aggregation="composite" isBehavior="true"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_1B0QcA1BEeiI4MJQ71mFuw" name="Read">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Dpo1cA1CEeiI4MJQ71mFuw"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_O1hCkA1DEeiI4MJQ71mFuw" name="ReadV">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_O1hCkQ1DEeiI4MJQ71mFuw" value="0"/>
+      </ownedAttribute>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_p28mQAxLEeiZjs_9AA28NA" name="Referee_SM" isReentrant="false">
+        <region xmi:type="uml:Region" xmi:id="_p7GtgAxLEeiZjs_9AA28NA" name="Region">
+          <transition xmi:type="uml:Transition" xmi:id="_p77M4AxLEeiZjs_9AA28NA" name="Initial" source="_p7Th0AxLEeiZjs_9AA28NA" target="_YRijAA1BEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_PHBQEAyEEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+Round=0;&#xD;
+log.log(&quot;[Referee] Ok! Let's play the game&quot;);&#xD;
+
+ReadV=10;
+log.log(&quot;[Referee] the game will go for %d round(s)&quot;, ReadV);&#xD;
+</body>
+            </effect>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_R6kI0AxPEeiZjs_9AA28NA" name="t3" source="_p7sjYAxLEeiZjs_9AA28NA" target="_mbQP8AyiEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_Hb944EHjEemkLr3nTm6bLA" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+&#xD;
+if(Player_Id==1)&#xD;
+{&#xD;
+Response_Player_1=Hit;&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+Response_Player_2=Hit;&#xD;
+}&#xD;
+&#xD;
+if(Hit=='R')&#xD;
+{&#xD;
+	log.log(&quot;[Referee] Got 'Rock' from player %d ...&quot;, Player_Id);&#xD;
+}&#xD;
+else if(Hit=='P')&#xD;
+{&#xD;
+	log.log(&quot;[Referee] Got 'Paper' from player %d ...&quot;, Player_Id);&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+	log.log(&quot;[Referee] Got 'Scissors' from player %d ...&quot;, Player_Id);&#xD;
+&#xD;
+}&#xD;
+&#xD;
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_U34vkAyREeiI4MJQ71mFuw" event="_QyoKAAxHEeiZjs_9AA28NA" port="_6alKUAyQEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_iQAYgAyXEeiI4MJQ71mFuw" name="t1" source="_fXq5cAyXEeiI4MJQ71mFuw" target="_1wBIkAykEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_3tEIUEHoEemkLr3nTm6bLA" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>
+Round++;&#xD;
+if ((Round&lt;=ReadV)&amp;&amp; !Read)&#xD;
+{&#xD;
+InstructionsPort.Ready_Instruction().send();&#xD;
+log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;-----------------------------Preparing----------------------------\n&quot;);&#xD;
+log.log(&quot;[Referee] Got ready?&quot;);&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;-------------------------------Final Evaluation----------------------------\n&quot;);&#xD;
+log.log(&quot;[Referee] Finished.&quot;);&#xD;
+&#xD;
+	if(Score_Player_1 > Score_Player_2)&#xD;
+	{&#xD;
+		InstructionsPort.Info_Instruction(1).send();&#xD;
+		log.log(&quot;|-----------------------------------------------|&quot;);&#xD;
+		log.log(&quot;|\tPlayer 1 [%d]\t|\tPlayer 2 [%d]\t|&quot;,Score_Player_1,Score_Player_2);&#xD;
+		log.log(&quot;|-----------------------------------------------|&quot;);&#xD;
+		log.log(&quot;[Referee] The winner is Player 1&quot;);&#xD;
+&#xD;
+	}&#xD;
+	else if (Score_Player_1 &lt; Score_Player_2)&#xD;
+	{&#xD;
+		InstructionsPort.Info_Instruction(2).send();&#xD;
+		log.log(&quot;|-----------------------------------------------|&quot;);&#xD;
+		log.log(&quot;|\tPlayer 1 [%d]\t|\tPlayer 2 [%d]\t|&quot;,Score_Player_1,Score_Player_2);&#xD;
+		log.log(&quot;|-----------------------------------------------|&quot;);&#xD;
+		log.log(&quot;[Referee] The winner is Player 2&quot;);&#xD;
+&#xD;
+	}&#xD;
+	else &#xD;
+	{&#xD;
+		InstructionsPort.Info_Instruction(3).send();&#xD;
+              log.log(&quot;|-----------------------------------------------|&quot;);&#xD;
+		log.log(&quot;|\tPlayer 1 [%d]\t|\tPlayer 2 [%d]\t|&quot;,Score_Player_1,Score_Player_2);&#xD;
+		log.log(&quot;|-----------------------------------------------|&quot;);&#xD;
+						log.log(&quot;[Referee] No once won the game!&quot;);&#xD;
+	}&#xD;
+&#xD;
+}</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_kq01IAyXEeiI4MJQ71mFuw" event="_Pl6Q4AyXEeiI4MJQ71mFuw" port="_Nk-4wAyIEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_LGU1QAyZEeiI4MJQ71mFuw" name="t5" source="_KrbLgAylEeiI4MJQ71mFuw" target="_fXq5cAyXEeiI4MJQ71mFuw">
+            <trigger xmi:type="uml:Trigger" xmi:id="_GhalAAysEeiI4MJQ71mFuw" port="_EecnsAysEeiI4MJQ71mFuw">
+              <event xmi:type="uml:CallEvent" href="pathmap://UMLRTRTSLIB/UMLRT-RTS.uml#_IaEO8HDxEeSwWKwNKw1iAA"/>
+            </trigger>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_-b5TkAykEeiI4MJQ71mFuw" name="t2" source="_1wBIkAykEeiI4MJQ71mFuw" target="_p7sjYAxLEeiZjs_9AA28NA">
+            <trigger xmi:type="uml:Trigger" xmi:id="_DQJFsAylEeiI4MJQ71mFuw" event="_Pl6Q4AyXEeiI4MJQ71mFuw" port="_Nk-4wAyIEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_NOKOAAylEeiI4MJQ71mFuw" name="t4" source="_mbQP8AyiEeiI4MJQ71mFuw" target="_KrbLgAylEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_JHgNoEHjEemkLr3nTm6bLA" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>    log.log(&quot;\n&quot;);&#xD;
+    if(Player_Id==1)&#xD;
+    {&#xD;
+    Response_Player_1=Hit;&#xD;
+    }&#xD;
+    else&#xD;
+    {&#xD;
+    Response_Player_2=Hit;&#xD;
+    }&#xD;
+    if(Hit=='R')&#xD;
+    {&#xD;
+    log.log(&quot;[Referee] Got 'Rock' from player %d ...&quot;, Player_Id);&#xD;
+    }&#xD;
+    else if(Hit=='P')&#xD;
+    {&#xD;
+    log.log(&quot;[Referee] Got 'Paper' from player %d ...&quot;, Player_Id);&#xD;
+    }&#xD;
+    else&#xD;
+    {&#xD;
+    log.log(&quot;[Referee] Got 'Scissors' from player %d ...&quot;, Player_Id);&#xD;
+    }&#xD;
+&#xD;
+if(Response_Player_1==Response_Player_2)&#xD;
+{&#xD;
+log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;[Referee] Tie Round&quot;);&#xD;
+&#xD;
+}&#xD;
+else if ((Response_Player_1=='R' &amp;&amp; Response_Player_2=='S')||(Response_Player_1=='S' &amp;&amp; Response_Player_2=='P')||(Response_Player_1=='P' &amp;&amp; Response_Player_2=='R'))&#xD;
+{&#xD;
+Score_Player_1++;&#xD;
+log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;[Referee] Player 1 won! got 1 point&quot;);&#xD;
+if (((Score_Player_1 >= ((ReadV/2)+1))))&#xD;
+{&#xD;
+Read=true;&#xD;
+}&#xD;
+&#xD;
+}&#xD;
+else&#xD;
+{&#xD;
+log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;[Referee] Player 2 won! got 1 point&quot;);&#xD;
+Score_Player_2++;&#xD;
+if (((Score_Player_2 >= ((ReadV/2)+1))))&#xD;
+{&#xD;
+Read=true;&#xD;
+}&#xD;
+&#xD;
+}&#xD;
+&#xD;
+&#xD;
+&#xD;
+timing.informIn(UMLRTTimespec(1,1));&#xD;
+&#xD;
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_N9upwAylEeiI4MJQ71mFuw" event="_QyoKAAxHEeiZjs_9AA28NA" port="_6alKUAyQEeiI4MJQ71mFuw"/>
+          </transition>
+          <transition xmi:type="uml:Transition" xmi:id="_fwavYA1BEeiI4MJQ71mFuw" name="t0" source="_YRijAA1BEeiI4MJQ71mFuw" target="_fXq5cAyXEeiI4MJQ71mFuw">
+            <effect xmi:type="uml:OpaqueBehavior" xmi:id="_4iUtUA1CEeiI4MJQ71mFuw" name="Effect" isReentrant="false">
+              <language>C++</language>
+              <body>//log.log(&quot;[Referee] the game will go for %d round(s)&quot;,N);&#xD;
+//ReadV=N;
+
+
+</body>
+            </effect>
+            <trigger xmi:type="uml:Trigger" xmi:id="_hCdmEA1BEeiI4MJQ71mFuw" event="_szCtoA1AEeiI4MJQ71mFuw" port="_1ajWAA1AEeiI4MJQ71mFuw"/>
+          </transition>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_p7Th0AxLEeiZjs_9AA28NA"/>
+          <subvertex xmi:type="uml:State" xmi:id="_p7sjYAxLEeiZjs_9AA28NA" name="Action">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_hrUxYAyHEeiI4MJQ71mFuw" name="OpaqueBehavior1">
+              <language>C++</language>
+              <body>log.log(&quot;\n&quot;);&#xD;
+InstructionsPort.Go_Instruction().send();&#xD;
+log.log(&quot;-------------------------------Action----------------------------\n&quot;);&#xD;
+log.log(&quot;[Referee] Round %d: 3, 2, 1, Go!&quot;, Round);&#xD;
+log.log(&quot;\n&quot;);&#xD;
+log.log(&quot;[Referee] Looking at players ...&quot;);</body>
+            </entry>
+          </subvertex>
+          <subvertex xmi:type="uml:State" xmi:id="_fXq5cAyXEeiI4MJQ71mFuw" name="Waiting_Ready"/>
+          <subvertex xmi:type="uml:State" xmi:id="_mbQP8AyiEeiI4MJQ71mFuw" name="Get1Hit"/>
+          <subvertex xmi:type="uml:State" xmi:id="_1wBIkAykEeiI4MJQ71mFuw" name="Waiting4Players"/>
+          <subvertex xmi:type="uml:State" xmi:id="_KrbLgAylEeiI4MJQ71mFuw" name="Get2Hit"/>
+          <subvertex xmi:type="uml:State" xmi:id="_YRijAA1BEeiI4MJQ71mFuw" name="ReadInput"/>
+        </region>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_wLy-sA0rEeiI4MJQ71mFuw" specification="_KT-d8A0rEeiI4MJQ71mFuw">
+        <language>C++</language>
+        <body>return (rand() % 3);&#xD;
+</body>
+      </ownedBehavior>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_KT-d8A0rEeiI4MJQ71mFuw" name="Random" isStatic="true" concurrency="guarded" method="_wLy-sA0rEeiI4MJQ71mFuw">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_KT-d8Q0rEeiI4MJQ71mFuw" name="return" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusC_Cpp_LIBRARIES/AnsiCLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_CbwnkgxGEeiZjs_9AA28NA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CbwnkwxGEeiZjs_9AA28NA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/umlrt#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_RT_PROFILE/uml-rt.profile.uml#_1h74oEeVEeO0lv5O1DTHOQ"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_CbwnlAxGEeiZjs_9AA28NA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CbwnlQxGEeiZjs_9AA28NA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/umlrt/statemachine#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_RT_PROFILE/UMLRealTimeSM-addendum.profile.uml#_KLcn0FDtEeOA4ecmvfqvaw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_CbwnlgxGEeiZjs_9AA28NA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CbwnlwxGEeiZjs_9AA28NA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/umlrt/cppproperties#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UMLRT_CPP/RTCppProperties.profile.uml#_vl5LALs8EeSTjNEQkASznQ"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_rTGvgAx9EeiI4MJQ71mFuw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rTJLwAx9EeiI4MJQ71mFuw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLRealTime:ProtocolContainer xmi:id="_45ntgAxGEeiZjs_9AA28NA" base_Package="_45KagAxGEeiZjs_9AA28NA"/>
+  <UMLRealTime:RTMessageSet xmi:id="_46U4IAxGEeiZjs_9AA28NA" base_Interface="_46CkQAxGEeiZjs_9AA28NA"/>
+  <UMLRealTime:RTMessageSet xmi:id="_46wV8AxGEeiZjs_9AA28NA" base_Interface="_46poQAxGEeiZjs_9AA28NA" rtMsgKind="out"/>
+  <UMLRealTime:RTMessageSet xmi:id="_469KQAxGEeiZjs_9AA28NA" base_Interface="_462ckAxGEeiZjs_9AA28NA" rtMsgKind="inOut"/>
+  <UMLRealTime:Protocol xmi:id="_47Cp0AxGEeiZjs_9AA28NA" base_Collaboration="_4sIrIAxGEeiZjs_9AA28NA"/>
+  <UMLRealTime:ProtocolContainer xmi:id="_HlP0cAxHEeiZjs_9AA28NA" base_Package="_Hk1kwAxHEeiZjs_9AA28NA"/>
+  <UMLRealTime:RTMessageSet xmi:id="_HlV7EAxHEeiZjs_9AA28NA" base_Interface="_HlRpoAxHEeiZjs_9AA28NA"/>
+  <UMLRealTime:RTMessageSet xmi:id="_Hled8AxHEeiZjs_9AA28NA" base_Interface="_HlYXUAxHEeiZjs_9AA28NA" rtMsgKind="out"/>
+  <UMLRealTime:RTMessageSet xmi:id="_HloO8AxHEeiZjs_9AA28NA" base_Interface="_HllLoAxHEeiZjs_9AA28NA" rtMsgKind="inOut"/>
+  <UMLRealTime:Protocol xmi:id="_HlsgYAxHEeiZjs_9AA28NA" base_Collaboration="_HkkfAAxHEeiZjs_9AA28NA"/>
+  <UMLRealTime:Capsule xmi:id="_doHR4AxLEeiZjs_9AA28NA" base_Class="_dnzv4AxLEeiZjs_9AA28NA"/>
+  <UMLRealTime:Capsule xmi:id="_ftlwoAxLEeiZjs_9AA28NA" base_Class="_fsztgAxLEeiZjs_9AA28NA"/>
+  <UMLRealTime:Capsule xmi:id="_hU660AxLEeiZjs_9AA28NA" base_Class="_hUnY0AxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_p7aPgAxLEeiZjs_9AA28NA" base_Pseudostate="_p7Th0AxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTState xmi:id="_p7xb4AxLEeiZjs_9AA28NA" base_State="_p7sjYAxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTRegion xmi:id="_p8JPUAxLEeiZjs_9AA28NA" base_Region="_p7GtgAxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTStateMachine xmi:id="_p8vsQAxLEeiZjs_9AA28NA" base_StateMachine="_p28mQAxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_t43jkAxLEeiZjs_9AA28NA" base_Pseudostate="_t4vnwAxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTState xmi:id="_t4-4UAxLEeiZjs_9AA28NA" base_State="_t46m4AxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTRegion xmi:id="_t5LFkAxLEeiZjs_9AA28NA" base_Region="_t4nr8AxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTStateMachine xmi:id="_t5P-EAxLEeiZjs_9AA28NA" base_StateMachine="_t4a3oAxLEeiZjs_9AA28NA"/>
+  <UMLRealTime:CapsulePart xmi:id="_1S4WsAxOEeiZjs_9AA28NA" base_Property="_1S1TYAxOEeiZjs_9AA28NA"/>
+  <UMLRealTime:CapsulePart xmi:id="_2W5YcAxOEeiZjs_9AA28NA" base_Property="_2Wz44AxOEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_Q52yYAxSEeiZjs_9AA28NA" base_Pseudostate="_Q5pXAAxSEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTState xmi:id="_Q57q4AxSEeiZjs_9AA28NA" base_State="_Q55OoAxSEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTRegion xmi:id="_Q59gEAxSEeiZjs_9AA28NA" base_Region="_Q5lsoAxSEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTStateMachine xmi:id="_Q6BxgAxSEeiZjs_9AA28NA" base_StateMachine="_Q5XDIAxSEeiZjs_9AA28NA"/>
+  <UMLRealTime:RTPort xmi:id="_tr2vkAx9EeiI4MJQ71mFuw" isWired="false" base_Port="_trrwcAx9EeiI4MJQ71mFuw"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_QETUgAyAEeiI4MJQ71mFuw" headerPreface="#include &quot;umlrtmain.hh&quot;" base_Class="_fsztgAxLEeiZjs_9AA28NA"/>
+  <UMLRealTime:RTPort xmi:id="__oK1EAyGEeiI4MJQ71mFuw" isWired="false" base_Port="__oBrIAyGEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_NlWsMAyIEeiI4MJQ71mFuw" base_Port="_Nk-4wAyIEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_pLeeMAyJEeiI4MJQ71mFuw" base_State="_pLaz0AyJEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_4_aRAAyJEeiI4MJQ71mFuw" isWired="false" base_Port="_4_WmoAyJEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_5yy1wAyJEeiI4MJQ71mFuw" base_Port="_5yukUAyJEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_Mc_EAAyKEeiI4MJQ71mFuw" base_State="_Mc8nwAyKEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_OSKngAyLEeiI4MJQ71mFuw" base_State="_OSILQAyLEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_LABIAAyQEeiI4MJQ71mFuw" base_Port="_K_7BYAyQEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_6asfEAyQEeiI4MJQ71mFuw" base_Port="_6alKUAyQEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_fXtVsAyXEeiI4MJQ71mFuw" base_State="_fXq5cAyXEeiI4MJQ71mFuw"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_KT_nIAyeEeiI4MJQ71mFuw" headerPreface="#include &lt;stdlib.h>&#xD;&#xA;#include &lt;time.h>" base_Class="_dnzv4AxLEeiZjs_9AA28NA"/>
+  <UMLRTStateMachines:RTState xmi:id="_mbSFIAyiEeiI4MJQ71mFuw" base_State="_mbQP8AyiEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_1wDk0AykEeiI4MJQ71mFuw" base_State="_1wBIkAykEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_KrdnwAylEeiI4MJQ71mFuw" base_State="_KrbLgAylEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_EefrAAysEeiI4MJQ71mFuw" isWired="false" base_Port="_EecnsAysEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_NYgjMAytEeiI4MJQ71mFuw" isWired="false" base_Port="_NYeG8AytEeiI4MJQ71mFuw"/>
+  <UMLRealTime:Capsule xmi:id="_sGU0AAywEeiI4MJQ71mFuw" base_Class="_sGMRIAywEeiI4MJQ71mFuw"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_sGVbEAywEeiI4MJQ71mFuw" headerPreface="#include &lt;stdlib.h>&#xD;&#xA;#include &lt;time.h>&#xD;&#xA;#include &quot;umlrtmain.hh&quot;" base_Class="_sGMRIAywEeiI4MJQ71mFuw" publicDeclarations=""/>
+  <UMLRealTime:RTPort xmi:id="_sGWpMAywEeiI4MJQ71mFuw" isWired="false" base_Port="_sGMRIQywEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_sGXQQAywEeiI4MJQ71mFuw" base_Port="_sGMRIgywEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_sGX3UAywEeiI4MJQ71mFuw" base_Port="_sGMRJAywEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_sGX3UQywEeiI4MJQ71mFuw" isWired="false" base_Port="_sGMRJQywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTStateMachine xmi:id="_sGYeYAywEeiI4MJQ71mFuw" base_StateMachine="_sGMRJgywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTRegion xmi:id="_sGZFcAywEeiI4MJQ71mFuw" base_Region="_sGMRJwywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTPseudostate xmi:id="_sGZFcQywEeiI4MJQ71mFuw" base_Pseudostate="_sGMRNAywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_sGZsgAywEeiI4MJQ71mFuw" base_State="_sGMRNQywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_sGZsgQywEeiI4MJQ71mFuw" base_State="_sGMRNgywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_sGaTkAywEeiI4MJQ71mFuw" base_State="_sGMROAywEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_sGaTkQywEeiI4MJQ71mFuw" base_State="_sGMROQywEeiI4MJQ71mFuw"/>
+  <UMLRealTime:CapsulePart xmi:id="_LIMJkAyxEeiI4MJQ71mFuw" base_Property="_LH4AgAyxEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTConnector xmi:id="_m9UEcA0AEeiI4MJQ71mFuw" base_Connector="_m9EM0A0AEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTConnector xmi:id="_ndPhsQ0AEeiI4MJQ71mFuw" base_Connector="_ndNFcA0AEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTConnector xmi:id="_0n6q4A0OEeiI4MJQ71mFuw" base_Connector="_0nqMMA0OEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTConnector xmi:id="_1j8OQA0OEeiI4MJQ71mFuw" base_Connector="_1jrvkA0OEeiI4MJQ71mFuw"/>
+  <UMLRealTime:ProtocolContainer xmi:id="_lBXhEA1AEeiI4MJQ71mFuw" base_Package="_lBKFsA1AEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTMessageSet xmi:id="_lB9W8A1AEeiI4MJQ71mFuw" base_Interface="_lB5skA1AEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTMessageSet xmi:id="_lC3V4A1AEeiI4MJQ71mFuw" base_Interface="_lCydYA1AEeiI4MJQ71mFuw" rtMsgKind="out"/>
+  <UMLRealTime:RTMessageSet xmi:id="_lDbWkA1AEeiI4MJQ71mFuw" base_Interface="_lDXFIA1AEeiI4MJQ71mFuw" rtMsgKind="inOut"/>
+  <UMLRealTime:Protocol xmi:id="_lDpZAA1AEeiI4MJQ71mFuw" base_Collaboration="_lAqWcA1AEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_1ckvQA1AEeiI4MJQ71mFuw" base_Port="_1ajWAA1AEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTPort xmi:id="_C5Gl0A1BEeiI4MJQ71mFuw" base_Port="_C5CUYA1BEeiI4MJQ71mFuw"/>
+  <UMLRealTime:RTConnector xmi:id="_G9H04A1BEeiI4MJQ71mFuw" base_Connector="_G9DjcA1BEeiI4MJQ71mFuw"/>
+  <UMLRTStateMachines:RTState xmi:id="_YRzowA1BEeiI4MJQ71mFuw" base_State="_YRijAA1BEeiI4MJQ71mFuw"/>
+  <RTCppProperties:CapsuleProperties xmi:id="_p8_mIEQWEemtXvdKsyczJw" headerPreface="#include &quot;STATES.hh&quot;&#xA;&#xA;#include &lt;map>&#xA;#include &lt;assert.h>&#xA;#include &lt;vector>&#xA;#include &lt;iostream>&#xA;#include &lt;fstream>&#xA;#include &lt;string>&#xA;&#xA;#include &quot;libcrest/crest.h&quot;&#xA;&#xA;#include &lt;stdbool.h>" base_Class="_hUnY0AxLEeiZjs_9AA28NA"/>
+</xmi:XMI>
