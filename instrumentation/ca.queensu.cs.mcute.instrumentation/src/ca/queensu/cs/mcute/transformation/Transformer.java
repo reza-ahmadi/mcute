@@ -40,6 +40,7 @@ import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -367,6 +368,12 @@ public class Transformer {
 		// }// doExecute
 		//
 		// });
+		
+		//set top capsule
+		EAnnotation annotation = modelUnderTest.getEAnnotation("UMLRT_Default_top");
+		if (annotation == null)
+			annotation = modelUnderTest.createEAnnotation("UMLRT_Default_top");
+		annotation.getDetails().put("top_name", "mCUTE__TOP");
 
 		return true;
 
@@ -1849,6 +1856,7 @@ public class Transformer {
 		}
 		return true;
 	}
+	
 
 	public static void updateTransitionEffect(Transition trans, String actionCode) {
 		OpaqueBehavior ob = UMLFactory.eINSTANCE.createOpaqueBehavior();
