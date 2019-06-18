@@ -28,7 +28,10 @@ https://drive.google.com/file/d/1DIjLxFqPLQUuLrRtR_QecJUOLlhGSAqt/view?usp=shari
   
 * [*Transforming and testing some sample models using mCUTE*](https://youtu.be/tMMvTqu3G6A)
 
-* ![new-icon.png](https://bitbucket.org/repo/ngK5gx7/images/2756170474-new-icon.png) [*mCUTE now runs in Eclipse-based IDE Papyrus-RT*](https://youtu.be/Ty1-gVptLYA)
+* [*mCUTE now runs in Eclipse-based IDE Papyrus-RT*](https://youtu.be/Ty1-gVptLYA)
+
+* ![new-icon.png](https://bitbucket.org/repo/ngK5gx7/images/2756170474-new-icon.png) [*A short video that shows how mCUTE runs step by step!*](https://youtu.be/AIUmlWBgAB8)
+
 
 If you have any questions do not hesitate to contact me: 
 
